@@ -1,0 +1,87 @@
+/* Selected Competitors Tab Styles */
+
+/* Remove Button */
+.remove-btn {
+    padding: 6px 16px;
+    border: 1px solid #dc2626;
+    border-radius: 6px;
+    background: white;
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.remove-btn:hover {
+    background: #dc2626;
+    color: white;
+}
+
+/* Selected Table Specific */
+.selected-table tbody tr {
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Empty State for Selected Tab */
+.selected-table .empty-state {
+    padding: 80px 20px;
+    text-align: center;
+    background: none;
+    border: none;
+}
+
+.selected-table .empty-state svg {
+    width: 80px;
+    height: 80px;
+    stroke: #d1d5db;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.selected-table .empty-state h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 12px;
+}
+
+.selected-table .empty-state p {
+    font-size: 15px;
+    color: #6b7280;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Compare Button Icon Animation */
+.compare-button:hover svg {
+    transform: translateY(-1px);
+}
+
+/* Selected Badge Animation */
+@keyframes badgePulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.tab-badge {
+    animation: badgePulse 0.3s ease-out;
+}

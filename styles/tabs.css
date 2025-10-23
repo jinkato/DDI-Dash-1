@@ -1,0 +1,114 @@
+/* Tab Navigation Styles */
+
+.tab-navigation {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 0 24px 0 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tab-button {
+    position: relative;
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-button:hover {
+    color: #374151;
+    /* background-color: #f9fafb; */
+}
+
+.tab-button.active {
+    color: #0763D3;
+    border-bottom-color: #0763D3;
+    /* font-weight: 600; */
+}
+
+.tab-button.active:hover {
+    /* background-color: transparent; */
+}
+
+/* Tab Badge */
+.tab-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background-color: white;
+    color: #0763D3;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.tab-button:not(.active) .tab-badge {
+    background-color: #6b7280;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Compare Button */
+.compare-section {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 24px 16px 24px;
+}
+
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+}
+
+.empty-state svg {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    opacity: 0.3;
+}
+
+.empty-state h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 14px;
+    color: #6b7280;
+}

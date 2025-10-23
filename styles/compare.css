@@ -1,0 +1,249 @@
+/* Compare Page Styles */
+
+/* Compare Header */
+.compare-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 24px 24px 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.compare-header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* Back Button */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.back-button:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.back-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Export Buttons */
+.export-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.export-btn:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.export-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Compare Content */
+.compare-content {
+    padding: 0 24px;
+}
+
+/* Compare Table */
+.compare-table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.compare-table th,
+.compare-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.compare-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    font-size: 14px;
+    color: #374151;
+}
+
+.metric-header {
+    width: 200px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.dealer-header {
+    min-width: 180px;
+}
+
+.dealer-header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dealer-header .dealer-logo {
+    width: 53px;
+    height: 40px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: white;
+    border: 1px solid #D8DBDE;
+}
+
+.dealer-header .dealer-logo span {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.dealer-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.metric-name {
+    font-weight: 500;
+    color: #6b7280;
+    background-color: #f9fafb;
+}
+
+.metric-value {
+    font-size: 14px;
+    color: #111827;
+}
+
+.metric-value.best-value {
+    font-weight: 700;
+    color: #059669;
+    position: relative;
+}
+
+.metric-value.best-value::after {
+    content: "✓";
+    margin-left: 4px;
+    font-size: 12px;
+}
+
+/* Charts Section */
+.charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.chart-container {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.chart-container canvas {
+    max-height: 250px;
+}
+
+/* Print Styles */
+@media print {
+    .sidebar,
+    .dropdowns,
+    .back-button,
+    .export-buttons {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin: 0;
+        padding: 20px;
+    }
+    
+    .compare-header {
+        margin: 0 0 20px 0;
+        padding-bottom: 10px;
+    }
+    
+    .compare-table-container,
+    .chart-container {
+        box-shadow: none;
+        border: 1px solid #e5e7eb;
+    }
+    
+    .charts-section {
+        page-break-before: always;
+    }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .compare-header {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    
+    .compare-header h1 {
+        width: 100%;
+        order: -1;
+    }
+    
+    .compare-table-container {
+        overflow-x: auto;
+    }
+    
+    .charts-section {
+        grid-template-columns: 1fr;
+    }
+}

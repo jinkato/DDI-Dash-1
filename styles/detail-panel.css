@@ -1,0 +1,418 @@
+/* Detail Panel Styles */
+
+/* Detail Panel Container */
+.detail-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 540px;
+    height: 100vh;
+    background: white;
+    border-left: 1px solid #D8DBDE;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+    flex-direction: column;
+}
+
+/* Panel Active State */
+.detail-panel.active {
+    display: flex; /* Show instantly */
+}
+
+/* Chart Styles */
+.info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+    background-color: #e5e7eb;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 50%;
+    cursor: help;
+}
+
+/* Inventory Chart */
+.inventory-chart {
+    margin-top: 16px;
+}
+
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chart-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chart-label {
+    width: 80px;
+    font-size: 14px;
+    color: #374151;
+    text-align: right;
+}
+
+.chart-bars {
+    flex: 1;
+    position: relative;
+}
+
+.bar-wrapper {
+    position: relative;
+    height: 20px;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.bar-this-location {
+    background-color: #3b82f6;
+    position: relative;
+}
+
+.bar-value {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
+}
+
+.bar-avg-competitor {
+    background-color: #5E6976;
+    position: relative;
+}
+
+.bar-avg-competitor .bar-value {
+    color: white;
+}
+
+.chart-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+    padding-left: 92px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+/* Pricing Chart */
+.pricing-chart {
+    margin-top: 16px;
+}
+
+.stacked-bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stacked-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stacked-bar-label {
+    width: 100px;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.stacked-bar-container {
+    flex: 1;
+    display: flex;
+    height: 24px;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stacked-bar-segment {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.pricing-legend {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 16px;
+    margin-top: 16px;
+    padding-left: 112px;
+    font-size: 13px;
+}
+
+/* Review Summary Styles */
+.review-summary {
+    margin-top: 12px;
+}
+
+.review-content {
+    background-color: #F4F6F9;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.review-text {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #374151;
+}
+
+.review-sources {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.source-rating {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.source-name {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.rating {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.review-count {
+    margin: 0;
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Detail Panel Header */
+.detail-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+    min-height: 80px;
+}
+
+.detail-panel-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Close Button */
+.close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border: 1px solid #d1d5db;
+}
+
+.close-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.close-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: #6b7280;
+}
+
+/* Detail Panel Content */
+.detail-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+/* Content Sections */
+.detail-section {
+    margin-bottom: 32px;
+}
+
+.detail-section:last-child {
+    margin-bottom: 0;
+}
+
+.detail-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 24px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.info-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+}
+
+/* Dealer Logo in Detail Panel Header */
+.detail-dealer-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.detail-dealer-logo {
+    width: 53px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #D8DBDE;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.detail-dealer-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.detail-dealer-info h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.detail-dealer-info p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* When panel is open, adjust main content */
+body.detail-panel-open .header {
+    margin-right: 540px;
+}
+
+body.detail-panel-open .tab-navigation {
+    margin-right: 540px;
+}
+
+body.detail-panel-open .content {
+    margin-right: 540px;
+    gap: 0; /* Remove gap when filter panel is hidden */
+}
+
+body.detail-panel-open .filter-panel {
+    display: none;
+}
+
+body.detail-panel-open .table-container {
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .detail-panel {
+        width: 400px;
+    }
+    
+    body.detail-panel-open .header {
+        margin-right: 400px;
+    }
+    
+    body.detail-panel-open .tab-navigation {
+        margin-right: 400px;
+    }
+    
+    body.detail-panel-open .content {
+        margin-right: 400px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .detail-panel {
+        width: 100%;
+    }
+    
+    body.detail-panel-open .header {
+        margin-right: 0;
+    }
+    
+    body.detail-panel-open .tab-navigation {
+        margin-right: 0;
+    }
+    
+    body.detail-panel-open .content {
+        margin-right: 0;
+    }
+}

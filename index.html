@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1300, initial-scale=1.0">
+    <title>CarGurus Dealer Analysis</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/tabs.css">
+    <link rel="stylesheet" href="styles/competitors.css">
+    <link rel="stylesheet" href="styles/selected.css">
+    <link rel="stylesheet" href="styles/detail-panel.css">
+    
+</head>
+<body>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <img src="img/logo.svg" alt="CarGurus" style="height: 19px;">
+            </div>
+            
+            <nav class="sidebar-nav">
+                <!-- Navigation content removed -->
+                <img src="img/sidenav.svg" alt="CarGurus" style="height: 656px;">
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dropdowns">
+                <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
+            </div>
+            <div class="header">
+                <h1>Get to know your competitors</h1>
+                <button class="btn-primary compare-button" onclick="appState.navigateToCompare()">
+                    Compare Selected
+                    <span class="tab-badge" style="display: none;">0</span>
+                </button>
+            </div>
+            
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-button active" data-tab="select">
+                    Select Competitors
+                </button>
+                <button class="tab-button" data-tab="selected">
+                    Selected Competitors
+                </button>
+            </div>
+            
+            <!-- Tab 1: Select Competitors -->
+            <div id="select-tab" class="tab-content active">
+                <div class="content">
+                <!-- Table Container -->
+                <div class="table-container">
+                    <table class="competitors-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="name">Local competitor</th>
+                                <th class="sortable" data-sort="inventory">Inventory</th>
+                                <th class="sortable" data-sort="sessions">% of Sessions</th>
+                                <th class="sortable" data-sort="overlap">Total overlap sessions</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table rows will be dynamically populated from JSON data -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Filter Panel -->
+                <div class="filter-panel">
+                    <h2>Filters</h2>
+                    
+                    <div class="filter-section">
+                        <label for="search">Search</label>
+                        <input type="text" id="search" class="search-input" placeholder="Search...">
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="date-range">Date range</label>
+                        <select id="date-range" class="filter-select">
+                            <option value="All">All time</option>
+                            <option value="Last month">Last month</option>
+                            <option value="Last 3 months">Last 3 months</option>
+                            <option value="Last 6 month">Last 6 months</option>
+                            <option value="Last year">Last year</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="radius">Radius</label>
+                        <select id="radius" class="filter-select">
+                            <option value="All">All distances</option>
+                            <option value="5 miles">5 miles</option>
+                            <option value="10 miles">10 miles</option>
+                            <option value="25 miles">25 miles</option>
+                            <option value="50 miles">50 miles</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="franchise">Franchise type</label>
+                        <select id="franchise" class="filter-select">
+                            <option>All</option>
+                            <option>Franchise</option>
+                            <option>Independent</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="brand">Brand overlap</label>
+                        <select id="brand" class="filter-select">
+                            <option>All</option>
+                            <option>Toyota</option>
+                            <option>Honda</option>
+                            <option>Nissan</option>
+                            <option>Volvo</option>
+                            <option>Multi-brand</option>
+                            <option>Luxury</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label>Inventory size</label>
+                        <div class="range-inputs">
+                            <input type="number" class="range-input" placeholder="Min" id="inv-min">
+                            <span class="range-separator">to</span>
+                            <input type="number" class="range-input" placeholder="Max" id="inv-max">
+                        </div>
+                        <a href="#" class="reset-link">Reset</a>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="cross-shopper">Cross shopper</label>
+                        <select id="cross-shopper" class="filter-select">
+                            <option>All</option>
+                            <option>High overlap</option>
+                            <option>Medium overlap</option>
+                            <option>Low overlap</option>
+                        </select>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <!-- Tab 2: Selected Competitors -->
+            <div id="selected-tab" class="tab-content">
+                <div class="content">
+                    <div class="table-container">
+                        <table class="competitors-table selected-table">
+                            <thead>
+                                <tr>
+                                    <th>Local competitor</th>
+                                    <th>Inventory</th>
+                                    <th>% of Sessions</th>
+                                    <th>Total overlap sessions</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="selected-tbody">
+                                <!-- Selected dealers will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Chart.js Library -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    
+    <!-- Detail Panel -->
+    <div id="detail-panel" class="detail-panel">
+        <div class="detail-panel-header">
+            <button class="close-btn" onclick="closeDetailPanel()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="detail-panel-content" id="detail-panel-content">
+            <!-- Content will be dynamically populated -->
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/app.js"></script>
+    <script src="js/competitors.js"></script>
+    <script src="js/selected.js"></script>
+</body>
+</html>
