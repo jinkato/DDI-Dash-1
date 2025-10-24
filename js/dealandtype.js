@@ -382,7 +382,7 @@ function initializeBubbleChart() {
     // Create gradient colors based on leads per vehicle using alpha transparency
     const getColor = (leadsPerVehicle) => {
         // Convert hex #0763D3 to RGB: 7, 99, 211
-        if (leadsPerVehicle <= 0.1) return 'rgba(128, 128, 128, 0.3)'; // Gray for minimal/no data
+        if (leadsPerVehicle <= 0.1) return 'rgba(7, 99, 211, 0)'; // 0% alpha for minimal/no data
         
         // Calculate alpha based on leads per vehicle (0.2 to 1.0)
         // Max leads per vehicle is around 3.2, min meaningful is around 0.2
@@ -398,20 +398,58 @@ function initializeBubbleChart() {
         return `rgba(7, 99, 211, ${alpha.toFixed(2)})`;
     };
 
+    // Plugin to draw text labels in center of bubbles
+    const bubbleLabelsPlugin = {
+        id: 'bubbleLabels',
+        afterDatasetsDraw: function(chart) {
+            const ctx = chart.ctx;
+            
+            chart.data.datasets.forEach((dataset, datasetIndex) => {
+                const meta = chart.getDatasetMeta(datasetIndex);
+                
+                meta.data.forEach((element, index) => {
+                    const data = dataset.data[index];
+                    const leadsPerVehicle = data.originalData.leadsPerVehicle;
+                    
+                    // Get bubble radius
+                    const radius = element.options.radius;
+                    
+                    // Show label for all bubbles except the very smallest
+                    if (radius > 7) {
+                        ctx.save();
+                        
+                        // Set text properties based on bubble size
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        
+                        // Use consistent font size for all bubbles
+                        ctx.font = 'bold 12px DM Sans';
+                        
+                        // Use white text for dark bubbles, dark text for light bubbles
+                        const alpha = parseFloat(getColor(leadsPerVehicle).match(/[\d.]+\)$/)[0].slice(0, -1));
+                        ctx.fillStyle = alpha > 0.6 ? '#FFFFFF' : '#0D1722';
+                        
+                        // Draw the text
+                        ctx.fillText(leadsPerVehicle.toFixed(1), element.x, element.y);
+                        
+                        ctx.restore();
+                    }
+                });
+            });
+        }
+    };
+
     // Configure Chart.js
     window.bubbleChart = new Chart(ctx, {
         type: 'bubble',
+        plugins: [bubbleLabelsPlugin],
         data: {
             datasets: [{
                 label: 'Market Segments',
                 data: chartData,
                 backgroundColor: chartData.map(d => getColor(d.originalData.leadsPerVehicle)),
                 borderColor: chartData.map(d => {
-                    const color = getColor(d.originalData.leadsPerVehicle);
-                    // For border, always use full opacity except for gray
-                    if (d.originalData.leadsPerVehicle <= 0.1) {
-                        return 'rgba(128, 128, 128, 0.5)';
-                    }
+                    // For border, always use full opacity
                     return 'rgba(7, 99, 211, 1)';
                 }),
                 borderWidth: 2,
@@ -419,9 +457,6 @@ function initializeBubbleChart() {
                 hoverBackgroundColor: chartData.map(d => {
                     const color = getColor(d.originalData.leadsPerVehicle);
                     // For hover, increase alpha slightly (max 1.0)
-                    if (d.originalData.leadsPerVehicle <= 0.1) {
-                        return 'rgba(128, 128, 128, 0.4)';
-                    }
                     const match = color.match(/rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/);
                     if (match) {
                         const alpha = parseFloat(match[4]);
@@ -589,8 +624,8 @@ function addChartLegend() {
                         <span>Lowest (0.2-0.5 leads/vehicle)</span>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(128, 128, 128, 0.3)"></span>
-                        <span>Minimal Activity</span>
+                        <span class="legend-color" style="background: rgba(7, 99, 211, 0); border: 1px solid rgba(7, 99, 211, 0.5)"></span>
+                        <span>Minimal Activity (0% fill)</span>
                     </div>
                 </div>
             </div>
