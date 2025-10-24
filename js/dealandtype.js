@@ -8,6 +8,7 @@ const marketData = [
         dealRating: "Great Deal",
         volume: 320,
         performance: 1.4,
+        leadsPerVehicle: 2.8,
         insights: {
             demographics: "Young professionals, household income $50-70k",
             behavior: "Quick decision makers, 1-2 week research period",
@@ -20,6 +21,7 @@ const marketData = [
         dealRating: "Good Deal",
         volume: 450,
         performance: 1.2,
+        leadsPerVehicle: 2.1,
         insights: {
             demographics: "Families with 2+ kids, household income $40-60k",
             behavior: "View 12+ vehicles, research for 3+ weeks",
@@ -32,6 +34,7 @@ const marketData = [
         dealRating: "Fair Deal",
         volume: 280,
         performance: 0.9,
+        leadsPerVehicle: 1.4,
         insights: {
             demographics: "Budget-conscious families",
             behavior: "Price comparison focused, 4+ weeks research",
@@ -44,6 +47,7 @@ const marketData = [
         dealRating: "High-Priced",
         volume: 180,
         performance: 0.7,
+        leadsPerVehicle: 0.8,
         insights: {
             demographics: "Value shoppers, diverse income levels",
             behavior: "Extensive research, wait for sales",
@@ -56,6 +60,7 @@ const marketData = [
         dealRating: "Over-Priced",
         volume: 90,
         performance: 0.5,
+        leadsPerVehicle: 0.3,
         insights: {
             demographics: "Price-sensitive shoppers",
             behavior: "Quick to abandon, comparison shop",
@@ -70,6 +75,7 @@ const marketData = [
         dealRating: "Great Deal",
         volume: 240,
         performance: 1.3,
+        leadsPerVehicle: 2.4,
         insights: {
             demographics: "Urban professionals, singles and couples",
             behavior: "Research focused, 2-3 week timeline",
@@ -82,6 +88,7 @@ const marketData = [
         dealRating: "Good Deal",
         volume: 380,
         performance: 1.1,
+        leadsPerVehicle: 1.8,
         insights: {
             demographics: "Commuters, mixed age groups",
             behavior: "Practical buyers, moderate research",
@@ -94,6 +101,7 @@ const marketData = [
         dealRating: "Fair Deal",
         volume: 220,
         performance: 1.0,
+        leadsPerVehicle: 1.2,
         insights: {
             demographics: "First-time buyers, young adults",
             behavior: "Budget conscious, financing focused",
@@ -106,6 +114,7 @@ const marketData = [
         dealRating: "High-Priced",
         volume: 140,
         performance: 0.8,
+        leadsPerVehicle: 0.6,
         insights: {
             demographics: "Credit challenged buyers",
             behavior: "Payment focused, limited options",
@@ -118,6 +127,7 @@ const marketData = [
         dealRating: "Over-Priced",
         volume: 60,
         performance: 0.4,
+        leadsPerVehicle: 0.2,
         insights: {
             demographics: "Distressed buyers",
             behavior: "Last resort shoppers",
@@ -132,6 +142,7 @@ const marketData = [
         dealRating: "Great Deal",
         volume: 280,
         performance: 1.5,
+        leadsPerVehicle: 3.0,
         insights: {
             demographics: "Contractors, rural households",
             behavior: "Feature focused, know what they want",
@@ -144,6 +155,7 @@ const marketData = [
         dealRating: "Good Deal",
         volume: 420,
         performance: 1.3,
+        leadsPerVehicle: 2.5,
         insights: {
             demographics: "Blue collar workers, outdoor enthusiasts",
             behavior: "Brand loyal, moderate research",
@@ -156,6 +168,7 @@ const marketData = [
         dealRating: "Fair Deal",
         volume: 340,
         performance: 1.0,
+        leadsPerVehicle: 1.6,
         insights: {
             demographics: "Suburban families, lifestyle buyers",
             behavior: "Comparing SUVs and trucks",
@@ -168,6 +181,7 @@ const marketData = [
         dealRating: "High-Priced",
         volume: 160,
         performance: 0.6,
+        leadsPerVehicle: 0.7,
         insights: {
             demographics: "Aspirational buyers",
             behavior: "Want truck but price sensitive",
@@ -180,6 +194,7 @@ const marketData = [
         dealRating: "Over-Priced",
         volume: 40,
         performance: 0.3,
+        leadsPerVehicle: 0.3,
         insights: {
             demographics: "Challenged buyers",
             behavior: "Limited by budget",
@@ -194,6 +209,7 @@ const marketData = [
         dealRating: "Great Deal",
         volume: 120,
         performance: 1.6,
+        leadsPerVehicle: 3.2,
         insights: {
             demographics: "Young professionals, enthusiasts",
             behavior: "Emotion-driven, quick decisions",
@@ -206,6 +222,7 @@ const marketData = [
         dealRating: "Good Deal",
         volume: 180,
         performance: 1.2,
+        leadsPerVehicle: 2.2,
         insights: {
             demographics: "Singles, young couples",
             behavior: "Image conscious, research performance",
@@ -218,6 +235,7 @@ const marketData = [
         dealRating: "Fair Deal",
         volume: 100,
         performance: 0.9,
+        leadsPerVehicle: 1.3,
         insights: {
             demographics: "Entry-level sports car buyers",
             behavior: "Comparing with sedan options",
@@ -230,6 +248,7 @@ const marketData = [
         dealRating: "High-Priced",
         volume: 60,
         performance: 0.5,
+        leadsPerVehicle: 0.5,
         insights: {
             demographics: "Aspirational young buyers",
             behavior: "Dream car shoppers",
@@ -242,6 +261,7 @@ const marketData = [
         dealRating: "Over-Priced",
         volume: 20,
         performance: 0.2,
+        leadsPerVehicle: 0.2,
         insights: {
             demographics: "Window shoppers",
             behavior: "Unrealistic expectations",
@@ -256,6 +276,7 @@ const marketData = [
         dealRating: "Great Deal",
         volume: 80,
         performance: 1.4,
+        leadsPerVehicle: 2.6,
         insights: {
             demographics: "Educated urbanites, eco-conscious",
             behavior: "Alternative seekers, anti-SUV",
@@ -268,6 +289,7 @@ const marketData = [
         dealRating: "Good Deal",
         volume: 120,
         performance: 1.1,
+        leadsPerVehicle: 1.9,
         insights: {
             demographics: "European car enthusiasts, families",
             behavior: "Brand specific searches",
@@ -280,6 +302,7 @@ const marketData = [
         dealRating: "Fair Deal",
         volume: 60,
         performance: 0.8,
+        leadsPerVehicle: 1.0,
         insights: {
             demographics: "Practical buyers",
             behavior: "Comparing with SUVs",
@@ -292,6 +315,7 @@ const marketData = [
         dealRating: "High-Priced",
         volume: 30,
         performance: 0.0,
+        leadsPerVehicle: 0.4,
         insights: {
             demographics: "Limited market",
             behavior: "Specific model seekers",
@@ -304,6 +328,7 @@ const marketData = [
         dealRating: "Over-Priced",
         volume: 10,
         performance: 0.0,
+        leadsPerVehicle: 0.1,
         insights: {
             demographics: "Rare buyers",
             behavior: "Collectors or specific needs",
@@ -354,13 +379,23 @@ function initializeBubbleChart() {
         };
     });
 
-    // Create gradient colors based on performance
-    const getColor = (performance) => {
-        if (performance === 0.0) return 'rgba(128, 128, 128, 0.5)'; // Gray for no data
-        if (performance >= 1.2) return 'rgba(34, 197, 94, 0.7)'; // Green
-        if (performance >= 1.0) return 'rgba(134, 239, 172, 0.7)'; // Light green
-        if (performance >= 0.8) return 'rgba(252, 165, 165, 0.7)'; // Light red
-        return 'rgba(239, 68, 68, 0.7)'; // Red
+    // Create gradient colors based on leads per vehicle using alpha transparency
+    const getColor = (leadsPerVehicle) => {
+        // Convert hex #0763D3 to RGB: 7, 99, 211
+        if (leadsPerVehicle <= 0.1) return 'rgba(128, 128, 128, 0.3)'; // Gray for minimal/no data
+        
+        // Calculate alpha based on leads per vehicle (0.2 to 1.0)
+        // Max leads per vehicle is around 3.2, min meaningful is around 0.2
+        const maxLeads = 3.2;
+        const minLeads = 0.2;
+        
+        // Normalize to 0-1 range
+        const normalized = Math.max(0, Math.min(1, (leadsPerVehicle - minLeads) / (maxLeads - minLeads)));
+        
+        // Map to alpha range (0.2 to 1.0)
+        const alpha = 0.2 + (normalized * 0.8);
+        
+        return `rgba(7, 99, 211, ${alpha.toFixed(2)})`;
     };
 
     // Configure Chart.js
@@ -370,11 +405,31 @@ function initializeBubbleChart() {
             datasets: [{
                 label: 'Market Segments',
                 data: chartData,
-                backgroundColor: chartData.map(d => getColor(d.originalData.performance)),
-                borderColor: chartData.map(d => getColor(d.originalData.performance).replace('0.7', '1')),
+                backgroundColor: chartData.map(d => getColor(d.originalData.leadsPerVehicle)),
+                borderColor: chartData.map(d => {
+                    const color = getColor(d.originalData.leadsPerVehicle);
+                    // For border, always use full opacity except for gray
+                    if (d.originalData.leadsPerVehicle <= 0.1) {
+                        return 'rgba(128, 128, 128, 0.5)';
+                    }
+                    return 'rgba(7, 99, 211, 1)';
+                }),
                 borderWidth: 2,
                 hoverBorderWidth: 3,
-                hoverBackgroundColor: chartData.map(d => getColor(d.originalData.performance).replace('0.7', '0.9'))
+                hoverBackgroundColor: chartData.map(d => {
+                    const color = getColor(d.originalData.leadsPerVehicle);
+                    // For hover, increase alpha slightly (max 1.0)
+                    if (d.originalData.leadsPerVehicle <= 0.1) {
+                        return 'rgba(128, 128, 128, 0.4)';
+                    }
+                    const match = color.match(/rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/);
+                    if (match) {
+                        const alpha = parseFloat(match[4]);
+                        const newAlpha = Math.min(1, alpha + 0.1);
+                        return `rgba(7, 99, 211, ${newAlpha})`;
+                    }
+                    return color;
+                })
             }]
         },
         options: {
@@ -382,10 +437,10 @@ function initializeBubbleChart() {
             maintainAspectRatio: false,
             layout: {
                 padding: {
-                    left: 20,
-                    right: 20,
-                    top: 20,
-                    bottom: 40
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
                 }
             },
             scales: {
@@ -425,13 +480,7 @@ function initializeBubbleChart() {
                         padding: 10
                     },
                     title: {
-                        display: true,
-                        text: 'Vehicle Type',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        padding: 20
+                        display: false
                     }
                 },
                 y: {
@@ -470,13 +519,7 @@ function initializeBubbleChart() {
                         padding: 10
                     },
                     title: {
-                        display: true,
-                        text: 'Deal Rating',
-                        font: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        padding: 20
+                        display: false
                     }
                 }
             },
@@ -491,7 +534,7 @@ function initializeBubbleChart() {
                             return [
                                 `${data.vehicleType} - ${data.dealRating}`,
                                 `Volume: ${data.volume} shoppers`,
-                                `Performance: ${(data.performance * 100).toFixed(0)}% of market average`
+                                `Leads per Vehicle: ${data.leadsPerVehicle.toFixed(1)}`
                             ];
                         }
                     }
@@ -523,27 +566,31 @@ function addChartLegend() {
                 <p>Represents the number of shoppers in each segment</p>
             </div>
             <div class="legend-section">
-                <h4>Bubble Color</h4>
+                <h4>Bubble Color Intensity (Leads per Vehicle)</h4>
                 <div class="legend-items">
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(34, 197, 94, 0.7)"></span>
-                        <span>High Performance (120%+ of average)</span>
+                        <span class="legend-color" style="background: rgba(7, 99, 211, 1.0)"></span>
+                        <span>Highest (3.0+ leads/vehicle)</span>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(134, 239, 172, 0.7)"></span>
-                        <span>Above Average (100-119%)</span>
+                        <span class="legend-color" style="background: rgba(7, 99, 211, 0.8)"></span>
+                        <span>High (2.5+ leads/vehicle)</span>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(252, 165, 165, 0.7)"></span>
-                        <span>Below Average (80-99%)</span>
+                        <span class="legend-color" style="background: rgba(7, 99, 211, 0.6)"></span>
+                        <span>Medium (1.5-2.5 leads/vehicle)</span>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(239, 68, 68, 0.7)"></span>
-                        <span>Low Performance (<80%)</span>
+                        <span class="legend-color" style="background: rgba(7, 99, 211, 0.4)"></span>
+                        <span>Low (0.5-1.5 leads/vehicle)</span>
                     </div>
                     <div class="legend-item">
-                        <span class="legend-color" style="background: rgba(128, 128, 128, 0.5)"></span>
-                        <span>No Data Available</span>
+                        <span class="legend-color" style="background: rgba(7, 99, 211, 0.2)"></span>
+                        <span>Lowest (0.2-0.5 leads/vehicle)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: rgba(128, 128, 128, 0.3)"></span>
+                        <span>Minimal Activity</span>
                     </div>
                 </div>
             </div>
@@ -574,7 +621,7 @@ function showInsightsModal(data) {
                     <div class="insight-section">
                         <h3>Market Volume</h3>
                         <p class="volume-stat">${data.volume} shoppers</p>
-                        <p class="performance-stat">Performance: ${(data.performance * 100).toFixed(0)}% of market average</p>
+                        <p class="performance-stat">Leads per Vehicle: ${data.leadsPerVehicle.toFixed(1)}</p>
                     </div>
                     
                     <div class="insight-section">
