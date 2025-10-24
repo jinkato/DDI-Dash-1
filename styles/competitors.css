@@ -5,7 +5,6 @@
     display: flex;
     gap: 24px;
     padding: 12px 24px;
-    height: calc(100vh - 67px - 80px);
 }
 
 /* Table Container */
@@ -14,8 +13,7 @@
     background: white;
     border-radius: 16px;
     border: 1px solid #D8DBDE;
-    /* overflow: auto; */
-    max-height: calc(100vh - 67px - 80px - 24px);
+    overflow: visible;
     align-self: flex-start;
 }
 
@@ -24,6 +22,7 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
+    table-layout: auto;
 }
 
 .competitors-table thead {
@@ -132,12 +131,39 @@
     font-size: 14px;
     font-weight: 500;
     color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .dealer-details p {
     margin: 2px 0 0;
     font-size: 12px;
     color: #6b7280;
+}
+
+/* Preselected Pill */
+.preselected-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #E4F5FE;
+    color: #0763D3;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+/* Recommended Pill */
+.recommended-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #DCF7DD;
+    color: #078A0B;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 12px;
+    white-space: nowrap;
 }
 
 /* Action Buttons Container */
@@ -175,7 +201,6 @@
     border-radius: 16px;
     border: 1px solid #D8DBDE;
     padding: 24px;
-    max-height: calc(100vh - 67px - 80px - 24px);
     align-self: flex-start;
 }
 
@@ -270,6 +295,40 @@
 .reset-link:hover {
     color: #374151;
     text-decoration: underline;
+}
+
+/* Adjustments when detail panel is open */
+body.detail-panel-open .competitors-table {
+    font-size: 13px;
+}
+
+body.detail-panel-open .competitors-table th,
+body.detail-panel-open .competitors-table td {
+    padding: 12px 8px;
+}
+
+body.detail-panel-open .competitors-table td:first-child,
+body.detail-panel-open .competitors-table th:first-child {
+    padding-left: 16px;
+}
+
+body.detail-panel-open .dealer-logo {
+    width: 48px;
+    height: 36px;
+}
+
+body.detail-panel-open .dealer-details h3 {
+    font-size: 13px;
+}
+
+body.detail-panel-open .dealer-details p {
+    font-size: 11px;
+}
+
+body.detail-panel-open .select-btn {
+    width: 70px;
+    font-size: 11px;
+    padding: 0 8px;
 }
 
 /* Responsive */

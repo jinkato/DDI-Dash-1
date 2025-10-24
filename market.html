@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1300, initial-scale=1.0">
+    <title>Market Analysis - CarGurus Dealer Analysis</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/market.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <img src="img/logo.svg" alt="CarGurus" style="height: 19px;">
+            </div>
+            
+            <nav class="sidebar-nav">
+                <!-- Navigation content removed -->
+                <img src="img/sidenav.svg" alt="CarGurus" style="height: 656px;">
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dropdowns">
+                <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
+            </div>
+            <div class="header">
+                <h1>Market Analysis</h1>
+            </div>
+            
+            <!-- Main content area -->
+            <div class="content">
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <span class="filter-label">Time frame:</span>
+                        <select class="filter-select">
+                            <option>14 days</option>
+                            <option>30 days</option>
+                            <option>90 days</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">Dealer set:</span>
+                        <select class="filter-select">
+                            <option>All dealers</option>
+                            <option>Selected dealers</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Panels Grid -->
+                <div class="panels-grid">
+                    <!-- Top Features Panel -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Top features</h3>
+                                                    </div>
+                        <div class="panel-content">
+                            <table class="features-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Count</th>
+                                    <th>Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>All wheel drive</td>
+                                    <td>287</td>
+                                    <td><span class="trend-up">46%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Backup camera</td>
+                                    <td>121</td>
+                                    <td><span class="trend-up">29%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Blind spot monitoring</td>
+                                    <td>113</td>
+                                    <td><span class="trend-up">27%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Sunroof/moonroof</td>
+                                    <td>113</td>
+                                    <td><span class="trend-up">18%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Heated seats</td>
+                                    <td>99</td>
+                                    <td><span class="trend-up">16%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <div class="see-more">
+                            <a href="#">See more</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Search vs Vehicle Type Chart -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Search vs. vehicle type</h3>
+                                                    </div>
+                        <div class="chart-container">
+                            <canvas id="searchVsTypeChart"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: #3b82f6;"></span>
+                                <span>Your inventory</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot" style="background: #5E6976;"></span>
+                                <span>Local market</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Underserved Demand Panel - Full Width -->
+                <div class="panel" style="margin-bottom: 24px;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Underserved demand</h3>
+                                            </div>
+                    <div class="search-filters">
+                        <div class="filter-group">
+                            <select class="filter-select">
+                                <option>Make</option>
+                                <option>Toyota</option>
+                                <option>Honda</option>
+                                <option>Ford</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <select class="filter-select">
+                                <option>Model</option>
+                                <option>Camry</option>
+                                <option>Accord</option>
+                                <option>Civic</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <select class="filter-select">
+                                <option>Trim</option>
+                                <option>LE</option>
+                                <option>SE</option>
+                                <option>XLE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="vehicle-table-container">
+                        <table class="vehicle-table">
+                            <thead>
+                                <tr>
+                                    <th>Vehicle</th>
+                                    <th>Searches</th>
+                                    <th>Avg. budget</th>
+                                    <th>Avg. mileage</th>
+                                    <th>Availability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="vehicle-info">
+                                            <img src="img/car thumbnail/car3@2x.png" alt="Vehicle" class="vehicle-image">
+                                            <div class="vehicle-details">
+                                                2017 Chevrolet Colorado Extended Cab
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>482</td>
+                                    <td>$23,450</td>
+                                    <td>45,231 mi</td>
+                                    <td>
+                                        <div class="availability high">
+                                            High availability
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="vehicle-info">
+                                            <img src="img/car thumbnail/car1@2x.png" alt="Vehicle" class="vehicle-image">
+                                            <div class="vehicle-details">
+                                                2019 Nissan Sentra SV
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>351</td>
+                                    <td>$18,900</td>
+                                    <td>32,100 mi</td>
+                                    <td>
+                                        <div class="availability medium">
+                                            Medium availability
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="vehicle-info">
+                                            <img src="img/car thumbnail/car2@2x.png" alt="Vehicle" class="vehicle-image">
+                                            <div class="vehicle-details">
+                                                2018 Honda HR-V EX
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>298</td>
+                                    <td>$21,750</td>
+                                    <td>38,900 mi</td>
+                                    <td>
+                                        <div class="availability high">
+                                            High availability
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="see-all">
+                        <a href="#">See all vehicles</a>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row Panels -->
+                <div class="panels-grid">
+                    <!-- Price vs. Search Chart -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Price vs. Search</h3>
+                                                    </div>
+                        <div class="chart-container">
+                            <canvas id="priceVsSearchChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Max Mileage Chart -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Max mileage</h3>
+                                                    </div>
+                        <div class="chart-container">
+                            <canvas id="maxMileageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/market.js"></script>
+</body>
+</html>

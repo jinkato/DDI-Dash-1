@@ -69,7 +69,7 @@ const dealerDatabase = [
         brands: ["Toyota", "Volvo"],
         logoColor: "#000000",
         lastActivity: "2024-10-21",
-        isSelected: false,
+        isSelected: true,
         inventoryData: {
             'Compact': { thisLocation: 3, avgCompetitor: 5 },
             'Sedans': { thisLocation: 8, avgCompetitor: 8 },
@@ -437,9 +437,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load saved selections from localStorage
     if (typeof appState !== 'undefined') {
         const savedIds = appState.selectedDealerIds;
-        dealersData.forEach(dealer => {
-            dealer.isSelected = savedIds.includes(dealer.id);
-        });
+        // Only override if there are saved selections
+        if (savedIds && savedIds.length > 0) {
+            dealersData.forEach(dealer => {
+                dealer.isSelected = savedIds.includes(dealer.id);
+            });
+        } else {
+            // No saved selections, update appState with default preselected dealers
+            const preselectedIds = dealersData
+                .filter(dealer => dealer.isSelected)
+                .map(dealer => dealer.id);
+            appState.saveSelectedDealers(preselectedIds);
+        }
     }
     
     // Initialize event listeners
@@ -507,7 +516,7 @@ function createTableRow(dealer) {
                     ${logoContent}
                 </div>
                 <div class="dealer-details">
-                    <h3>${dealer.name}</h3>
+                    <h3>${dealer.name}${dealer.id <= 3 ? `<span class="${dealer.isSelected ? 'preselected' : 'recommended'}-pill">${dealer.isSelected ? 'Preselected' : 'Recommended'}</span>` : ''}</h3>
                     <p>${dealer.distance} mi</p>
                 </div>
             </div>
@@ -653,6 +662,23 @@ function toggleSelection(button) {
         // Update localStorage through app state
         if (typeof appState !== 'undefined') {
             appState.toggleDealerSelection(dealerId, dealer.isSelected);
+        }
+        
+        // For the first 3 dealers, update the pill when selection changes
+        if (dealerId <= 3) {
+            const row = button.closest('tr');
+            const dealerDetailsH3 = row.querySelector('.dealer-details h3');
+            const pillSpan = dealerDetailsH3.querySelector('span');
+            
+            if (pillSpan) {
+                if (dealer.isSelected) {
+                    pillSpan.className = 'preselected-pill';
+                    pillSpan.textContent = 'Preselected';
+                } else {
+                    pillSpan.className = 'recommended-pill';
+                    pillSpan.textContent = 'Recommended';
+                }
+            }
         }
     }
 }

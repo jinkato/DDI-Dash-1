@@ -368,7 +368,7 @@ body.detail-panel-open .tab-navigation {
 }
 
 body.detail-panel-open .content {
-    margin-right: 540px;
+    margin-right: 520px;
     gap: 0; /* Remove gap when filter panel is hidden */
 }
 

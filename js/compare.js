@@ -1,6 +1,6 @@
 // Compare Page Logic
 
-// Dealer data (same as in competitors.js)
+// Import dealer data with all properties
 const dealerDatabase = [
     {
         id: 1,
@@ -12,7 +12,23 @@ const dealerDatabase = [
         franchiseType: "Franchise",
         brands: ["Volvo"],
         logoColor: "#1B365D",
-        lastActivity: "2024-10-20"
+        lastActivity: "2024-10-20",
+        isSelected: true,
+        inventoryData: {
+            'Compact': { thisLocation: 2, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 6, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 12, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 8, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 18, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 8 },
+            'Good deal': { percent: 15 },
+            'Fair deal': { percent: 42 },
+            'High priced': { percent: 20 },
+            'Over priced': { percent: 10 },
+            'Uncertain': { percent: 5 }
+        }
     },
     {
         id: 2,
@@ -24,7 +40,23 @@ const dealerDatabase = [
         franchiseType: "Franchise",
         brands: ["Toyota"],
         logoColor: "#EB0A1E",
-        lastActivity: "2024-10-19"
+        lastActivity: "2024-10-19",
+        isSelected: true,
+        inventoryData: {
+            'Compact': { thisLocation: 4, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 10, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 15, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 12, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 5, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 12 },
+            'Good deal': { percent: 18 },
+            'Fair deal': { percent: 35 },
+            'High priced': { percent: 22 },
+            'Over priced': { percent: 8 },
+            'Uncertain': { percent: 5 }
+        }
     },
     {
         id: 3,
@@ -36,7 +68,23 @@ const dealerDatabase = [
         franchiseType: "Franchise",
         brands: ["Toyota", "Volvo"],
         logoColor: "#000000",
-        lastActivity: "2024-10-21"
+        lastActivity: "2024-10-21",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 3, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 8, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 11, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 14, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 15, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 6 },
+            'Good deal': { percent: 14 },
+            'Fair deal': { percent: 40 },
+            'High priced': { percent: 25 },
+            'Over priced': { percent: 12 },
+            'Uncertain': { percent: 3 }
+        }
     },
     {
         id: 4,
@@ -48,7 +96,23 @@ const dealerDatabase = [
         franchiseType: "Independent",
         brands: ["Multi-brand"],
         logoColor: "#2B4C8C",
-        lastActivity: "2024-10-18"
+        lastActivity: "2024-10-18",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 5, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 7, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 9, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 10, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 8, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 10 },
+            'Good deal': { percent: 20 },
+            'Fair deal': { percent: 38 },
+            'High priced': { percent: 18 },
+            'Over priced': { percent: 10 },
+            'Uncertain': { percent: 4 }
+        }
     },
     {
         id: 5,
@@ -60,7 +124,23 @@ const dealerDatabase = [
         franchiseType: "Franchise",
         brands: ["Volvo"],
         logoColor: "#1B365D",
-        lastActivity: "2024-10-17"
+        lastActivity: "2024-10-17",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 1, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 5, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 13, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 7, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 20, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 7 },
+            'Good deal': { percent: 13 },
+            'Fair deal': { percent: 45 },
+            'High priced': { percent: 22 },
+            'Over priced': { percent: 9 },
+            'Uncertain': { percent: 4 }
+        }
     },
     {
         id: 6,
@@ -72,7 +152,23 @@ const dealerDatabase = [
         franchiseType: "Independent",
         brands: ["Multi-brand"],
         logoColor: "#333333",
-        lastActivity: "2024-10-16"
+        lastActivity: "2024-10-16",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 8, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 12, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 6, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 4, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 3, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 15 },
+            'Good deal': { percent: 25 },
+            'Fair deal': { percent: 32 },
+            'High priced': { percent: 18 },
+            'Over priced': { percent: 7 },
+            'Uncertain': { percent: 3 }
+        }
     },
     {
         id: 7,
@@ -84,7 +180,23 @@ const dealerDatabase = [
         franchiseType: "Franchise",
         brands: ["Nissan"],
         logoColor: "#C3002F",
-        lastActivity: "2024-10-20"
+        lastActivity: "2024-10-20",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 5, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 9, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 14, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 9, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 7, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 9 },
+            'Good deal': { percent: 16 },
+            'Fair deal': { percent: 38 },
+            'High priced': { percent: 24 },
+            'Over priced': { percent: 10 },
+            'Uncertain': { percent: 3 }
+        }
     },
     {
         id: 8,
@@ -96,7 +208,23 @@ const dealerDatabase = [
         franchiseType: "Independent",
         brands: ["Luxury", "Multi-brand"],
         logoColor: "#1A1A1A",
-        lastActivity: "2024-10-15"
+        lastActivity: "2024-10-15",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 2, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 3, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 8, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 4, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 25, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 5 },
+            'Good deal': { percent: 10 },
+            'Fair deal': { percent: 30 },
+            'High priced': { percent: 35 },
+            'Over priced': { percent: 15 },
+            'Uncertain': { percent: 5 }
+        }
     },
     {
         id: 9,
@@ -108,7 +236,23 @@ const dealerDatabase = [
         franchiseType: "Independent",
         brands: ["Multi-brand"],
         logoColor: "#2B4C8C",
-        lastActivity: "2024-10-14"
+        lastActivity: "2024-10-14",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 6, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 9, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 10, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 11, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 9, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 12 },
+            'Good deal': { percent: 21 },
+            'Fair deal': { percent: 37 },
+            'High priced': { percent: 20 },
+            'Over priced': { percent: 7 },
+            'Uncertain': { percent: 3 }
+        }
     },
     {
         id: 10,
@@ -120,7 +264,23 @@ const dealerDatabase = [
         franchiseType: "Independent",
         brands: ["Multi-brand"],
         logoColor: "#FF8C00",
-        lastActivity: "2024-10-19"
+        lastActivity: "2024-10-19",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 7, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 10, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 9, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 13, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 6, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 14 },
+            'Good deal': { percent: 24 },
+            'Fair deal': { percent: 35 },
+            'High priced': { percent: 18 },
+            'Over priced': { percent: 6 },
+            'Uncertain': { percent: 3 }
+        }
     },
     {
         id: 11,
@@ -132,7 +292,23 @@ const dealerDatabase = [
         franchiseType: "Franchise",
         brands: ["Toyota"],
         logoColor: "#EB0A1E",
-        lastActivity: "2024-10-28"
+        lastActivity: "2024-10-28",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 6, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 11, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 16, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 14, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 4, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 11 },
+            'Good deal': { percent: 19 },
+            'Fair deal': { percent: 36 },
+            'High priced': { percent: 23 },
+            'Over priced': { percent: 8 },
+            'Uncertain': { percent: 3 }
+        }
     },
     {
         id: 12,
@@ -144,7 +320,23 @@ const dealerDatabase = [
         franchiseType: "Independent",
         brands: ["Multi-brand", "Luxury"],
         logoColor: "#4B0082",
-        lastActivity: "2024-10-21"
+        lastActivity: "2024-10-21",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 3, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 4, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 7, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 3, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 22, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 6 },
+            'Good deal': { percent: 11 },
+            'Fair deal': { percent: 33 },
+            'High priced': { percent: 32 },
+            'Over priced': { percent: 13 },
+            'Uncertain': { percent: 5 }
+        }
     },
     {
         id: 13,
@@ -156,7 +348,23 @@ const dealerDatabase = [
         franchiseType: "Franchise",
         brands: ["Honda"],
         logoColor: "#0088CC",
-        lastActivity: "2024-10-20"
+        lastActivity: "2024-10-20",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 7, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 12, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 17, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 11, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 6, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 13 },
+            'Good deal': { percent: 22 },
+            'Fair deal': { percent: 40 },
+            'High priced': { percent: 17 },
+            'Over priced': { percent: 6 },
+            'Uncertain': { percent: 2 }
+        }
     },
     {
         id: 14,
@@ -168,7 +376,23 @@ const dealerDatabase = [
         franchiseType: "Franchise",
         brands: ["Nissan"],
         logoColor: "#C3002F",
-        lastActivity: "2024-10-15"
+        lastActivity: "2024-10-15",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 4, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 8, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 13, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 8, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 5, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 8 },
+            'Good deal': { percent: 15 },
+            'Fair deal': { percent: 38 },
+            'High priced': { percent: 26 },
+            'Over priced': { percent: 10 },
+            'Uncertain': { percent: 3 }
+        }
     },
     {
         id: 15,
@@ -180,7 +404,23 @@ const dealerDatabase = [
         franchiseType: "Independent",
         brands: ["Multi-brand"],
         logoColor: "#228B22",
-        lastActivity: "2024-09-22"
+        lastActivity: "2024-09-22",
+        isSelected: false,
+        inventoryData: {
+            'Compact': { thisLocation: 9, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 14, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 5, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 6, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 2, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 16 },
+            'Good deal': { percent: 28 },
+            'Fair deal': { percent: 33 },
+            'High priced': { percent: 16 },
+            'Over priced': { percent: 5 },
+            'Uncertain': { percent: 2 }
+        }
     }
 ];
 
@@ -191,7 +431,7 @@ let charts = {};
 document.addEventListener('DOMContentLoaded', function() {
     loadSelectedDealers();
     buildComparisonTable();
-    initializeCharts();
+    // Remove chart initialization as we won't need them for this design
 });
 
 // Load selected dealers from localStorage
@@ -210,182 +450,230 @@ function loadSelectedDealers() {
 
 // Build comparison table
 function buildComparisonTable() {
-    const headerRow = document.getElementById('compare-header-row');
     const tbody = document.getElementById('compare-tbody');
     
     // Clear existing content
-    headerRow.innerHTML = '<th class="metric-header">Metrics</th>';
     tbody.innerHTML = '';
     
-    // Add dealer columns to header
+    // Create header row with competitor logos
+    const competitorHeader = document.createElement('tr');
+    competitorHeader.className = 'competitor-header-row';
+    competitorHeader.innerHTML = '<th class="section-header"></th>'; // Empty cell for alignment
+    
     selectedDealers.forEach(dealer => {
         const th = document.createElement('th');
-        th.className = 'dealer-header';
+        th.className = 'competitor-cell';
         
-        // Use store logo if ID is 11 or less, otherwise use fallback
+        // Build logo content
         const logoContent = dealer.id <= 11 
-            ? `<img src="img/store_logo/store_${dealer.id}.png" srcset="img/store_logo/store_${dealer.id}@2x.png 2x" alt="${dealer.name}" style="width: 100%; height: 100%; object-fit: contain;">`
-            : `<div style="background-color: ${dealer.logoColor}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-                <span style="color: white; font-weight: bold;">${dealer.name.charAt(0)}</span>
+            ? `<img src="img/store_logo/store_${dealer.id}.png" srcset="img/store_logo/store_${dealer.id}@2x.png 2x" alt="${dealer.name}">`
+            : `<div class="logo-placeholder" style="background-color: ${dealer.logoColor};">
+                <span>${dealer.name.charAt(0)}</span>
               </div>`;
         
         th.innerHTML = `
-            <div class="dealer-header-content">
-                <div class="dealer-logo">
-                    ${logoContent}
-                </div>
-                <div class="dealer-name">${dealer.name}</div>
+            <div class="competitor-logo">
+                ${logoContent}
             </div>
+            <div class="competitor-name">${dealer.name}</div>
         `;
-        headerRow.appendChild(th);
+        competitorHeader.appendChild(th);
     });
+    tbody.appendChild(competitorHeader);
     
-    // Define metrics to compare
-    const metrics = [
-        { key: 'distance', label: 'Distance', format: (val) => `${val} mi` },
-        { key: 'inventory', label: 'Inventory', format: (val) => val },
-        { key: 'sessionsPercentage', label: '% of Sessions', format: (val) => `${val}%` },
-        { key: 'overlapSessions', label: 'Overlap Sessions', format: (val) => val },
-        { key: 'franchiseType', label: 'Franchise Type', format: (val) => val },
-        { key: 'brands', label: 'Brands', format: (val) => Array.isArray(val) ? val.join(', ') : val },
-        { key: 'lastActivity', label: 'Last Activity', format: (val) => new Date(val).toLocaleDateString() }
+    // Define sections with metrics
+    const sections = [
+        {
+            name: 'Performance',
+            metrics: [
+                { key: 'leadPerVehicle', label: 'Lead per vehicle', format: 'decimal' },
+                { key: 'srpToVdp', label: 'SRP to VDP conversion rate', format: 'percent' },
+                { key: 'turnTime', label: 'Turn time', format: 'days' },
+                { key: 'fairShare', label: 'Fair Share', format: 'decimal' }
+            ]
+        },
+        {
+            name: 'Store information',
+            metrics: [
+                { key: 'inventory', label: 'Inventory', format: 'number' },
+                { key: 'avgPrice', label: 'Average price', format: 'currency' },
+                { key: 'distance', label: 'Distance', format: 'distance' }
+            ]
+        },
+        {
+            name: 'Deal rating',
+            metrics: [
+                { key: 'greatDeal', label: '% in Great deal', format: 'percent' },
+                { key: 'goodDeal', label: '% in Good deal', format: 'percent' },
+                { key: 'fairDeal', label: '% in Fair deal', format: 'percent' },
+                { key: 'highPriced', label: '% in High-priced deal', format: 'percent' },
+                { key: 'overPriced', label: '% in Over-priced deal', format: 'percent' }
+            ]
+        },
+        {
+            name: 'Overlap by vehicle type',
+            metrics: [
+                { key: 'overlapCompact', label: 'Compact', format: 'percent' },
+                { key: 'overlapSedans', label: 'Sedans', format: 'percent' },
+                { key: 'overlapSuvCo', label: 'SUV/CO', format: 'percent' },
+                { key: 'overlapTrucks', label: 'Trucks', format: 'percent' },
+                { key: 'overlapLuxury', label: 'Luxury', format: 'percent' }
+            ]
+        },
+        {
+            name: 'Inventory',
+            metrics: [
+                { key: 'invCompact', label: 'Compact', format: 'percent' },
+                { key: 'invSedans', label: 'Sedans', format: 'percent' },
+                { key: 'invSuvCo', label: 'SUV/CO', format: 'percent' },
+                { key: 'invTrucks', label: 'Trucks', format: 'percent' },
+                { key: 'invLuxury', label: 'Luxury', format: 'percent' }
+            ]
+        }
     ];
     
-    // Add metric rows
-    metrics.forEach(metric => {
-        const tr = document.createElement('tr');
+    // Add sections and metrics
+    sections.forEach((section, sectionIndex) => {
+        // Add section header row
+        const sectionRow = document.createElement('tr');
+        sectionRow.className = 'section-row';
+        sectionRow.setAttribute('data-section', sectionIndex);
+        sectionRow.innerHTML = `
+            <td class="section-header" colspan="${selectedDealers.length + 1}">
+                <span class="section-name">${section.name}</span>
+                <span class="collapse-icon">▼</span>
+            </td>
+        `;
+        tbody.appendChild(sectionRow);
         
-        // Metric name cell
-        const metricCell = document.createElement('td');
-        metricCell.className = 'metric-name';
-        metricCell.textContent = metric.label;
-        tr.appendChild(metricCell);
-        
-        // Dealer value cells
-        selectedDealers.forEach(dealer => {
-            const td = document.createElement('td');
-            td.className = 'metric-value';
+        // Add metric rows for this section
+        section.metrics.forEach(metric => {
+            const metricRow = document.createElement('tr');
+            metricRow.className = 'metric-row';
+            metricRow.setAttribute('data-section', sectionIndex);
+            metricRow.innerHTML = `<td class="metric-label">${metric.label}</td>`;
             
-            // Highlight best values for numeric metrics
-            if (['inventory', 'sessionsPercentage', 'overlapSessions'].includes(metric.key)) {
-                const values = selectedDealers.map(d => d[metric.key]);
-                const maxValue = Math.max(...values);
-                if (dealer[metric.key] === maxValue) {
-                    td.classList.add('best-value');
+            selectedDealers.forEach((dealer, dealerIndex) => {
+                const td = document.createElement('td');
+                td.className = 'metric-value';
+                
+                // Get value based on metric key
+                let value = getMetricValue(dealer, metric.key, dealerIndex);
+                
+                // Format value based on type
+                switch (metric.format) {
+                    case 'percent':
+                        td.textContent = value !== 'N/A' ? `${value}%` : 'N/A';
+                        break;
+                    case 'currency':
+                        td.textContent = value !== 'N/A' ? `$${value.toLocaleString()}` : 'N/A';
+                        break;
+                    case 'decimal':
+                        td.textContent = value !== 'N/A' ? value.toFixed(1) : 'N/A';
+                        break;
+                    case 'days':
+                        td.textContent = value !== 'N/A' ? `${value} days` : 'N/A';
+                        break;
+                    case 'distance':
+                        td.textContent = value !== 'N/A' ? `${value} mi` : 'N/A';
+                        break;
+                    default:
+                        td.textContent = value !== 'N/A' ? value : 'N/A';
                 }
-            }
+                
+                metricRow.appendChild(td);
+            });
             
-            td.textContent = metric.format(dealer[metric.key]);
-            tr.appendChild(td);
+            tbody.appendChild(metricRow);
         });
-        
-        tbody.appendChild(tr);
     });
+    
+    // Add click handlers for collapsible sections
+    initializeCollapsibleSections();
 }
 
-// Initialize charts
-function initializeCharts() {
-    const chartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    };
+// Get metric value from dealer data
+function getMetricValue(dealer, key, dealerIndex) {
+    // Performance metrics
+    if (key === 'leadPerVehicle') {
+        const leadRates = { 1: 2.1, 2: 2.5, 3: 1.7, 4: 1.9, 5: 2.3, 6: 1.5, 7: 2.8, 8: 1.2, 9: 2.0, 10: 1.8, 11: 3.1, 12: 1.4, 13: 3.5, 14: 2.2, 15: 1.6 };
+        return leadRates[dealer.id] || 2.0;
+    }
+    if (key === 'srpToVdp') {
+        const conversionRates = { 1: 3.6, 2: 4.1, 3: 1.9, 4: 3.2, 5: 3.8, 6: 2.5, 7: 4.5, 8: 2.1, 9: 3.5, 10: 3.0, 11: 4.8, 12: 2.3, 13: 5.2, 14: 3.7, 15: 2.8 };
+        return conversionRates[dealer.id] || 3.5;
+    }
+    if (key === 'turnTime') {
+        const turnTimes = { 1: 43, 2: 39, 3: 48, 4: 36, 5: 41, 6: 53, 7: 37, 8: 49, 9: 40, 10: 45, 11: 35, 12: 51, 13: 33, 14: 42, 15: 47 };
+        return turnTimes[dealer.id] || 40;
+    }
+    if (key === 'fairShare') {
+        const fairShares = { 1: 1.5, 2: 0.8, 3: 1.2, 4: 1.1, 5: 1.3, 6: 0.7, 7: 0.9, 8: 0.6, 9: 1.0, 10: 0.9, 11: 1.4, 12: 0.8, 13: 1.6, 14: 1.0, 15: 0.6 };
+        return fairShares[dealer.id] || 1.0;
+    }
     
-    const colors = selectedDealers.map(d => d.logoColor);
-    const labels = selectedDealers.map(d => d.name);
+    // Store information
+    if (key === 'avgPrice') {
+        const prices = { 1: 24097, 2: 26230, 3: 29166, 4: 22500, 5: 25800, 6: 18900, 7: 27400, 8: 45600, 9: 21300, 10: 19800, 11: 28900, 12: 42000, 13: 31200, 14: 26700, 15: 17500 };
+        return prices[dealer.id] || 25000;
+    }
     
-    // Inventory Chart
-    charts.inventory = new Chart(document.getElementById('inventory-chart'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: selectedDealers.map(d => d.inventory),
-                backgroundColor: colors,
-                borderWidth: 0
-            }]
-        },
-        options: chartOptions
-    });
+    // Deal rating (from pricing data)
+    if (dealer.pricingData) {
+        if (key === 'greatDeal') return dealer.pricingData['Great deal'].percent;
+        if (key === 'goodDeal') return dealer.pricingData['Good deal'].percent;
+        if (key === 'fairDeal') return dealer.pricingData['Fair deal'].percent;
+        if (key === 'highPriced') return dealer.pricingData['High priced'].percent;
+        if (key === 'overPriced') return dealer.pricingData['Over priced'].percent;
+    }
     
-    // Sessions Chart
-    charts.sessions = new Chart(document.getElementById('sessions-chart'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: selectedDealers.map(d => d.sessionsPercentage),
-                backgroundColor: colors,
-                borderWidth: 0
-            }]
-        },
-        options: {
-            ...chartOptions,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return value + '%';
-                        }
-                    }
-                }
-            }
-        }
-    });
+    // Overlap by vehicle type (mock data)
+    if (key.startsWith('overlap')) {
+        // For simplicity, showing N/A for the first dealer (your store)
+        if (dealerIndex === 0) return 'N/A';
+        const overlaps = {
+            overlapCompact: { 2: 4.9, 3: 4.3, 4: 3.8, 5: 5.2, 6: 2.9, 7: 4.5, 8: 2.1, 9: 4.0, 10: 3.5, 11: 5.5, 12: 2.5, 13: 5.8, 14: 4.2, 15: 3.0 },
+            overlapSedans: { 2: 2.1, 3: 2.1, 4: 3.5, 5: 1.8, 6: 4.2, 7: 2.8, 8: 1.5, 9: 3.0, 10: 2.5, 11: 3.2, 12: 1.9, 13: 3.8, 14: 2.6, 15: 2.2 },
+            overlapSuvCo: { 2: 3.6, 3: 4.3, 4: 5.1, 5: 3.2, 6: 4.8, 7: 5.5, 8: 2.8, 9: 4.5, 10: 4.0, 11: 5.8, 12: 3.0, 13: 6.2, 14: 4.7, 15: 3.5 },
+            overlapTrucks: { 2: 1.0, 3: 2.1, 4: 3.2, 5: 0.8, 6: 2.5, 7: 3.8, 8: 0.5, 9: 2.8, 10: 3.5, 11: 4.2, 12: 0.8, 13: 4.5, 14: 3.0, 15: 1.5 },
+            overlapLuxury: { 2: 4.3, 3: 4.3, 4: 3.0, 5: 6.5, 6: 1.8, 7: 2.5, 8: 8.5, 9: 2.2, 10: 1.5, 11: 3.8, 12: 7.2, 13: 2.0, 14: 2.2, 15: 1.0 }
+        };
+        return overlaps[key][dealer.id] || 3.0;
+    }
     
-    // Overlap Chart
-    charts.overlap = new Chart(document.getElementById('overlap-chart'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: selectedDealers.map(d => d.overlapSessions),
-                backgroundColor: colors,
-                borderWidth: 0
-            }]
-        },
-        options: chartOptions
-    });
+    // Inventory percentages (from inventoryData)
+    if (dealer.inventoryData) {
+        if (key === 'invCompact') return dealer.inventoryData['Compact'].thisLocation;
+        if (key === 'invSedans') return dealer.inventoryData['Sedans'].thisLocation;
+        if (key === 'invSuvCo') return dealer.inventoryData['SUV/CO'].thisLocation;
+        if (key === 'invTrucks') return dealer.inventoryData['Trucks'].thisLocation;
+        if (key === 'invLuxury') return dealer.inventoryData['Luxury'].thisLocation;
+    }
+    
+    // Default dealer properties
+    return dealer[key] || 'N/A';
 }
 
-// Export to CSV
-function exportToCSV() {
-    let csv = 'Metric,' + selectedDealers.map(d => `"${d.name}"`).join(',') + '\n';
+// Initialize collapsible sections
+function initializeCollapsibleSections() {
+    const sectionRows = document.querySelectorAll('.section-row');
     
-    const metrics = [
-        { key: 'distance', label: 'Distance (mi)' },
-        { key: 'inventory', label: 'Inventory' },
-        { key: 'sessionsPercentage', label: '% of Sessions' },
-        { key: 'overlapSessions', label: 'Overlap Sessions' },
-        { key: 'franchiseType', label: 'Franchise Type' },
-        { key: 'brands', label: 'Brands' }
-    ];
-    
-    metrics.forEach(metric => {
-        csv += metric.label + ',';
-        csv += selectedDealers.map(d => {
-            const value = d[metric.key];
-            return Array.isArray(value) ? `"${value.join(', ')}"` : value;
-        }).join(',');
-        csv += '\n';
+    sectionRows.forEach(row => {
+        row.addEventListener('click', function() {
+            const sectionIndex = this.getAttribute('data-section');
+            const metricRows = document.querySelectorAll(`.metric-row[data-section="${sectionIndex}"]`);
+            const collapseIcon = this.querySelector('.collapse-icon');
+            
+            // Toggle collapsed state
+            this.classList.toggle('collapsed');
+            
+            // Toggle metric rows visibility
+            metricRows.forEach(metricRow => {
+                metricRow.classList.toggle('hidden');
+            });
+            
+            // Update collapse icon
+            collapseIcon.textContent = this.classList.contains('collapsed') ? '▶' : '▼';
+        });
     });
-    
-    // Download CSV
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'competitor-comparison.csv';
-    a.click();
-    window.URL.revokeObjectURL(url);
 }
