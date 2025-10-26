@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1300, initial-scale=1.0">
+    <title>Leads Analysis - CarGurus</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/competitors.css">
+    <link rel="stylesheet" href="styles/leads.css">
+    
+</head>
+<body>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <img src="img/logo.svg" alt="CarGurus" style="height: 19px;">
+            </div>
+            
+            <nav class="sidebar-nav">
+                <!-- Navigation content removed -->
+                <img src="img/sidenav.svg" alt="CarGurus" style="height: 656px;">
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dropdowns">
+                <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
+            </div>
+            <div class="header">
+                <h1>Competitive Performance Analysis</h1>
+            </div>
+            
+            <!-- Content -->
+            <div class="content">
+                <div class="leads-container">
+                    <!-- Timeline Scrubber -->
+                    <div class="timeline-scrubber">
+                        <div class="scrubber-header">
+                            <h3>Timeline</h3>
+                            <span id="currentMonthLabel">October 2024</span>
+                        </div>
+                        <div class="scrubber-controls">
+                            <div class="timeline-navigation">
+                                <button id="prevMonth" class="timeline-arrow" aria-label="Previous month">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M15 18l-6-6 6-6" />
+                                    </svg>
+                                </button>
+                                <div class="timeline-labels" id="timelineLabels">
+                                    <!-- Dynamic labels will be inserted here -->
+                                </div>
+                                <button id="nextMonth" class="timeline-arrow" aria-label="Next month">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 18l6-6-6-6" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-wrapper">
+                        <canvas id="competitiveBubbleChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Filter Panel -->
+                <div class="filter-panel">
+                    <h2>Filters</h2>
+                    
+                    <div class="filter-section">
+                        <label for="date-range">Date range</label>
+                        <select id="date-range" class="filter-select">
+                            <option value="All">All time</option>
+                            <option value="Last month">Last month</option>
+                            <option value="Last 3 months">Last 3 months</option>
+                            <option value="Last 6 month">Last 6 months</option>
+                            <option value="Last year">Last year</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="vehicle-condition">Vehicle condition</label>
+                        <select id="vehicle-condition" class="filter-select">
+                            <option value="All">All</option>
+                            <option value="New">New</option>
+                            <option value="Used">Used</option>
+                            <option value="CPO">CPO</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+        
+        <!-- Detail Panel -->
+        <div class="detail-panel" id="competitive-detail-panel">
+            <div class="detail-panel-header">
+                <div class="detail-dealer-header" id="competitive-detail-header">
+                    <!-- Dynamic header content -->
+                </div>
+                <button class="close-btn" onclick="closeCompetitiveDetailPanel()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="detail-panel-content" id="competitive-detail-content">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JavaScript Files -->
+    <script src="js/app.js"></script>
+    <script src="js/leads.js"></script>
+</body>
+</html>

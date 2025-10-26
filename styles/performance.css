@@ -1,0 +1,559 @@
+/* Performance Page Styles */
+
+/* Content Layout */
+.content {
+    padding: 12px 24px;
+}
+
+/* Performance Table */
+.performance-table-container {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #D8DBDE;
+    overflow: hidden;
+}
+
+.performance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Store Logo Row */
+.store-logo-row {
+    background-color: white;
+}
+
+.store-logo-row th {
+    padding: 20px 16px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: none;
+    border-right: 1px solid #E5E7EB;
+}
+
+.store-logo-row th:last-child {
+    border-right: none;
+}
+
+.store-logo-row th.empty-cell {
+    background-color: white;
+    width: 280px;
+}
+
+.store-logo, .competitor-logo {
+    width: 100px;
+    height: 75px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.store-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.competitor-logo img {
+    width: 53px;
+    height: 40px;
+    object-fit: contain;
+}
+
+/* Market Average Box */
+.market-avg-logo {
+    width: 100px;
+    height: 75px;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.market-avg-box {
+    width: 53px;
+    height: 40px;
+    background-color: #E5E7EB;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.logo-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.store-name, .competitor-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+}
+
+.metric-label-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.store-logo-cell, .competitor-logo-cell, .metric-logo-cell {
+    min-width: 120px;
+}
+
+/* Performance Header Row */
+.performance-header-row {
+    background-color: #F4F6F9;
+}
+
+.performance-header-row th {
+    padding: 12px 16px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #E5E7EB;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.performance-header-row th:last-child {
+    border-right: none;
+}
+
+.performance-header-row th.section-header {
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: #6B7280;
+    background-color: #F4F6F9;
+    width: 280px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.performance-header-row th.metric-header {
+    text-align: center;
+    min-width: 120px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+/* Table Rows */
+.performance-table tbody tr {
+    border-bottom: 1px solid #F3F4F6;
+    transition: background-color 0.2s ease;
+}
+
+.performance-table tbody tr.vehicle-type-row {
+    cursor: pointer;
+    font-weight: 500;
+    background-color: white;
+}
+
+.performance-table tbody tr.vehicle-type-row:hover {
+    background-color: #F9FAFB;
+}
+
+.performance-table tbody tr.vehicle-type-row.expanded {
+    background-color: #CCC;
+    /* border-bottom-color: #D1D5DB; */
+}
+
+.performance-table tbody tr.vehicle-type-row.expanded td:first-child {
+    background-color: #CCC;
+}
+
+.performance-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.performance-table td {
+    padding: 16px;
+    font-size: 14px;
+    color: #111827;
+    border-right: 1px solid #E5E7EB;
+}
+
+.performance-table td:last-child {
+    border-right: none;
+}
+
+/* Deal Rating Rows */
+.deal-rating-row {
+    background-color: #FAFBFC;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.deal-rating-row:hover {
+    background-color: #F3F5F8;
+}
+
+.deal-rating-row td:first-child {
+    background-color: #F3F5F8;
+}
+
+.deal-rating-cell {
+    padding-left: 56px !important;
+}
+
+/* Darker border for last deal rating row in expanded section */
+.deal-rating-row.last-deal-row {
+    border-bottom: 1px solid #CCC;
+    border-left: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+}
+
+.deal-rating-name {
+    font-size: 13px;
+    color: #4B5563;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.deal-rating-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Trend Chart Row */
+
+/* Vehicle Cell */
+.vehicle-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* First column styling */
+.performance-table tbody tr td:first-child {
+    background-color: #FAFBFC;
+    border-right: 1px solid #D1D5DB;
+}
+
+.expand-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.expand-icon svg {
+    width: 16px;
+    height: 16px;
+    color: #6B7280;
+}
+
+tr.vehicle-type-row.expanded .expand-icon {
+    transform: rotate(90deg);
+}
+
+.vehicle-name {
+    font-weight: 500;
+}
+
+/* Metric Cells */
+.metric-cell {
+    text-align: center;
+    font-family: 'DM Sans', monospace;
+}
+
+/* Metric Value Cells with Heat Map */
+.metric-value-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: help;
+}
+
+.warning-icon {
+    flex-shrink: 0;
+}
+
+/* Heat Map Colors for Leads per Vehicle (higher is better) */
+.metric-value-cell.excellent {
+    background-color: #0F9D58;  /* Deep green */
+    color: white;
+}
+
+.metric-value-cell.good {
+    background-color: #8BC34A;  /* Light green */
+    color: #1B5E20;
+}
+
+.metric-value-cell.average {
+    background-color: #FFEB3B;  /* Yellow */
+    color: #5D4037;
+}
+
+.metric-value-cell.below {
+    background-color: #FF9800;  /* Orange */
+    color: #3E2723;
+}
+
+.metric-value-cell.poor {
+    background-color: #F44336;  /* Red */
+    color: white;
+}
+
+/* Market Average Cells */
+.market-avg-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #E5E7EB;
+    color: #374151;
+    font-weight: 600;
+}
+
+/* Positive/Negative indicators */
+.metric-cell.positive {
+    color: #10B981;
+    font-weight: 600;
+}
+
+.metric-cell.negative {
+    color: #EF4444;
+    font-weight: 600;
+}
+
+/* Expanded Content */
+.expanded-content {
+    background-color: #F9FAFB;
+    border-top: 1px solid #E5E7EB;
+}
+
+.expanded-content td {
+    padding: 0;
+}
+
+.expanded-inner {
+    padding: 24px 32px;
+}
+
+/* Models Breakdown Table */
+.models-breakdown {
+    margin-bottom: 24px;
+}
+
+.models-breakdown h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 16px 0;
+}
+
+.models-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.models-table thead {
+    background-color: #F9FAFB;
+}
+
+.models-table th {
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.models-table th:not(:first-child) {
+    text-align: right;
+}
+
+.models-table td {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #111827;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.models-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Metrics Comparison */
+.metrics-comparison {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.metric-card {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.metric-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 12px 0;
+}
+
+.metric-values {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.metric-vs {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+/* Summary Grid */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.summary-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.summary-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.summary-value.positive {
+    color: #10B981;
+}
+
+.summary-value.negative {
+    color: #EF4444;
+}
+
+/* Chart Container */
+
+/* Tooltip */
+.performance-tooltip {
+    position: absolute;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    padding: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.performance-tooltip.visible {
+    opacity: 1;
+}
+
+.tooltip-content {
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .content {
+        padding: 12px;
+    }
+    
+    .performance-table-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 12px;
+    }
+    
+    .filter-panel {
+        padding: 16px;
+    }
+    
+    .filter-panel h2 {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+    
+    .performance-table {
+        font-size: 12px;
+    }
+    
+    .performance-table th,
+    .performance-table td {
+        padding: 8px;
+    }
+    
+    .vehicle-column {
+        width: 200px !important;
+    }
+    
+    .metric-column {
+        width: 80px !important;
+    }
+}

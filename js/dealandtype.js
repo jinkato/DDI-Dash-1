@@ -13,7 +13,33 @@ const marketData = [
             demographics: "Young professionals, household income $50-70k",
             behavior: "Quick decision makers, 1-2 week research period",
             priorities: ["Technology features", "Fuel economy", "Modern styling"],
-            metrics: "High lead conversion, low price sensitivity"
+            metrics: "High lead conversion, low price sensitivity",
+            performanceBreakdown: [
+                {
+                    percentage: 45,
+                    shopperType: "Tech-savvy millennials",
+                    shoppingBehavior: "Mobile-first, quick decisions, 3-5 day cycle",
+                    topPriorities: ["Latest tech features", "Fuel efficiency", "Modern design"],
+                    keyMetrics: "4.2 leads/vehicle, 68% mobile traffic",
+                    insight: "High conversion rate drives leads up"
+                },
+                {
+                    percentage: 30,
+                    shopperType: "Value seekers",
+                    shoppingBehavior: "Compare 3-4 options, research reviews, 1-2 week timeline",
+                    topPriorities: ["Best value for money", "Reliability scores", "Low ownership cost"],
+                    keyMetrics: "2.8 leads/vehicle, high email engagement",
+                    insight: "Moderate conversion with good follow-through"
+                },
+                {
+                    percentage: 25,
+                    shopperType: "First-time SUV buyers",
+                    shoppingBehavior: "Extensive research, need guidance, 3-4 week process",
+                    topPriorities: ["Safety ratings", "Cargo space", "Easy financing"],
+                    keyMetrics: "1.5 leads/vehicle, high dealer interaction",
+                    insight: "Lower initial conversion but high engagement"
+                }
+            ]
         }
     },
     {
@@ -39,7 +65,33 @@ const marketData = [
             demographics: "Budget-conscious families",
             behavior: "Price comparison focused, 4+ weeks research",
             priorities: ["Price", "Reliability", "Space"],
-            metrics: "High engagement, moderate conversion"
+            metrics: "High engagement, moderate conversion",
+            performanceBreakdown: [
+                {
+                    percentage: 50,
+                    shopperType: "Cautious researchers",
+                    shoppingBehavior: "Compare 8+ vehicles, read all reviews, 4-6 week process",
+                    topPriorities: ["Lowest price", "Detailed comparisons", "Warranty coverage"],
+                    keyMetrics: "0.8 leads/vehicle, high page views per session",
+                    insight: "Lower lead rate due to long research cycle"
+                },
+                {
+                    percentage: 35,
+                    shopperType: "Deal waiters",
+                    shoppingBehavior: "Set price alerts, monitor inventory, wait for incentives",
+                    topPriorities: ["Sales events", "End-of-year deals", "Trade-in value"],
+                    keyMetrics: "0.5 leads/vehicle baseline, 3.5 during sales",
+                    insight: "Spike in leads during promotions only"
+                },
+                {
+                    percentage: 15,
+                    shopperType: "Immediate need buyers",
+                    shoppingBehavior: "Need vehicle within 1 week, limited options",
+                    topPriorities: ["Availability", "Quick financing", "Any reasonable deal"],
+                    keyMetrics: "3.0 leads/vehicle, low loyalty",
+                    insight: "High urgency but low dealer loyalty"
+                }
+            ]
         }
     },
     {
@@ -147,7 +199,33 @@ const marketData = [
             demographics: "Contractors, rural households",
             behavior: "Feature focused, know what they want",
             priorities: ["Towing capacity", "Bed size", "4WD"],
-            metrics: "High intent, quick decisions"
+            metrics: "High intent, quick decisions",
+            performanceBreakdown: [
+                {
+                    percentage: 55,
+                    shopperType: "Work truck buyers",
+                    shoppingBehavior: "Spec requirements first, test towing capacity, 3-5 day decision",
+                    topPriorities: ["Towing capacity", "Payload rating", "Reliability history"],
+                    keyMetrics: "4.5 leads/vehicle, 82% close rate",
+                    insight: "Very high conversion drives strong lead rate"
+                },
+                {
+                    percentage: 30,
+                    shopperType: "Lifestyle truck buyers",
+                    shoppingBehavior: "Compare features and comfort, read owner reviews, 2 week process",
+                    topPriorities: ["Interior comfort", "Tech features", "Fuel economy"],
+                    keyMetrics: "2.2 leads/vehicle, weekend test drives",
+                    insight: "Good conversion after feature comparison"
+                },
+                {
+                    percentage: 15,
+                    shopperType: "Fleet buyers",
+                    shoppingBehavior: "Bulk pricing focus, negotiate hard, 3-4 week process",
+                    topPriorities: ["Volume discounts", "Warranty terms", "Service packages"],
+                    keyMetrics: "0.8 leads/vehicle, 5+ units per sale",
+                    insight: "Lower lead rate but higher volume potential"
+                }
+            ]
         }
     },
     {
@@ -214,7 +292,33 @@ const marketData = [
             demographics: "Young professionals, enthusiasts",
             behavior: "Emotion-driven, quick decisions",
             priorities: ["Performance", "Style", "Brand image"],
-            metrics: "High close rate, less price sensitive"
+            metrics: "High close rate, less price sensitive",
+            performanceBreakdown: [
+                {
+                    percentage: 60,
+                    shopperType: "Performance enthusiasts",
+                    shoppingBehavior: "Know exact specs, compare performance, 1 week decision",
+                    topPriorities: ["0-60 times", "Handling reviews", "Modification potential"],
+                    keyMetrics: "4.8 leads/vehicle, 72% test drive conversion",
+                    insight: "Very high conversion drives lead rate up"
+                },
+                {
+                    percentage: 25,
+                    shopperType: "Image buyers",
+                    shoppingBehavior: "Research brand prestige, check financing first, 2-3 week process",
+                    topPriorities: ["Brand reputation", "Visual appeal", "Monthly payment"],
+                    keyMetrics: "2.5 leads/vehicle, financing dependent",
+                    insight: "Good conversion when financing approved"
+                },
+                {
+                    percentage: 15,
+                    shopperType: "Dreamers",
+                    shoppingBehavior: "Browse frequently, save favorites, rarely contact",
+                    topPriorities: ["Dream car features", "Future possibilities", "Visual inspiration"],
+                    keyMetrics: "0.4 leads/vehicle, high engagement time",
+                    insight: "Low conversion but high engagement"
+                }
+            ]
         }
     },
     {
@@ -362,14 +466,14 @@ function initializeBubbleChart() {
         const y = dealRatings.indexOf(item.dealRating);
         
         // Scale bubble size to fit within cells
-        // Max radius should be about 30 pixels to fit comfortably in a cell
+        // Max radius should be about 45 pixels to fit comfortably in a cell (50% larger than 30)
         const maxVolume = Math.max(...marketData.map(d => d.volume));
         const minVolume = Math.min(...marketData.filter(d => d.volume > 0).map(d => d.volume));
-        const scaleFactor = 25 / Math.sqrt(maxVolume);
+        const scaleFactor = 37.5 / Math.sqrt(maxVolume); // 50% larger than 25
         
-        // Calculate radius with minimum size of 8 pixels
+        // Calculate radius with minimum size of 12 pixels (50% larger than 8)
         let radius = Math.sqrt(item.volume) * scaleFactor;
-        radius = Math.max(radius, 8); // Ensure minimum visibility
+        radius = Math.max(radius, 12); // Ensure minimum visibility
         
         return {
             x: x,
@@ -415,7 +519,7 @@ function initializeBubbleChart() {
                     const radius = element.options.radius;
                     
                     // Show label for all bubbles except the very smallest
-                    if (radius > 7) {
+                    if (radius > 10) {
                         ctx.save();
                         
                         // Set text properties based on bubble size
@@ -452,8 +556,8 @@ function initializeBubbleChart() {
                     // For border, always use full opacity
                     return 'rgba(7, 99, 211, 1)';
                 }),
-                borderWidth: 2,
-                hoverBorderWidth: 3,
+                borderWidth: 1,
+                hoverBorderWidth: 2,
                 hoverBackgroundColor: chartData.map(d => {
                     const color = getColor(d.originalData.leadsPerVehicle);
                     // For hover, increase alpha slightly (max 1.0)
@@ -579,7 +683,7 @@ function initializeBubbleChart() {
                 if (elements.length > 0) {
                     const index = elements[0].index;
                     const data = chartData[index].originalData;
-                    showInsightsModal(data);
+                    showDetailPanel(data);
                 }
             },
             onHover: function(event, elements) {
@@ -639,78 +743,131 @@ function addChartLegend() {
     chartContainer.appendChild(legendDiv);
 }
 
-function showInsightsModal(data) {
-    // Create modal HTML
-    const modalHtml = `
-        <div class="insights-modal" id="insightsModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>${data.vehicleType} - ${data.dealRating}</h2>
-                    <button class="close-btn" onclick="closeInsightsModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+function showDetailPanel(data) {
+    // Update header
+    const headerContent = `
+        <h2>${data.vehicleType} - ${data.dealRating}</h2>
+    `;
+    document.getElementById('detail-dealer-header').innerHTML = headerContent;
+    
+    // Update content with tabs
+    const content = `
+        <div class="detail-tabs">
+            <button class="detail-tab active" onclick="switchDetailTab(event, 'buyers')">Buyers</button>
+            <button class="detail-tab" onclick="switchDetailTab(event, 'vehicle')">Vehicle</button>
+        </div>
+        
+        <div id="buyers-tab-content" class="tab-content active">
+            ${data.insights.performanceBreakdown ? `
+            <div class="detail-section performance-breakdown">
+                <div class="breakdown-visual">
+                    <div class="stacked-bar">
+                        ${data.insights.performanceBreakdown.map((segment, index) => {
+                            const colors = ['#0763D3', '#3B82F6', '#93C5FD'];
+                            return `<div class="bar-segment" style="width: ${segment.percentage}%; background-color: ${colors[index]};" title="${segment.percentage}%"></div>`;
+                        }).join('')}
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div class="insight-section">
-                        <h3>Market Volume</h3>
-                        <p class="volume-stat">${data.volume} shoppers</p>
-                        <p class="performance-stat">Leads per Vehicle: ${data.leadsPerVehicle.toFixed(1)}</p>
-                    </div>
-                    
-                    <div class="insight-section">
-                        <h3>Demographics</h3>
-                        <p>${data.insights.demographics}</p>
-                    </div>
-                    
-                    <div class="insight-section">
-                        <h3>Shopping Behavior</h3>
-                        <p>${data.insights.behavior}</p>
-                    </div>
-                    
-                    <div class="insight-section">
-                        <h3>Top Priorities</h3>
-                        <ul>
-                            ${data.insights.priorities.map(p => `<li>${p}</li>`).join('')}
-                        </ul>
-                    </div>
-                    
-                    <div class="insight-section">
-                        <h3>Key Metrics</h3>
-                        <p>${data.insights.metrics}</p>
-                    </div>
+                
+                <div class="breakdown-list">
+                    ${data.insights.performanceBreakdown.map((segment, index) => {
+                        const colors = ['#0763D3', '#3B82F6', '#93C5FD'];
+                        return `
+                        <div class="breakdown-item">
+                            <div class="breakdown-header">
+                                <span class="breakdown-dot" style="background-color: ${colors[index]};"></span>
+                                <span class="breakdown-percentage">${segment.percentage}%</span>
+                                <span class="breakdown-type">${segment.shopperType}</span>
+                            </div>
+                            <div class="breakdown-details">
+                                <div class="breakdown-grid">
+                                    <div class="breakdown-field">
+                                        <span class="field-label">Shopping Behavior:</span>
+                                        <span class="field-value">${segment.shoppingBehavior}</span>
+                                    </div>
+                                    <div class="breakdown-field">
+                                        <span class="field-label">Top Priorities:</span>
+                                        <span class="field-value">${segment.topPriorities.join(', ')}</span>
+                                    </div>
+                                    <div class="breakdown-field">
+                                        <span class="field-label">Key Metrics:</span>
+                                        <span class="field-value">${segment.keyMetrics}</span>
+                                    </div>
+                                </div>
+                                <p class="breakdown-impact">→ ${segment.insight}</p>
+                            </div>
+                        </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+            ` : '<p style="color: #6B7280; text-align: center; padding: 40px;">No buyer breakdown data available for this segment.</p>'}
+        </div>
+        
+        <div id="vehicle-tab-content" class="tab-content">
+            <div class="detail-section">
+                <h3>Vehicle Type Analysis</h3>
+                <p style="color: #6B7280; font-size: 14px; line-height: 1.6;">
+                    Vehicle segment analysis for ${data.vehicleType} in the ${data.dealRating} category.
+                </p>
+                <!-- Placeholder for future vehicle-specific content -->
+                <div style="padding: 40px; text-align: center; color: #9CA3AF;">
+                    <p>Vehicle performance data coming soon...</p>
                 </div>
             </div>
         </div>
     `;
     
-    // Add modal to page
-    const modalContainer = document.createElement('div');
-    modalContainer.innerHTML = modalHtml;
-    document.body.appendChild(modalContainer);
+    // Update panel content
+    document.getElementById('detail-panel-content').innerHTML = content;
     
-    // Add click outside to close
-    const modal = document.getElementById('insightsModal');
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeInsightsModal();
-        }
-    });
+    // Show panel
+    openDetailPanel();
 }
 
-function closeInsightsModal() {
-    const modal = document.getElementById('insightsModal');
-    if (modal) {
-        modal.remove();
-    }
+// Open detail panel
+function openDetailPanel() {
+    const panel = document.getElementById('detail-panel');
+    const body = document.body;
+    
+    // Add active class to panel
+    panel.classList.add('active');
+    
+    // Add class to body to adjust layout
+    body.classList.add('detail-panel-open');
+}
+
+// Close detail panel  
+function closeDetailPanel() {
+    const panel = document.getElementById('detail-panel');
+    const body = document.body;
+    
+    // Remove active class from panel
+    panel.classList.remove('active');
+    
+    // Remove class from body
+    body.classList.remove('detail-panel-open');
+}
+
+// Switch between detail panel tabs
+window.switchDetailTab = function(event, tabName) {
+    // Remove active class from all tabs and content
+    const tabs = document.querySelectorAll('.detail-tab');
+    const contents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => tab.classList.remove('active'));
+    contents.forEach(content => content.classList.remove('active'));
+    
+    // Add active class to clicked tab and corresponding content
+    event.target.classList.add('active');
+    document.getElementById(`${tabName}-tab-content`).classList.add('active');
 }
 
 function setupEventListeners() {
-    // Close modal on escape key
+    // Close panel on escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            closeInsightsModal();
+            closeDetailPanel();
         }
     });
     

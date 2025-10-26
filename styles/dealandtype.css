@@ -1,5 +1,14 @@
 /* Deal & Type Analysis Page Styles */
 
+/* Add smooth transitions */
+.header {
+    transition: margin-right 0.3s ease;
+}
+
+.content {
+    transition: margin-right 0.3s ease;
+}
+
 /* Chart Container */
 .chart-container {
     flex: 1;
@@ -191,10 +200,211 @@
     color: #6b7280 !important;
 }
 
+/* Adjust layout when detail panel is open */
+body.detail-panel-open .header {
+    margin-right: 540px;
+    transition: margin-right 0.3s ease;
+}
+
+body.detail-panel-open .content {
+    margin-right: 540px;
+    transition: margin-right 0.3s ease;
+}
+
+/* Override detail-panel.css - Keep filter panel visible */
+body.detail-panel-open .filter-panel {
+    display: block !important;
+}
+
+/* Maintain the gap between chart and filter panel */
+body.detail-panel-open .content {
+    gap: 24px !important;
+}
+
+/* Detail Panel Tabs */
+.detail-tabs {
+    display: flex;
+    border-bottom: 1px solid #E5E7EB;
+    margin-bottom: 24px;
+}
+
+.detail-tab {
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6B7280;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.detail-tab:hover {
+    color: #374151;
+}
+
+.detail-tab.active {
+    color: #111827;
+    font-weight: 600;
+}
+
+.detail-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #0763D3;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Performance Breakdown Styles */
+.performance-breakdown h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 20px;
+}
+
+.breakdown-visual {
+    margin-bottom: 24px;
+}
+
+.stacked-bar {
+    width: 100%;
+    height: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.bar-segment {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.bar-segment:hover {
+    opacity: 0.8;
+}
+
+.breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.breakdown-item {
+    padding: 16px;
+    background-color: #F9FAFB;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.breakdown-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.breakdown-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.breakdown-percentage {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    min-width: 45px;
+}
+
+.breakdown-type {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+}
+
+.breakdown-details {
+    margin-left: 69px; /* Align with text after dot + percentage */
+}
+
+.breakdown-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.breakdown-field {
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.field-label {
+    font-weight: 600;
+    color: #374151;
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.field-value {
+    color: #6B7280;
+    flex: 1;
+}
+
+.breakdown-impact {
+    margin: 0;
+    font-size: 13px;
+    color: #059669;
+    font-weight: 600;
+    line-height: 1.4;
+    padding-top: 8px;
+    border-top: 1px solid #E5E7EB;
+}
+
 /* Responsive */
+@media (max-width: 1400px) {
+    body.detail-panel-open .header {
+        margin-right: 400px;
+    }
+    
+    body.detail-panel-open .content {
+        margin-right: 400px;
+    }
+}
+
 @media (max-width: 1200px) {
     .chart-wrapper {
         height: 400px;
+    }
+    
+    body.detail-panel-open .header {
+        margin-right: 0;
+    }
+    
+    body.detail-panel-open .content {
+        margin-right: 0;
     }
 }
 

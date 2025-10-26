@@ -1,0 +1,440 @@
+/* Why Page Styles */
+
+/* Content Layout */
+.content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 12px 24px;
+}
+
+/* Market Callout */
+.market-callout {
+    background-color: #EBF5FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: #1F2937;
+    font-weight: 500;
+}
+
+.callout-icon {
+    flex-shrink: 0;
+}
+
+/* Chart Section */
+.chart-section {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    padding: 24px;
+    margin-bottom: 32px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.chart-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 24px 0;
+    text-align: left;
+}
+
+.bar-chart-container {
+    height: 300px;
+    padding: 0 16px;
+}
+
+/* Performance Table */
+.table-section {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 2px;
+}
+
+.table-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    padding: 24px 24px 16px 24px;
+    text-align: left;
+}
+
+.performance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0;
+}
+
+.performance-table thead {
+    background-color: #F9FAFB;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.performance-table th {
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    text-align: left;
+}
+
+.performance-table th.vehicle-header {
+    width: 40%;
+}
+
+.performance-table th.month-header {
+    text-align: center;
+    width: 30%;
+}
+
+/* Table Rows */
+.performance-table tbody tr {
+    border-bottom: 1px solid #E2E2E2;
+}
+
+.performance-table tbody tr:hover.vehicle-row {
+    background-color: #F9FAFB;
+}
+
+.performance-table td {
+    padding: 0 0 0 16px;
+    font-size: 14px;
+    color: #111827;
+}
+
+/* Total Row */
+.total-row {
+    background-color: #F3F4F6;
+    font-weight: 600;
+    border-bottom: 1px solid #D1D5DB !important;
+}
+
+.total-cell {
+    padding: 16px 16px 16px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.total-metric {
+    font-weight: 600;
+    font-size: 15px;
+    color: #111827;
+}
+
+/* Vehicle Rows */
+.vehicle-row {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.vehicle-row.expanded {
+    background-color: #F9FAFB;
+    border: 2px solid #374151;
+    border-bottom: none;
+}
+
+.vehicle-row.expanded td {
+    font-weight: 600;
+}
+
+.vehicle-cell {
+    padding: 16px 16px 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+}
+
+.expand-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.expand-icon svg {
+    width: 12px;
+    height: 12px;
+    color: #6B7280;
+}
+
+.vehicle-row.expanded .expand-icon {
+    transform: rotate(90deg);
+}
+
+.metric-cell {
+    text-align: center;
+    padding: 16px;
+    font-family: 'DM Sans', monospace;
+    font-weight: 500;
+    height: 48px;
+}
+
+/* Deal Rating Rows */
+.deal-row {
+    background-color: #FAFBFC;
+    display: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-left: 2px solid #374151;
+    border-right: 2px solid #374151;
+}
+
+.deal-row:hover {
+    background-color: #F3F4F6;
+}
+
+.deal-cell {
+    padding: 12px 16px 12px 48px;
+    font-size: 13px;
+    color: #6B7280;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.deal-cell::before {
+    content: ".";
+    margin-right: 8px;
+    color: #FFF;
+}
+
+.deal-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.deal-row .metric-cell {
+    font-size: 13px;
+    color: #6B7280;
+    height: 40px;
+    padding: 12px 16px;
+}
+
+/* Trend Arrows */
+.trend-arrow {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+/* Change-based Cell Colors - Not applied to total row */
+.metric-cell.significant-increase:not(.total-metric) {
+    background-color: rgba(16, 185, 129, 0.7); /* Green with 70% opacity */
+    color: #065F46;
+    font-weight: 600;
+}
+
+.metric-cell.moderate-increase:not(.total-metric) {
+    background-color: rgba(16, 185, 129, 0.15); /* Green with 15% opacity */
+    color: #065F46;
+}
+
+.metric-cell.slight-increase:not(.total-metric) {
+    background-color: rgba(16, 185, 129, 0.05); /* Green with 5% opacity */
+    color: #111827;
+}
+
+.metric-cell.no-change:not(.total-metric) {
+    background-color: rgba(156, 163, 175, 0.02); /* Gray with 2% opacity */
+    color: #374151;
+}
+
+.metric-cell.slight-decrease:not(.total-metric) {
+    background-color: rgba(239, 68, 68, 0.05); /* Red with 5% opacity */
+    color: #111827;
+}
+
+.metric-cell.moderate-decrease:not(.total-metric) {
+    background-color: rgba(239, 68, 68, 0.15); /* Red with 15% opacity */
+    color: #991B1B;
+}
+
+.metric-cell.significant-decrease:not(.total-metric) {
+    background-color: rgba(239, 68, 68, 0.7); /* Red with 70% opacity */
+    color: #7F1D1D;
+    font-weight: 600;
+}
+
+/* Inventory Chart Styles */
+.inventory-chart-row {
+    background-color: #FAFBFC;
+    border-left: 2px solid #374151;
+    border-right: 2px solid #374151;
+    border-bottom: 2px solid #374151;
+}
+
+.inventory-chart-row td.inventory-chart-cell {
+    padding: 0px 24px;
+    position: relative;
+}
+
+.charts-row-container {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.charts-row-container.second-row {
+    padding-top: 0;
+}
+
+.inventory-charts-container {
+    flex: 1;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.market-trend-container {
+    flex: 1;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.leads-per-vehicle-container {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.inventory-charts-container h4,
+.market-trend-container h4,
+.leads-per-vehicle-container h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.market-trend-container canvas {
+    max-width: 100%;
+    height: 120px !important;
+    max-height: 120px;
+}
+
+.leads-per-vehicle-container canvas {
+    max-width: 100%;
+    height: 150px !important;
+    max-height: 150px;
+}
+
+.inventory-month-container {
+    margin-bottom: 12px;
+}
+
+.inventory-month-container:last-child {
+    margin-bottom: 0;
+}
+
+.month-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6B7280;
+    margin-bottom: 6px;
+}
+
+.inventory-bar {
+    height: 20px;
+    background-color: #F3F4F6;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.inventory-bar-segments {
+    display: flex;
+    height: 100%;
+}
+
+.inventory-segment {
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.inventory-segment:hover {
+    opacity: 0.8;
+}
+
+/* Inventory Tooltip */
+.inventory-tooltip {
+    position: fixed;
+    background: #1F2937;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+}
+
+.inventory-tooltip.visible {
+    opacity: 1;
+}
+
+.inventory-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #1F2937;
+}
+
+/* Detail Panel Adjustments */
+body.detail-panel-open .content {
+    margin-right: 540px;
+}
+
+body.detail-panel-open .chart-section,
+body.detail-panel-open .table-section {
+    transition: margin-right 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .content {
+        min-width: 1200px;
+        overflow-x: auto;
+    }
+}

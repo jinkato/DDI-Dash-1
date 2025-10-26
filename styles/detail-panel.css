@@ -12,6 +12,7 @@
     z-index: 1000;
     display: none; /* Hidden by default */
     flex-direction: column;
+    overflow-y: auto;
 }
 
 /* Panel Active State */
@@ -397,6 +398,206 @@ body.detail-panel-open .table-container {
     body.detail-panel-open .content {
         margin-right: 400px;
     }
+}
+
+/* Detail Chart Section */
+.detail-chart-section {
+    margin-top: 24px;
+    padding: 16px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+}
+
+.detail-chart-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 16px 0;
+}
+
+.detail-chart-section canvas {
+    max-width: 100%;
+    height: 180px;
+}
+
+/* Detail Metric Section */
+.detail-metric-section {
+    margin-top: 24px;
+}
+
+.detail-metric-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.metric-item {
+    background-color: #f9fafb;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.metric-item .metric-label {
+    display: block;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.metric-item .metric-value {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Detail Inventory Section */
+.detail-inventory-section {
+    margin-top: 24px;
+}
+
+.detail-inventory-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.inventory-breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.inventory-breakdown-table th {
+    background-color: #f9fafb;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.inventory-breakdown-table th:not(:first-child) {
+    text-align: center;
+}
+
+.inventory-breakdown-table td {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #111827;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.inventory-breakdown-table td:not(:first-child) {
+    text-align: center;
+}
+
+.inventory-breakdown-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.inventory-breakdown-table td:first-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.deal-icon-small {
+    width: 16px;
+    height: 16px;
+}
+
+/* Detail Market Section */
+.detail-market-section {
+    margin-top: 24px;
+    padding: 16px;
+    background-color: #ebf5ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+}
+
+.detail-market-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.market-analysis p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.market-trend {
+    color: #1f2937;
+}
+
+.performance-indicator {
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.performance-indicator.positive {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.performance-indicator.negative {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.performance-indicator.neutral {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.deal-specific {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* Detail Insights Section */
+.detail-insights {
+    margin-top: 24px;
+}
+
+.detail-insights h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.detail-insights ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.detail-insights li {
+    font-size: 14px;
+    color: #374151;
+    line-height: 1.6;
+    margin-bottom: 8px;
 }
 
 @media (max-width: 1200px) {

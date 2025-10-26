@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1300, initial-scale=1.0">
+    <title>Performance Analysis - CarGurus Dealer Analysis</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/performance.css">
+    
+</head>
+<body>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <img src="img/logo.svg" alt="CarGurus" style="height: 19px;">
+            </div>
+            
+            <nav class="sidebar-nav">
+                <!-- Navigation content removed -->
+                <img src="img/sidenav.svg" alt="CarGurus" style="height: 656px;">
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dropdowns">
+                <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
+            </div>
+            <div class="header">
+                <h1>Performance Analysis</h1>
+            </div>
+            
+            <!-- Main content area -->
+            <div class="content">
+                <!-- Performance Overview Table -->
+                <div class="performance-table-container">
+                    <table class="performance-table">
+                        <thead style="display: none;">
+                            <tr>
+                                <th>Vehicle Type</th>
+                                <th>Your current store</th>
+                                <th>Market Avg</th>
+                                <th>vs Last Month</th>
+                                <th>Valley Motors</th>
+                            </tr>
+                        </thead>
+                        <tbody id="performance-tbody">
+                            <!-- Table rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/performance.js"></script>
+    
+</body>
+</html>

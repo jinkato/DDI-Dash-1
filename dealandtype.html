@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="styles/sidebar.css">
     <link rel="stylesheet" href="styles/competitors.css">
     <link rel="stylesheet" href="styles/dealandtype.css">
+    <link rel="stylesheet" href="styles/detail-panel.css">
     
 </head>
 <body>
@@ -107,10 +108,47 @@
                         </div>
                         <a href="#" class="reset-link">Reset</a>
                     </div>
+
+                    <div class="filter-section">
+                        <label for="condition">Condition</label>
+                        <select id="condition" class="filter-select">
+                            <option>All</option>
+                            <option>New</option>
+                            <option>Used</option>
+                            <option>Certified Pre-Owned</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label>Mileage</label>
+                        <div class="range-inputs">
+                            <input type="number" class="range-input" placeholder="Min" id="mileage-min">
+                            <span class="range-separator">to</span>
+                            <input type="number" class="range-input" placeholder="Max" id="mileage-max">
+                        </div>
+                        <a href="#" class="reset-link">Reset</a>
+                    </div>
                 </div>
             </div>
             
         </main>
+        
+        <!-- Detail Panel -->
+        <div class="detail-panel" id="detail-panel">
+            <div class="detail-panel-header">
+                <div class="detail-dealer-header" id="detail-dealer-header">
+                    <!-- Dynamic header content -->
+                </div>
+                <button class="close-btn" onclick="closeDetailPanel()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="detail-panel-content" id="detail-panel-content">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
     </div>
 
     <!-- Chart.js Library -->
