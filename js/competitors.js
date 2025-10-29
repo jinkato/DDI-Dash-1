@@ -13,7 +13,7 @@ const dealerDatabase = [
         brands: ["Volvo"],
         logoColor: "#1B365D",
         lastActivity: "2024-10-20",
-        isSelected: true,
+        isSelected: false,
         inventoryData: {
             'Compact': { thisLocation: 2, avgCompetitor: 5 },
             'Sedans': { thisLocation: 6, avgCompetitor: 8 },
@@ -41,7 +41,7 @@ const dealerDatabase = [
         brands: ["Toyota"],
         logoColor: "#EB0A1E",
         lastActivity: "2024-10-19",
-        isSelected: true,
+        isSelected: false,
         inventoryData: {
             'Compact': { thisLocation: 4, avgCompetitor: 5 },
             'Sedans': { thisLocation: 10, avgCompetitor: 8 },
@@ -69,7 +69,7 @@ const dealerDatabase = [
         brands: ["Toyota", "Volvo"],
         logoColor: "#000000",
         lastActivity: "2024-10-21",
-        isSelected: true,
+        isSelected: false,
         inventoryData: {
             'Compact': { thisLocation: 3, avgCompetitor: 5 },
             'Sedans': { thisLocation: 8, avgCompetitor: 8 },
@@ -443,11 +443,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 dealer.isSelected = savedIds.includes(dealer.id);
             });
         } else {
-            // No saved selections, update appState with default preselected dealers
-            const preselectedIds = dealersData
-                .filter(dealer => dealer.isSelected)
-                .map(dealer => dealer.id);
-            appState.saveSelectedDealers(preselectedIds);
+            // No saved selections, set all dealers to unselected
+            dealersData.forEach(dealer => {
+                dealer.isSelected = false;
+            });
         }
     }
     
@@ -516,7 +515,7 @@ function createTableRow(dealer) {
                     ${logoContent}
                 </div>
                 <div class="dealer-details">
-                    <h3>${dealer.name}${dealer.id <= 3 ? `<span class="${dealer.isSelected ? 'preselected' : 'recommended'}-pill">${dealer.isSelected ? 'Preselected' : 'Recommended'}</span>` : ''}</h3>
+                    <h3>${dealer.name}</h3>
                     <p>${dealer.distance} mi</p>
                 </div>
             </div>
@@ -667,18 +666,7 @@ function toggleSelection(button) {
         // For the first 3 dealers, update the pill when selection changes
         if (dealerId <= 3) {
             const row = button.closest('tr');
-            const dealerDetailsH3 = row.querySelector('.dealer-details h3');
-            const pillSpan = dealerDetailsH3.querySelector('span');
-            
-            if (pillSpan) {
-                if (dealer.isSelected) {
-                    pillSpan.className = 'preselected-pill';
-                    pillSpan.textContent = 'Preselected';
-                } else {
-                    pillSpan.className = 'recommended-pill';
-                    pillSpan.textContent = 'Recommended';
-                }
-            }
+
         }
     }
 }
@@ -927,6 +915,13 @@ function closeDetailPanel() {
     
     // Remove class from body
     body.classList.remove('detail-panel-open');
+    
+    // Remove selected class from all rows
+    const allRows = document.querySelectorAll('.competitors-table tbody tr');
+    allRows.forEach(row => row.classList.remove('selected'));
+    
+    // Reset selectedRowId
+    selectedRowId = null;
 }
 
 // Initialize sort headers

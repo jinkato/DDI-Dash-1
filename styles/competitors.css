@@ -152,29 +152,7 @@
     color: #6b7280;
 }
 
-/* Preselected Pill */
-.preselected-pill {
-    display: inline-block;
-    padding: 2px 8px;
-    background-color: #E4F5FE;
-    color: #0763D3;
-    font-size: 11px;
-    font-weight: 500;
-    border-radius: 12px;
-    white-space: nowrap;
-}
 
-/* Recommended Pill */
-.recommended-pill {
-    display: inline-block;
-    padding: 2px 8px;
-    background-color: #DCF7DD;
-    color: #078A0B;
-    font-size: 11px;
-    font-weight: 500;
-    border-radius: 12px;
-    white-space: nowrap;
-}
 
 /* Action Buttons Container */
 .action-buttons {

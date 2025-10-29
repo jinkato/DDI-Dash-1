@@ -177,15 +177,15 @@ function initializeCharts() {
         }
     });
 
-    // Max Mileage Chart
+    // VDP Views Chart
     const maxMileageCtx = document.getElementById('maxMileageChart').getContext('2d');
     new Chart(maxMileageCtx, {
         type: 'line',
         data: {
-            labels: ['< 30k', '30k-50k', '50k-70k', '70k-90k', '90k-110k', '> 110k'],
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             datasets: [{
-                label: 'Search volume',
-                data: [1200, 2100, 2800, 2400, 1600, 800],
+                label: 'VDP views',
+                data: [3200, 3500, 3800, 4100, 4500, 5200, 4800],
                 borderColor: '#3B82F6',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 borderWidth: 2,
@@ -214,7 +214,7 @@ function initializeCharts() {
                 y: {
                     title: {
                         display: true,
-                        text: 'Search volume',
+                        text: 'VDP views',
                         font: {
                             size: 12
                         }
@@ -246,7 +246,7 @@ function initializeCharts() {
                     },
                     callbacks: {
                         label: function(context) {
-                            return 'Searches: ' + context.formattedValue.toLocaleString();
+                            return 'VDP views: ' + context.formattedValue.toLocaleString();
                         }
                     }
                 }

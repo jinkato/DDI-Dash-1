@@ -436,15 +436,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Load selected dealers from localStorage
 function loadSelectedDealers() {
+    // Always include Toyota of Watertown (id: 2) as the user's dealership
+    const userDealership = dealerDatabase.find(dealer => dealer.id === 2);
+    
+    // Create CG Benchmark object
+    const cgBenchmark = {
+        id: 'benchmark',
+        name: 'CG Benchmark',
+        isBenchmark: true,
+        // Average benchmark data
+        inventoryData: {
+            'Compact': { thisLocation: 4, avgCompetitor: 5 },
+            'Sedans': { thisLocation: 8, avgCompetitor: 8 },
+            'SUV/CO': { thisLocation: 12, avgCompetitor: 9 },
+            'Trucks': { thisLocation: 11, avgCompetitor: 15 },
+            'Luxury': { thisLocation: 13, avgCompetitor: 12 }
+        },
+        pricingData: {
+            'Great deal': { percent: 9 },
+            'Good deal': { percent: 16 },
+            'Fair deal': { percent: 40 },
+            'High priced': { percent: 21 },
+            'Over priced': { percent: 10 },
+            'Uncertain': { percent: 4 }
+        }
+    };
+    
     const savedIds = localStorage.getItem('cargurusSelectedDealers');
     if (savedIds) {
         const ids = JSON.parse(savedIds);
-        selectedDealers = dealerDatabase.filter(dealer => ids.includes(dealer.id));
-    }
-    
-    if (selectedDealers.length === 0) {
-        // Redirect back if no dealers selected
-        window.location.href = 'index.html';
+        // Filter out the user's dealership from selected dealers to avoid duplicates
+        const otherDealers = dealerDatabase.filter(dealer => ids.includes(dealer.id) && dealer.id !== 2);
+        
+        // Always put user's dealership first, then benchmark, then other dealers
+        selectedDealers = [userDealership, cgBenchmark, ...otherDealers];
+    } else {
+        // If no dealers selected, show user's dealership and benchmark
+        selectedDealers = [userDealership, cgBenchmark];
     }
 }
 
@@ -465,11 +493,17 @@ function buildComparisonTable() {
         th.className = 'competitor-cell';
         
         // Build logo content
-        const logoContent = dealer.id <= 11 
-            ? `<img src="img/store_logo/store_${dealer.id}.png" srcset="img/store_logo/store_${dealer.id}@2x.png 2x" alt="${dealer.name}">`
-            : `<div class="logo-placeholder" style="background-color: ${dealer.logoColor};">
+        let logoContent;
+        if (dealer.isBenchmark) {
+            // Use benchmark image for CG Benchmark
+            logoContent = `<img src="img/store_logo/benchmark.png" srcset="img/store_logo/benchmark@2x.png 2x" alt="${dealer.name}">`;
+        } else if (dealer.id <= 11) {
+            logoContent = `<img src="img/store_logo/store_${dealer.id}.png" srcset="img/store_logo/store_${dealer.id}@2x.png 2x" alt="${dealer.name}">`;
+        } else {
+            logoContent = `<div class="logo-placeholder" style="background-color: ${dealer.logoColor};">
                 <span>${dealer.name.charAt(0)}</span>
               </div>`;
+        }
         
         th.innerHTML = `
             <div class="competitor-logo">
@@ -489,7 +523,8 @@ function buildComparisonTable() {
                 { key: 'leadPerVehicle', label: 'Lead per vehicle', format: 'decimal' },
                 { key: 'srpToVdp', label: 'SRP to VDP conversion rate', format: 'percent' },
                 { key: 'turnTime', label: 'Turn time', format: 'days' },
-                { key: 'fairShare', label: 'Fair Share', format: 'decimal' }
+                { key: 'fairShare', label: 'Fair Share', format: 'decimal' },
+                { key: 'vdpPerVehicle', label: 'VDP per vehicle', format: 'decimal' }
             ]
         },
         {
@@ -523,6 +558,7 @@ function buildComparisonTable() {
         {
             name: 'Inventory',
             metrics: [
+                { key: 'radarChart', label: 'Inventory Distribution', format: 'chart' },
                 { key: 'invCompact', label: 'Compact', format: 'percent' },
                 { key: 'invSedans', label: 'Sedans', format: 'percent' },
                 { key: 'invSuvCo', label: 'SUV/CO', format: 'percent' },
@@ -551,40 +587,84 @@ function buildComparisonTable() {
             const metricRow = document.createElement('tr');
             metricRow.className = 'metric-row';
             metricRow.setAttribute('data-section', sectionIndex);
-            metricRow.innerHTML = `<td class="metric-label">${metric.label}</td>`;
             
-            selectedDealers.forEach((dealer, dealerIndex) => {
-                const td = document.createElement('td');
-                td.className = 'metric-value';
+            if (metric.key === 'radarChart' && section.name === 'Inventory') {
+                // Special handling for radar chart row - create separate chart for each dealer
+                metricRow.innerHTML = `<td class="metric-label">${metric.label}</td>`;
                 
-                // Get value based on metric key
-                let value = getMetricValue(dealer, metric.key, dealerIndex);
+                // Create a separate cell with radar chart for each dealer
+                selectedDealers.forEach((dealer, dealerIndex) => {
+                    const td = document.createElement('td');
+                    td.className = 'radar-chart-cell';
+                    
+                    // Create canvas for radar chart
+                    const canvas = document.createElement('canvas');
+                    canvas.id = `inventoryRadarChart-${dealerIndex}`;
+                    canvas.width = 300;
+                    canvas.height = 250;
+                    td.appendChild(canvas);
+                    
+                    metricRow.appendChild(td);
+                });
                 
-                // Format value based on type
-                switch (metric.format) {
-                    case 'percent':
-                        td.textContent = value !== 'N/A' ? `${value}%` : 'N/A';
-                        break;
-                    case 'currency':
-                        td.textContent = value !== 'N/A' ? `$${value.toLocaleString()}` : 'N/A';
-                        break;
-                    case 'decimal':
-                        td.textContent = value !== 'N/A' ? value.toFixed(1) : 'N/A';
-                        break;
-                    case 'days':
-                        td.textContent = value !== 'N/A' ? `${value} days` : 'N/A';
-                        break;
-                    case 'distance':
-                        td.textContent = value !== 'N/A' ? `${value} mi` : 'N/A';
-                        break;
-                    default:
-                        td.textContent = value !== 'N/A' ? value : 'N/A';
-                }
+                tbody.appendChild(metricRow);
                 
-                metricRow.appendChild(td);
-            });
-            
-            tbody.appendChild(metricRow);
+                // Create individual radar charts after DOM is ready
+                setTimeout(() => {
+                    selectedDealers.forEach((dealer, dealerIndex) => {
+                        createRadarChart(dealer, dealerIndex);
+                    });
+                }, 100);
+            } else {
+                // Normal metric rows
+                metricRow.innerHTML = `<td class="metric-label">${metric.label}</td>`;
+                
+                selectedDealers.forEach((dealer, dealerIndex) => {
+                    const td = document.createElement('td');
+                    td.className = 'metric-value';
+                    
+                    // Get value based on metric key
+                    let value = getMetricValue(dealer, metric.key, dealerIndex);
+                    
+                    // Format value based on type
+                    switch (metric.format) {
+                        case 'percent':
+                            td.textContent = value !== 'N/A' ? `${value}%` : 'N/A';
+                            break;
+                        case 'currency':
+                            td.textContent = value !== 'N/A' ? `$${value.toLocaleString()}` : 'N/A';
+                            break;
+                        case 'decimal':
+                            // Special handling for VDP per vehicle with benchmark tooltip
+                            if (metric.key === 'vdpPerVehicle' && dealer.isBenchmark) {
+                                td.innerHTML = `
+                                    <span class="metric-with-tooltip">
+                                        ${value.toFixed(1)}
+                                        <span class="tooltip-icon">
+                                            <img src="img/info_icon.svg" alt="Info" />
+                                            <span class="tooltip-text">78% of the dealers with higher VDP per vehicle is using Highlight.</span>
+                                        </span>
+                                    </span>
+                                `;
+                            } else {
+                                td.textContent = value !== 'N/A' ? value.toFixed(1) : 'N/A';
+                            }
+                            break;
+                        case 'days':
+                            td.textContent = value !== 'N/A' ? `${value} days` : 'N/A';
+                            break;
+                        case 'distance':
+                            td.textContent = value !== 'N/A' ? `${value} mi` : 'N/A';
+                            break;
+                        default:
+                            td.textContent = value !== 'N/A' ? value : 'N/A';
+                    }
+                    
+                    metricRow.appendChild(td);
+                });
+                
+                tbody.appendChild(metricRow);
+            }
         });
     });
     
@@ -610,6 +690,12 @@ function getMetricValue(dealer, key, dealerIndex) {
     if (key === 'fairShare') {
         const fairShares = { 1: 1.5, 2: 0.8, 3: 1.2, 4: 1.1, 5: 1.3, 6: 0.7, 7: 0.9, 8: 0.6, 9: 1.0, 10: 0.9, 11: 1.4, 12: 0.8, 13: 1.6, 14: 1.0, 15: 0.6 };
         return fairShares[dealer.id] || 1.0;
+    }
+    if (key === 'vdpPerVehicle') {
+        // Handle benchmark separately
+        if (dealer.isBenchmark) return 12.5;
+        const vdpRates = { 1: 15.2, 2: 13.8, 3: 11.5, 4: 14.3, 5: 12.9, 6: 10.2, 7: 16.1, 8: 9.8, 9: 13.5, 10: 12.1, 11: 17.4, 12: 10.5, 13: 18.2, 14: 14.7, 15: 11.3 };
+        return vdpRates[dealer.id] || 13.0;
     }
     
     // Store information
@@ -675,5 +761,102 @@ function initializeCollapsibleSections() {
             // Update collapse icon
             collapseIcon.textContent = this.classList.contains('collapsed') ? '▶' : '▼';
         });
+    });
+}
+
+// Create radar chart for inventory distribution
+function createRadarChart(dealer, dealerIndex) {
+    const canvas = document.getElementById(`inventoryRadarChart-${dealerIndex}`);
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    // Prepare data for the dealer
+    const inventoryData = dealer.inventoryData;
+    const data = [
+        inventoryData['Compact'].thisLocation,
+        inventoryData['Sedans'].thisLocation,
+        inventoryData['SUV/CO'].thisLocation,
+        inventoryData['Trucks'].thisLocation,
+        inventoryData['Luxury'].thisLocation
+    ];
+    
+    // Color schemes for different dealers
+    const colors = [
+        { border: '#EF4444', background: 'rgba(239, 68, 68, 0.2)' },
+        { border: '#3B82F6', background: 'rgba(59, 130, 246, 0.2)' },
+        { border: '#8B5CF6', background: 'rgba(139, 92, 246, 0.2)' }
+    ];
+    
+    const colorScheme = colors[dealerIndex % colors.length];
+    
+    // Create the radar chart
+    new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['Compact', 'Sedans', 'SUV/CO', 'Trucks', 'Luxury'],
+            datasets: [{
+                label: dealer.name,
+                data: data,
+                borderColor: colorScheme.border,
+                backgroundColor: colorScheme.background,
+                borderWidth: 2,
+                pointBackgroundColor: colorScheme.border,
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: colorScheme.border,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false  // Hide legend since we only have one dataset per chart
+                },
+                tooltip: {
+                    backgroundColor: 'white',
+                    titleColor: '#111827',
+                    bodyColor: '#374151',
+                    borderColor: '#E5E7EB',
+                    borderWidth: 1,
+                    cornerRadius: 6,
+                    padding: 12,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.r + '%';
+                        }
+                    }
+                }
+            },
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#E5E7EB'
+                    },
+                    pointLabels: {
+                        font: {
+                            size: 11,
+                            family: "'DM Sans', sans-serif"
+                        },
+                        color: '#374151'
+                    },
+                    ticks: {
+                        stepSize: 5,
+                        font: {
+                            size: 9
+                        },
+                        color: '#9CA3AF',
+                        backdropColor: 'transparent'
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 25
+                }
+            }
+        }
     });
 }

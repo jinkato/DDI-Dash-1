@@ -10,7 +10,7 @@
 .filter-bar {
     display: flex;
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .filter-group {
@@ -38,7 +38,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .metric-card {
@@ -108,8 +108,8 @@
 .panels-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 24px;
+    gap: 16px;
+    margin-bottom: 16px;
     grid-auto-rows: minmax(400px, 1fr);
 }
 

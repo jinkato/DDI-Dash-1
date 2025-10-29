@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1300, initial-scale=1.0">
-    <title>Compare Competitors - CarGurus Dealer Analysis</title>
+    <title>User Segments - CarGurus Dealer Analysis</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/sidebar.css">
-    <link rel="stylesheet" href="styles/compare.css">
+    <link rel="stylesheet" href="styles/segment.css">
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -49,7 +49,32 @@
                 </button>
             </div>
             <div class="header">
-                <h1>Compare Competitors</h1>
+                <h1>User Segments</h1>
+            </div>
+            
+            <div class="segment-filters">
+                <div class="filter-group">
+                    <label for="vehicle-type-filter">Vehicle Type:</label>
+                    <select id="vehicle-type-filter" class="filter-dropdown">
+                        <option value="all">All Types</option>
+                        <option value="compact">Compact</option>
+                        <option value="sedans">Sedans</option>
+                        <option value="suv">SUV/Crossover</option>
+                        <option value="trucks">Trucks</option>
+                        <option value="luxury">Luxury</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="deal-rating-filter">Deal Rating:</label>
+                    <select id="deal-rating-filter" class="filter-dropdown">
+                        <option value="all">All Ratings</option>
+                        <option value="great">Great Deal</option>
+                        <option value="good">Good Deal</option>
+                        <option value="fair">Fair Deal</option>
+                        <option value="high">High Priced</option>
+                        <option value="over">Over Priced</option>
+                    </select>
+                </div>
             </div>
             
             <div class="compare-content">
@@ -72,6 +97,6 @@
     </div>
 
     <!-- JavaScript Files -->
-    <script src="js/compare.js"></script>
+    <script src="js/segment.js"></script>
 </body>
 </html>

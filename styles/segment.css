@@ -10,6 +10,54 @@
     height: 16px;
 }
 
+/* Segment Filters */
+.segment-filters {
+    padding: 0 24px 16px 24px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    white-space: nowrap;
+}
+
+.filter-dropdown {
+    padding: 8px 32px 8px 12px;
+    font-size: 14px;
+    color: #111827;
+    background-color: white;
+    border: 1px solid #D8DBDE;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    min-width: 160px;
+}
+
+.filter-dropdown:hover {
+    border-color: #9CA3AF;
+}
+
+.filter-dropdown:focus {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
 /* Compare Content */
 .compare-content {
     padding: 0 24px 24px 24px;
@@ -124,6 +172,133 @@
 
 .section-row.collapsed .collapse-icon {
     transform: rotate(-90deg);
+}
+
+/* Segment Description Row */
+.segment-description-row {
+    background-color: #F9FAFB;
+    border-bottom: 2px solid #D1D5DB;
+}
+
+.segment-description-label {
+    padding: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #111827;
+    border-right: 1px solid #e5e7eb;
+}
+
+.segment-description-cell {
+    padding: 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: #1F2937;
+    background-color: #F9FAFB;
+    border-bottom: 2px solid #D1D5DB;
+}
+
+/* Category Rows */
+.category-row {
+    cursor: pointer;
+    user-select: none;
+}
+
+.category-row:hover {
+    background-color: #f9fafb;
+}
+
+.category-header {
+    background-color: #F4F6F9;
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #111827;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.category-header-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.category-icon {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+}
+
+.category-row.collapsed .category-icon {
+    transform: rotate(-90deg);
+}
+
+/* Dealer/Segment Header */
+.dealer-header {
+    padding: 20px 16px;
+    text-align: center;
+    vertical-align: top;
+    border-bottom: 1px solid #e5e7eb;
+    min-width: 200px;
+}
+
+.dealer-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.dealer-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dealer-info {
+    text-align: center;
+}
+
+.dealer-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.dealer-details {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* Percentage Bar */
+.percentage-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.percentage-bar {
+    height: 8px;
+    background-color: #3B82F6;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.percentage-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: #111827;
+    min-width: 35px;
 }
 
 /* Metric Rows */
