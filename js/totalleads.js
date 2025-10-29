@@ -1,4 +1,4 @@
-// Why Page JavaScript
+// Total Leads Page JavaScript
 
 // Data structure
 const leadsData = {
@@ -15,30 +15,30 @@ const leadsData = {
         july2025: 320,
         august2025: 285,
         september2025: 292,
-        october2025: 270
+        october2025: 280
     },
     table: {
         compact: {
-            total: { july: 65, august: 58, september: 57, october: 53 },
-            greatDeal: { july: 25, august: 22, september: 21, october: 19 },
+            total: { july: 65, august: 58, september: 57, october: 55 },
+            greatDeal: { july: 25, august: 22, september: 21, october: 20 },
             goodDeal: { july: 18, august: 16, september: 16, october: 15 },
             fairDeal: { july: 12, august: 11, september: 12, october: 12 },
             highPriced: { july: 7, august: 6, september: 5, october: 5 },
-            overPriced: { july: 3, august: 3, september: 3, october: 2 }
+            overPriced: { july: 3, august: 3, september: 3, october: 3 }
         },
         sedans: {
-            total: { july: 70, august: 65, september: 63, october: 60 },
-            greatDeal: { july: 28, august: 26, september: 25, october: 23 },
+            total: { july: 70, august: 65, september: 63, october: 62 },
+            greatDeal: { july: 28, august: 26, september: 25, october: 24 },
             goodDeal: { july: 20, august: 18, september: 18, october: 17 },
             fairDeal: { july: 13, august: 12, september: 12, october: 12 },
             highPriced: { july: 6, august: 6, september: 6, october: 6 },
-            overPriced: { july: 3, august: 3, september: 2, october: 2 }
+            overPriced: { july: 3, august: 3, september: 2, october: 3 }
         },
         suvco: {
-            total: { july: 145, august: 130, september: 125, october: 115 },
-            greatDeal: { july: 60, august: 55, september: 52, october: 48 },
-            goodDeal: { july: 45, august: 40, september: 39, october: 36 },
-            fairDeal: { july: 25, august: 22, september: 21, october: 19 },
+            total: { july: 145, august: 130, september: 125, october: 120 },
+            greatDeal: { july: 60, august: 55, september: 52, october: 50 },
+            goodDeal: { july: 45, august: 40, september: 39, october: 38 },
+            fairDeal: { july: 25, august: 22, september: 21, october: 20 },
             highPriced: { july: 10, august: 9, september: 9, october: 8 },
             overPriced: { july: 5, august: 4, september: 4, october: 4 }
         },
@@ -51,10 +51,10 @@ const leadsData = {
             overPriced: { july: 1, august: 0, september: 1, october: 1 }
         },
         luxury: {
-            total: { july: 10, august: 10, september: 12, october: 14 },
+            total: { july: 10, august: 10, september: 12, october: 15 },
             greatDeal: { july: 4, august: 4, september: 5, october: 6 },
             goodDeal: { july: 3, august: 3, september: 4, october: 5 },
-            fairDeal: { july: 2, august: 2, september: 2, october: 2 },
+            fairDeal: { july: 2, august: 2, september: 2, october: 3 },
             highPriced: { july: 1, august: 1, september: 1, october: 1 },
             overPriced: { july: 0, august: 0, september: 0, october: 0 }
         }
@@ -63,13 +63,13 @@ const leadsData = {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    initializeWhyPage();
+    initializeTotalLeadsPage();
 });
 
-function initializeWhyPage() {
+function initializeTotalLeadsPage() {
     initializeBarChart();
     renderPerformanceTable();
-    setupAccordionHandlers();
+    setupClickHandlers();
     setupDropdownHandler();
 }
 
@@ -268,11 +268,6 @@ function renderPerformanceTable(selectedMonth = 'september-2025') {
         const vehicleTrend = getTrendArrow(vehicleData.total.october, vehicleData.total[firstMonthTableKey]);
         vehicleRow.innerHTML = `
             <td class="vehicle-cell">
-                <span class="expand-icon">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </span>
                 ${vehicle.name}
             </td>
             <td class="metric-cell">${vehicleData.total[firstMonthTableKey]}</td>
@@ -282,136 +277,16 @@ function renderPerformanceTable(selectedMonth = 'september-2025') {
             </td>
         `;
         tbody.appendChild(vehicleRow);
-        
-        // Create deal rating rows
-        dealRatings.forEach(deal => {
-            const dealRow = document.createElement('tr');
-            dealRow.className = 'deal-row';
-            dealRow.dataset.vehicle = vehicle.key;
-            const dealTrend = getTrendArrow(vehicleData[deal.key].october, vehicleData[deal.key][firstMonthTableKey]);
-            dealRow.innerHTML = `
-                <td class="deal-cell">
-                    <img src="img/deals/${getDealIcon(deal.name)}" alt="${deal.name}" class="deal-icon" />
-                    ${deal.name}
-                </td>
-                <td class="metric-cell">${vehicleData[deal.key][firstMonthTableKey]}</td>
-                <td class="metric-cell ${getChangeClass(vehicleData[deal.key].october, vehicleData[deal.key][firstMonthTableKey])}">
-                    ${vehicleData[deal.key].october}
-                    ${dealTrend}
-                </td>
-            `;
-            
-            // Add click handler
-            dealRow.addEventListener('click', () => {
-                showDealDetails(vehicle.key, deal.name);
-            });
-            
-            tbody.appendChild(dealRow);
-        });
-        
-        // Create inventory chart row (hidden by default) - placed after deal rows
-        const chartRow = document.createElement('tr');
-        chartRow.className = 'inventory-chart-row';
-        chartRow.dataset.parentIndex = index;
-        chartRow.style.display = 'none';
-        chartRow.innerHTML = `
-            <td colspan="3" class="inventory-chart-cell">
-                <div class="charts-row-container">
-                    <div class="inventory-charts-container">
-                        <h4>Inventory - ${vehicle.name}</h4>
-                        <div class="inventory-month-container">
-                            <div class="month-label-row">
-                                <span class="month-label">September 2025</span>
-                                <span class="total-label">Total vehicles: ${getInventoryTotal(vehicle.key, 'september')}</span>
-                            </div>
-                            <div class="inventory-bar" id="inventory-bar-${vehicle.key}-september">
-                                ${generateInventoryBar(vehicle.key, 'september')}
-                            </div>
-                        </div>
-                        <div class="inventory-month-container">
-                            <div class="month-label-row">
-                                <span class="month-label">October 2025</span>
-                                <span class="total-label">Total vehicles: ${getInventoryTotal(vehicle.key, 'october')}</span>
-                            </div>
-                            <div class="inventory-bar" id="inventory-bar-${vehicle.key}-october">
-                                ${generateInventoryBar(vehicle.key, 'october')}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="leads-per-vehicle-container">
-                        <h4>Leads per Vehicle - ${vehicle.name}</h4>
-                        <canvas id="leads-per-vehicle-${vehicle.key}"></canvas>
-                    </div>
-                </div>
-                <div class="charts-row-container second-row">
-                    <div class="market-trend-container">
-                        <h4>Market Trend - ${vehicle.name}</h4>
-                        <canvas id="market-trend-${vehicle.key}"></canvas>
-                    </div>
-                    <div class="buyer-overlap-container">
-                        <h4>Average buyer overlap per vehicle - ${vehicle.name}</h4>
-                        <canvas id="buyer-overlap-${vehicle.key}"></canvas>
-                    </div>
-                </div>
-            </td>
-        `;
-        tbody.appendChild(chartRow);
     });
 }
 
-function setupAccordionHandlers() {
+function setupClickHandlers() {
     const vehicleRows = document.querySelectorAll('.vehicle-row');
     
     vehicleRows.forEach(row => {
         row.addEventListener('click', function() {
-            const isExpanded = this.classList.contains('expanded');
             const vehicle = this.dataset.vehicle;
-            const index = row.dataset.index;
-            
-            // Close all other expanded rows
-            vehicleRows.forEach(r => {
-                if (r !== this) {
-                    r.classList.remove('expanded');
-                }
-            });
-            
-            // Hide all inventory charts
-            document.querySelectorAll('.inventory-chart-row').forEach(chartRow => {
-                chartRow.style.display = 'none';
-            });
-            
-            // Toggle current row
-            this.classList.toggle('expanded');
-            
-            // Show/hide inventory chart for this vehicle
-            const chartRow = document.querySelector(`.inventory-chart-row[data-parent-index="${index}"]`);
-            if (!isExpanded && chartRow) {
-                chartRow.style.display = 'table-row';
-                // Initialize tooltips for this chart
-                initializeInventoryTooltips(vehicle);
-                // Initialize charts
-                setTimeout(() => {
-                    initializeMarketTrendChart(vehicle);
-                    initializeLeadsPerVehicleChart(vehicle);
-                    initializeBuyerOverlapChart(vehicle);
-                }, 100);
-            }
-            
-            // Show/hide deal rows for this vehicle
-            const dealRows = document.querySelectorAll(`.deal-row[data-vehicle="${vehicle}"]`);
-            dealRows.forEach(dealRow => {
-                if (isExpanded) {
-                    dealRow.style.display = 'none';
-                } else {
-                    dealRow.style.display = 'table-row';
-                }
-            });
-            
-            // Hide all other deal rows
-            const otherDealRows = document.querySelectorAll(`.deal-row:not([data-vehicle="${vehicle}"])`);
-            otherDealRows.forEach(dealRow => {
-                dealRow.style.display = 'none';
-            });
+            showVehicleDetails(vehicle);
         });
     });
 }
@@ -424,6 +299,116 @@ function setupDropdownHandler() {
             renderPerformanceTable(selectedMonth);
         });
     }
+}
+
+function showVehicleDetails(vehicleKey) {
+    const vehicleData = leadsData.table[vehicleKey];
+    const vehicleName = vehicleKey === 'suvco' ? 'SUV/CO' : vehicleKey.charAt(0).toUpperCase() + vehicleKey.slice(1);
+    const selectedMonth = document.getElementById('month-dropdown').value;
+    const firstMonthTableKey = selectedMonth === 'september-2025' ? 'september' : 'august';
+    
+    // Build the content for detail panel
+    const content = `
+        <div class="detail-section">
+            <h2>${vehicleName}</h2>
+            
+            <div class="charts-row-container">
+                <div class="inventory-charts-container">
+                    <h4>Inventory - ${vehicleName}</h4>
+                    <div class="inventory-month-container">
+                        <div class="month-label-row">
+                            <span class="month-label">${selectedMonth === 'september-2025' ? 'September 2025' : 'August 2025'}</span>
+                            <span class="total-label">Total vehicles: ${getInventoryTotal(vehicleKey, firstMonthTableKey)}</span>
+                        </div>
+                        <div class="inventory-bar" id="detail-inventory-bar-${vehicleKey}-${firstMonthTableKey}">
+                            ${generateInventoryBar(vehicleKey, firstMonthTableKey)}
+                        </div>
+                    </div>
+                    <div class="inventory-month-container">
+                        <div class="month-label-row">
+                            <span class="month-label">October 2025</span>
+                            <span class="total-label">Total vehicles: ${getInventoryTotal(vehicleKey, 'october')}</span>
+                        </div>
+                        <div class="inventory-bar" id="detail-inventory-bar-${vehicleKey}-october">
+                            ${generateInventoryBar(vehicleKey, 'october')}
+                        </div>
+                    </div>
+                </div>
+                <div class="leads-per-vehicle-container">
+                    <h4>Leads per Vehicle - ${vehicleName}</h4>
+                    <canvas id="detail-leads-per-vehicle-${vehicleKey}"></canvas>
+                </div>
+            </div>
+            <div class="charts-row-container second-row">
+                <div class="market-trend-container">
+                    <h4>Market Trend - ${vehicleName}</h4>
+                    <canvas id="detail-market-trend-${vehicleKey}"></canvas>
+                </div>
+                <div class="buyer-overlap-container">
+                    <h4>Average buyer overlap per vehicle - ${vehicleName}</h4>
+                    <canvas id="detail-buyer-overlap-${vehicleKey}"></canvas>
+                </div>
+            </div>
+            
+            <!-- Deal ratings breakdown -->
+            <div class="deal-ratings-section">
+                <h3>Leads by Deal Rating</h3>
+                <table class="deal-ratings-table">
+                    <thead>
+                        <tr>
+                            <th>Deal Rating</th>
+                            <th>${selectedMonth === 'september-2025' ? 'September 2025' : 'October 2024'}</th>
+                            <th>October 2025</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${generateDealRatingsRows(vehicleData, firstMonthTableKey)}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('detail-panel-content').innerHTML = content;
+    openDetailPanel();
+    
+    // Initialize charts after panel is opened
+    setTimeout(() => {
+        initializeDetailMarketTrendChart(vehicleKey);
+        initializeDetailLeadsPerVehicleChart(vehicleKey);
+        initializeDetailBuyerOverlapChart(vehicleKey);
+        initializeDetailInventoryTooltips(vehicleKey, firstMonthTableKey);
+    }, 100);
+}
+
+function generateDealRatingsRows(vehicleData, firstMonthKey) {
+    const dealRatings = [
+        { key: 'greatDeal', name: 'Great Deal' },
+        { key: 'goodDeal', name: 'Good Deal' },
+        { key: 'fairDeal', name: 'Fair Deal' },
+        { key: 'highPriced', name: 'High Priced' },
+        { key: 'overPriced', name: 'Over Priced' }
+    ];
+    
+    let rows = '';
+    dealRatings.forEach(deal => {
+        const dealTrend = getTrendArrow(vehicleData[deal.key].october, vehicleData[deal.key][firstMonthKey]);
+        rows += `
+            <tr>
+                <td class="deal-cell">
+                    <img src="img/deals/${getDealIcon(deal.name)}" alt="${deal.name}" class="deal-icon" />
+                    ${deal.name}
+                </td>
+                <td class="metric-cell">${vehicleData[deal.key][firstMonthKey]}</td>
+                <td class="metric-cell ${getChangeClass(vehicleData[deal.key].october, vehicleData[deal.key][firstMonthKey])}">
+                    ${vehicleData[deal.key].october}
+                    ${dealTrend}
+                </td>
+            </tr>
+        `;
+    });
+    
+    return rows;
 }
 
 function getDealIcon(rating) {
@@ -1119,4 +1104,304 @@ function generateMarketAnalysis(vehicle, dealRating, vehicleData) {
     
     analysis += '</div>';
     return analysis;
+}
+
+// Detail Panel Chart Functions
+function initializeDetailMarketTrendChart(vehicleKey) {
+    const ctx = document.getElementById(`detail-market-trend-${vehicleKey}`);
+    if (!ctx) return;
+    
+    const vehicleData = leadsData.table[vehicleKey];
+    const selectedMonth = document.getElementById('month-dropdown').value;
+    const firstMonthTableKey = selectedMonth === 'september-2025' ? 'september' : 'august';
+    
+    // Calculate percentage change for your store
+    const yourChange = ((vehicleData.total.october - vehicleData.total[firstMonthTableKey]) / vehicleData.total[firstMonthTableKey] * 100).toFixed(1);
+    
+    // Mock market average (would come from real market data)
+    const marketAvgChange = vehicleKey === 'suvco' ? -8 : vehicleKey === 'sedans' ? 3 : -2;
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Your Store', 'Market Avg'],
+            datasets: [
+                {
+                    label: '% Change',
+                    data: [yourChange, marketAvgChange],
+                    backgroundColor: function(context) {
+                        const value = context.parsed.y;
+                        return value >= 0 ? '#10B981' : '#EF4444';
+                    },
+                    borderRadius: 4,
+                    barPercentage: 0.5,
+                    categoryPercentage: 0.7
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'white',
+                    titleColor: '#111827',
+                    bodyColor: '#374151',
+                    borderColor: '#E5E7EB',
+                    borderWidth: 1,
+                    cornerRadius: 6,
+                    padding: 8,
+                    callbacks: {
+                        label: function(context) {
+                            return (context.parsed.y >= 0 ? '+' : '') + context.parsed.y + '%';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    grid: {
+                        color: '#F3F4F6',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#6B7280',
+                        font: { size: 10 },
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        color: '#374151',
+                        font: { size: 10 }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function initializeDetailLeadsPerVehicleChart(vehicleKey) {
+    const ctx = document.getElementById(`detail-leads-per-vehicle-${vehicleKey}`);
+    if (!ctx) return;
+    
+    const vehicleData = leadsData.table[vehicleKey];
+    const selectedMonth = document.getElementById('month-dropdown').value;
+    const firstMonthTableKey = selectedMonth === 'september-2025' ? 'september' : 'august';
+    const firstMonthDisplay = selectedMonth === 'september-2025' ? 'September 2025' : 'October 2024';
+    
+    const dealRatings = ['greatDeal', 'goodDeal', 'fairDeal', 'highPriced', 'overPriced'];
+    const dealNames = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
+    
+    // Calculate leads per vehicle
+    const firstMonthData = dealRatings.map(rating => {
+        const leads = vehicleData[rating][firstMonthTableKey];
+        const inventory = Math.round(leads / 2.5);
+        return inventory > 0 ? (leads / inventory).toFixed(1) : 0;
+    });
+    
+    const octoberData = dealRatings.map(rating => {
+        const leads = vehicleData[rating].october;
+        const inventory = Math.round(leads / 2.5);
+        return inventory > 0 ? (leads / inventory).toFixed(1) : 0;
+    });
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: dealNames,
+            datasets: [
+                {
+                    label: firstMonthDisplay,
+                    data: firstMonthData,
+                    backgroundColor: '#93C5FD',
+                    borderRadius: 4,
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.8
+                },
+                {
+                    label: 'October 2025',
+                    data: octoberData,
+                    backgroundColor: '#3B82F6',
+                    borderRadius: 4,
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.8
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 8,
+                        font: { size: 11 }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'white',
+                    titleColor: '#111827',
+                    bodyColor: '#374151',
+                    borderColor: '#E5E7EB',
+                    borderWidth: 1,
+                    cornerRadius: 6,
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y + ' leads/vehicle';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#F3F4F6',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#6B7280',
+                        font: { size: 10 }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Leads per Vehicle',
+                        color: '#6B7280',
+                        font: { size: 11 }
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        color: '#374151',
+                        font: { size: 9 },
+                        autoSkip: false,
+                        maxRotation: 45,
+                        minRotation: 45
+                    }
+                }
+            }
+        }
+    });
+}
+
+function initializeDetailBuyerOverlapChart(vehicleKey) {
+    const ctx = document.getElementById(`detail-buyer-overlap-${vehicleKey}`);
+    if (!ctx) return;
+    
+    // Mock data for buyer overlap
+    const overlapData = {
+        compact: [2.3, 2.5, 2.4, 2.6],
+        sedans: [2.8, 2.9, 2.7, 3.0],
+        suvco: [3.2, 3.4, 3.3, 3.5],
+        trucks: [2.1, 2.2, 2.0, 2.3],
+        luxury: [1.8, 1.9, 1.7, 2.0]
+    };
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['July', 'August', 'September', 'October'],
+            datasets: [{
+                label: 'Avg Buyer Overlap',
+                data: overlapData[vehicleKey] || [2.5, 2.6, 2.4, 2.7],
+                borderColor: '#3B82F6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.2,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#3B82F6',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'white',
+                    titleColor: '#111827',
+                    bodyColor: '#374151',
+                    borderColor: '#E5E7EB',
+                    borderWidth: 1,
+                    cornerRadius: 6,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Overlap: ' + context.parsed.y + ' vehicles';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#F3F4F6',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#6B7280',
+                        font: { size: 10 }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Average Vehicles',
+                        color: '#6B7280',
+                        font: { size: 11 }
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        color: '#374151',
+                        font: { size: 10 }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function initializeDetailInventoryTooltips(vehicleKey, firstMonthKey) {
+    // Create tooltip element if it doesn't exist
+    let tooltip = document.getElementById('detail-inventory-tooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'detail-inventory-tooltip';
+        tooltip.className = 'inventory-tooltip';
+        document.body.appendChild(tooltip);
+    }
+    
+    // Add hover events to inventory segments
+    const segments = document.querySelectorAll(`#detail-inventory-bar-${vehicleKey}-${firstMonthKey} .inventory-segment, #detail-inventory-bar-${vehicleKey}-october .inventory-segment`);
+    
+    segments.forEach(segment => {
+        segment.addEventListener('mouseenter', function(e) {
+            const rating = this.dataset.rating;
+            const count = this.dataset.count;
+            
+            tooltip.textContent = `${rating}: ${count} vehicles`;
+            tooltip.classList.add('visible');
+        });
+        
+        segment.addEventListener('mousemove', function(e) {
+            tooltip.style.left = e.pageX + 'px';
+            tooltip.style.top = (e.pageY - 35) + 'px';
+        });
+        
+        segment.addEventListener('mouseleave', function() {
+            tooltip.classList.remove('visible');
+        });
+    });
 }

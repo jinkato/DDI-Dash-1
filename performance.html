@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="styles/sidebar.css">
     <link rel="stylesheet" href="styles/performance.css">
     
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -38,35 +40,261 @@
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
             <div class="header">
-                <h1>Performance Analysis</h1>
+                <h1>Performance</h1>
             </div>
             
             <!-- Main content area -->
             <div class="content">
-                <!-- Performance Overview Table -->
-                <div class="performance-table-container">
-                    <table class="performance-table">
-                        <thead style="display: none;">
-                            <tr>
-                                <th>Vehicle Type</th>
-                                <th>Your current store</th>
-                                <th>Market Avg</th>
-                                <th>vs Last Month</th>
-                                <th>Valley Motors</th>
-                            </tr>
-                        </thead>
-                        <tbody id="performance-tbody">
-                            <!-- Table rows will be inserted here by JavaScript -->
-                        </tbody>
-                    </table>
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <span class="filter-label">Time frame:</span>
+                        <select class="filter-select">
+                            <option>14 days</option>
+                            <option>30 days</option>
+                            <option>90 days</option>
+                        </select>
+                    </div>
                 </div>
-
+                
+                <!-- Metric Cards -->
+                <div class="metric-cards-grid">
+                    <div class="metric-card">
+                        <a href="dealandtype.html" class="metric-card-title-link">
+                            <div class="metric-card-title">Market percentile</div>
+                        </a>
+                        <div class="metric-card-value-wrapper">
+                            <div class="metric-card-value">72th</div>
+                        </div>
+                        <div class="metric-card-change neutral">
+                            <span>vs Market</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <a href="dealandtype.html" class="metric-card-title-link">
+                            <div class="metric-card-title">Current inventory</div>
+                        </a>
+                        <div class="metric-card-value">247</div>
+                        <div class="metric-card-change negative">
+                            <img src="img/trend icon/down.svg" alt="Down" class="trend-icon">
+                            <span>-7% decrease</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <a href="dealandtype.html" class="metric-card-title-link">
+                            <div class="metric-card-title">Total monthly leads</div>
+                        </a>
+                        <div class="metric-card-value">301</div>
+                        <div class="metric-card-change negative">
+                            <img src="img/trend icon/down.svg" alt="Down" class="trend-icon">
+                            <span>-29% decrease</span>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <a href="dealandtype.html" class="metric-card-title-link">
+                            <div class="metric-card-title">Leads per vehicle</div>
+                        </a>
+                        <div class="metric-card-value">1.4</div>
+                        <div class="metric-card-change positive">
+                            <img src="img/trend icon/up.svg" alt="Up" class="trend-icon">
+                            <span>3% decrease</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Panels Grid -->
+                <div class="panels-grid">
+                    <!-- Search vs Vehicle Type Chart -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <h3 class="panel-title">Conversion Funnel</h3>
+                                <div class="availability high">Strong</div>
+                            </div>
+                            <a href="why.html" class="learn-more-link">Learn more</a>
+                        </div>
+                        <div class="overall-conversion">
+                            <span class="conversion-label">Overall SRP to Lead conversion</span>
+                            <span class="conversion-value">1.62%</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="searchVsTypeChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Top Features Panel -->
+                    <div class="panel connection-summary-panel">
+                        <div class="panel-header">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <h3 class="panel-title">Connection Summary</h3>
+                                <div class="availability high">Strong</div>
+                            </div>
+                            <a href="why.html" class="learn-more-link">Learn more</a>
+                        </div>
+                        <div class="panel-content">
+                            <table class="features-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Last Month</th>
+                                    <th>Current Month</th>
+                                    <th>Change</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>498</td>
+                                    <td>542</td>
+                                    <td><span class="trend-up">8.8%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>389</td>
+                                    <td>423</td>
+                                    <td><span class="trend-up">8.7%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Chat</td>
+                                    <td>287</td>
+                                    <td>312</td>
+                                    <td><span class="trend-up">8.7%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Text</td>
+                                    <td>265</td>
+                                    <td>289</td>
+                                    <td><span class="trend-up">9.1%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Website</td>
+                                    <td>279</td>
+                                    <td>301</td>
+                                    <td><span class="trend-up">7.9%</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row Panels -->
+                <div class="panels-grid">
+                    <!-- Price vs. Search Chart -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <h3 class="panel-title">Turn Time</h3>
+                                <div class="availability high">Strong</div>
+                            </div>
+                            <a href="why.html" class="learn-more-link">Learn more</a>
+                        </div>
+                        <div class="overall-conversion">
+                            <span class="conversion-label">Average turn time</span>
+                            <span class="conversion-value">34 days</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="priceVsSearchChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Max Mileage Chart -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <h3 class="panel-title">Total leads</h3>
+                                <div class="availability needs-attention">Needs attention</div>
+                            </div>
+                            <a href="why.html" class="learn-more-link">Learn more</a>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="maxMileageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Underserved Demand Panel - Full Width -->
+                <div class="panel" style="margin-bottom: 24px;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Your Top Competitors</h3>
+                        <a href="index.html" class="learn-more-link">Learn more</a>
+                    </div>
+                    <div class="vehicle-table-container">
+                        <table class="vehicle-table">
+                            <thead>
+                                <tr>
+                                    <th>Dealer</th>
+                                    <th>Distance</th>
+                                    <th>Search overlap</th>
+                                    <th>VDP overlap</th>
+                                    <th>Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="vehicle-info">
+                                            <img src="img/store_logo/store_1@2x.png" alt="Boston Volvo Cars" class="vehicle-image">
+                                            <div class="vehicle-details">
+                                                Boston Volvo Cars
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>2.4 miles</td>
+                                    <td>21%</td>
+                                    <td>18%</td>
+                                    <td>
+                                        <div class="availability needs-attention">
+                                            Losing traffic
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="vehicle-info">
+                                            <img src="img/store_logo/store_2@2x.png" alt="Toyota of Watertown" class="vehicle-image">
+                                            <div class="vehicle-details">
+                                                Toyota of Watertown
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>8.5 miles</td>
+                                    <td>14%</td>
+                                    <td>15%</td>
+                                    <td>
+                                        <div class="availability high">
+                                            Taking traffic
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="vehicle-info">
+                                            <img src="img/store_logo/store_3@2x.png" alt="Jaffarian Toyota Volvo" class="vehicle-image">
+                                            <div class="vehicle-details">
+                                                Jaffarian Toyota Volvo
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>6.2 miles</td>
+                                    <td>4%</td>
+                                    <td>12%</td>
+                                    <td>
+                                        <div class="availability needs-attention">
+                                            Losing traffic
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
 
     <!-- JavaScript Files -->
     <script src="js/performance.js"></script>
-    
 </body>
 </html>

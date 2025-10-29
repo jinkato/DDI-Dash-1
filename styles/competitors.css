@@ -1,5 +1,15 @@
 /* Competitors Page Styles */
 
+/* Back Navigation */
+.back-navigation {
+    padding: 16px 24px 0 24px;
+}
+
+.back-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
 /* Content Layout */
 .content {
     display: flex;

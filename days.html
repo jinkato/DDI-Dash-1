@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1300, initial-scale=1.0">
-    <title>Why Analysis - CarGurus Dealer Analysis</title>
+    <title>Days Analysis - CarGurus Dealer Analysis</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/sidebar.css">
-    <link rel="stylesheet" href="styles/why.css">
+    <link rel="stylesheet" href="styles/days.css">
     <link rel="stylesheet" href="styles/detail-panel.css">
     
 </head>
@@ -38,32 +38,23 @@
             <div class="dropdowns">
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
-            
-            <div class="back-navigation">
-                <button class="btn-secondary back-btn" onclick="window.location.href='performance.html'">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Back
-                </button>
-            </div>
             <div class="header">
-                <h1>Total leads</h1>
+                <h1>Days on lot: Auto Mile Boston</h1>
             </div>
             
             <!-- Main content area -->
             <div class="content">
                 <!-- Bar Chart Section -->
                 <div class="chart-section">
-                    <h2>Total Leads - Last 12 Months</h2>
+                    <h2>Days on Lot - Last 12 Months</h2>
                     <div class="bar-chart-container">
-                        <canvas id="totalLeadsChart"></canvas>
+                        <canvas id="daysOnLotChart"></canvas>
                     </div>
                 </div>
                 
                 <!-- Performance Table -->
                 <div class="table-section">
-                    <h2>Leads by vehicle type</h2>
+                    <h2>Days on lot by vehicle type</h2>
                     
                     <!-- Market Context Callout -->
                     <div class="market-callout">
@@ -71,7 +62,7 @@
                             <circle cx="8" cy="8" r="7" stroke="#3B82F6" stroke-width="1.5"/>
                             <path d="M8 11V8M8 5.5V5" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
-                        <span>Market Update: SUV demand down 8% market-wide this month. Sedan demand up 3%.</span>
+                        <span>Market Update: Industry average days on lot increased from 52 to 58 days this month.</span>
                     </div>
                     
                     <table class="performance-table">
@@ -112,7 +103,7 @@
 
     <!-- JavaScript Files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/why.js"></script>
+    <script src="js/days.js"></script>
     
 </body>
 </html>

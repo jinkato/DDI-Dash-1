@@ -1,72 +1,72 @@
-// Why Page JavaScript
+// Days Page JavaScript
 
 // Data structure
-const leadsData = {
+const daysOnLotData = {
     barChart: {
-        october2024: 305,
-        november2024: 298,
-        december2024: 275,
-        january2025: 310,
-        february2025: 295,
-        march2025: 305,
-        april2025: 290,
-        may2025: 315,
-        june2025: 308,
-        july2025: 320,
-        august2025: 285,
-        september2025: 292,
-        october2025: 270
+        october2024: 48,
+        november2024: 52,
+        december2024: 55,
+        january2025: 54,
+        february2025: 56,
+        march2025: 58,
+        april2025: 61,
+        may2025: 59,
+        june2025: 62,
+        july2025: 60,
+        august2025: 63,
+        september2025: 55,
+        october2025: 68
     },
     table: {
         compact: {
-            total: { july: 65, august: 58, september: 57, october: 53 },
-            greatDeal: { july: 25, august: 22, september: 21, october: 19 },
-            goodDeal: { july: 18, august: 16, september: 16, october: 15 },
-            fairDeal: { july: 12, august: 11, september: 12, october: 12 },
-            highPriced: { july: 7, august: 6, september: 5, october: 5 },
-            overPriced: { july: 3, august: 3, september: 3, october: 2 }
+            total: { july: 52, august: 51, september: 52, october: 53 },  // Staying similar
+            greatDeal: { july: 45, august: 44, september: 45, october: 46 },
+            goodDeal: { july: 50, august: 49, september: 50, october: 51 },
+            fairDeal: { july: 55, august: 54, september: 55, october: 56 },
+            highPriced: { july: 58, august: 57, september: 58, october: 59 },
+            overPriced: { july: 62, august: 61, september: 62, october: 63 }
         },
         sedans: {
-            total: { july: 70, august: 65, september: 63, october: 60 },
-            greatDeal: { july: 28, august: 26, september: 25, october: 23 },
-            goodDeal: { july: 20, august: 18, september: 18, october: 17 },
-            fairDeal: { july: 13, august: 12, september: 12, october: 12 },
-            highPriced: { july: 6, august: 6, september: 6, october: 6 },
-            overPriced: { july: 3, august: 3, september: 2, october: 2 }
+            total: { july: 58, august: 62, september: 65, october: 72 },  // Getting worse
+            greatDeal: { july: 50, august: 54, september: 57, october: 64 },
+            goodDeal: { july: 55, august: 59, september: 62, october: 69 },
+            fairDeal: { july: 60, august: 64, september: 67, october: 74 },
+            highPriced: { july: 63, august: 67, september: 70, october: 77 },
+            overPriced: { july: 67, august: 71, september: 74, october: 81 }
         },
         suvco: {
-            total: { july: 145, august: 130, september: 125, october: 115 },
-            greatDeal: { july: 60, august: 55, september: 52, october: 48 },
-            goodDeal: { july: 45, august: 40, september: 39, october: 36 },
-            fairDeal: { july: 25, august: 22, september: 21, october: 19 },
-            highPriced: { july: 10, august: 9, september: 9, october: 8 },
-            overPriced: { july: 5, august: 4, september: 4, october: 4 }
+            total: { july: 72, august: 68, september: 64, october: 60 },  // Improving
+            greatDeal: { july: 65, august: 61, september: 57, october: 53 },
+            goodDeal: { july: 70, august: 66, september: 62, october: 58 },
+            fairDeal: { july: 75, august: 71, september: 67, october: 63 },
+            highPriced: { july: 78, august: 74, september: 70, october: 66 },
+            overPriced: { july: 82, august: 78, september: 74, october: 70 }
         },
         trucks: {
-            total: { july: 30, august: 22, september: 25, october: 28 },
-            greatDeal: { july: 12, august: 9, september: 10, october: 11 },
-            goodDeal: { july: 9, august: 7, september: 8, october: 9 },
-            fairDeal: { july: 5, august: 4, september: 4, october: 5 },
-            highPriced: { july: 3, august: 2, september: 2, october: 2 },
-            overPriced: { july: 1, august: 0, september: 1, october: 1 }
+            total: { july: 68, august: 69, september: 68, october: 69 },  // Staying similar
+            greatDeal: { july: 60, august: 61, september: 60, october: 61 },
+            goodDeal: { july: 65, august: 66, september: 65, october: 66 },
+            fairDeal: { july: 70, august: 71, september: 70, october: 71 },
+            highPriced: { july: 73, august: 74, september: 73, october: 74 },
+            overPriced: { july: 77, august: 78, september: 77, october: 78 }
         },
         luxury: {
-            total: { july: 10, august: 10, september: 12, october: 14 },
-            greatDeal: { july: 4, august: 4, september: 5, october: 6 },
-            goodDeal: { july: 3, august: 3, september: 4, october: 5 },
-            fairDeal: { july: 2, august: 2, september: 2, october: 2 },
-            highPriced: { july: 1, august: 1, september: 1, october: 1 },
-            overPriced: { july: 0, august: 0, september: 0, october: 0 }
+            total: { july: 45, august: 48, september: 52, october: 57 },  // Getting worse
+            greatDeal: { july: 38, august: 41, september: 45, october: 50 },
+            goodDeal: { july: 42, august: 45, september: 49, october: 54 },
+            fairDeal: { july: 47, august: 50, september: 54, october: 59 },
+            highPriced: { july: 50, august: 53, september: 57, october: 62 },
+            overPriced: { july: 54, august: 57, september: 61, october: 66 }
         }
     }
 };
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    initializeWhyPage();
+    initializeDaysPage();
 });
 
-function initializeWhyPage() {
+function initializeDaysPage() {
     initializeBarChart();
     renderPerformanceTable();
     setupAccordionHandlers();
@@ -74,7 +74,7 @@ function initializeWhyPage() {
 }
 
 function initializeBarChart() {
-    const ctx = document.getElementById('totalLeadsChart').getContext('2d');
+    const ctx = document.getElementById('daysOnLotChart').getContext('2d');
     
     new Chart(ctx, {
         type: 'bar',
@@ -82,21 +82,21 @@ function initializeBarChart() {
             labels: ['Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025', 'Mar 2025', 'Apr 2025', 
                      'May 2025', 'Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025', 'Oct 2025'],
             datasets: [{
-                label: 'Total Leads',
+                label: 'Days on Lot',
                 data: [
-                    leadsData.barChart.october2024,
-                    leadsData.barChart.november2024,
-                    leadsData.barChart.december2024,
-                    leadsData.barChart.january2025,
-                    leadsData.barChart.february2025,
-                    leadsData.barChart.march2025,
-                    leadsData.barChart.april2025,
-                    leadsData.barChart.may2025,
-                    leadsData.barChart.june2025,
-                    leadsData.barChart.july2025,
-                    leadsData.barChart.august2025,
-                    leadsData.barChart.september2025,
-                    leadsData.barChart.october2025
+                    daysOnLotData.barChart.october2024,
+                    daysOnLotData.barChart.november2024,
+                    daysOnLotData.barChart.december2024,
+                    daysOnLotData.barChart.january2025,
+                    daysOnLotData.barChart.february2025,
+                    daysOnLotData.barChart.march2025,
+                    daysOnLotData.barChart.april2025,
+                    daysOnLotData.barChart.may2025,
+                    daysOnLotData.barChart.june2025,
+                    daysOnLotData.barChart.july2025,
+                    daysOnLotData.barChart.august2025,
+                    daysOnLotData.barChart.september2025,
+                    daysOnLotData.barChart.october2025
                 ],
                 backgroundColor: '#3B82F6',
                 borderRadius: 4,
@@ -126,7 +126,7 @@ function initializeBarChart() {
                     displayColors: false,
                     callbacks: {
                         label: function(context) {
-                            return 'Total Leads: ' + context.parsed.y;
+                            return 'Days on Lot: ' + context.parsed.y;
                         }
                     }
                 },
@@ -246,19 +246,19 @@ function renderPerformanceTable(selectedMonth = 'september-2025') {
     // Create total row
     const totalRow = document.createElement('tr');
     totalRow.className = 'total-row';
-    const totalTrend = getTrendArrow(leadsData.barChart.october2025, leadsData.barChart[firstMonthKey]);
+    const totalTrend = getTrendArrow(daysOnLotData.barChart.october2025, daysOnLotData.barChart[firstMonthKey]);
     totalRow.innerHTML = `
-        <td class="total-cell">Total Leads</td>
-        <td class="metric-cell total-metric">${leadsData.barChart[firstMonthKey]}</td>
-        <td class="metric-cell total-metric ${getChangeClass(leadsData.barChart.october2025, leadsData.barChart[firstMonthKey])}">
-            ${leadsData.barChart.october2025}
+        <td class="total-cell">Average Days</td>
+        <td class="metric-cell total-metric">${daysOnLotData.barChart[firstMonthKey]}</td>
+        <td class="metric-cell total-metric ${getChangeClass(daysOnLotData.barChart.october2025, daysOnLotData.barChart[firstMonthKey])}">
+            ${daysOnLotData.barChart.october2025}
             ${totalTrend}
         </td>
     `;
     tbody.appendChild(totalRow);
     
     vehicleTypes.forEach((vehicle, index) => {
-        const vehicleData = leadsData.table[vehicle.key];
+        const vehicleData = daysOnLotData.table[vehicle.key];
         
         // Create main vehicle row
         const vehicleRow = document.createElement('tr');
@@ -339,7 +339,7 @@ function renderPerformanceTable(selectedMonth = 'september-2025') {
                         </div>
                     </div>
                     <div class="leads-per-vehicle-container">
-                        <h4>Leads per Vehicle - ${vehicle.name}</h4>
+                        <h4>Days on Lot by Deal Rating - ${vehicle.name}</h4>
                         <canvas id="leads-per-vehicle-${vehicle.key}"></canvas>
                     </div>
                 </div>
@@ -450,25 +450,26 @@ function getTrendArrow(current, previous) {
 function getChangeClass(current, previous) {
     const absoluteChange = current - previous;
     
-    if (absoluteChange >= 10) {
-        return 'significant-increase';
-    } else if (absoluteChange >= 5) {
-        return 'moderate-increase';
-    } else if (absoluteChange > 0) {
-        return 'slight-increase';
+    // For days on lot, increase is bad (red) and decrease is good (green)
+    if (absoluteChange <= -10) {
+        return 'significant-increase'; // Green
+    } else if (absoluteChange <= -5) {
+        return 'moderate-increase'; // Light green
+    } else if (absoluteChange < 0) {
+        return 'slight-increase'; // Very light green
     } else if (absoluteChange === 0) {
         return 'no-change';
-    } else if (absoluteChange > -5) {
-        return 'slight-decrease';
-    } else if (absoluteChange > -10) {
-        return 'moderate-decrease';
+    } else if (absoluteChange < 5) {
+        return 'slight-decrease'; // Very light red
+    } else if (absoluteChange < 10) {
+        return 'moderate-decrease'; // Light red
     } else {
-        return 'significant-decrease';
+        return 'significant-decrease'; // Red
     }
 }
 
 function getInventoryTotal(vehicleKey, month) {
-    const vehicleData = leadsData.table[vehicleKey];
+    const vehicleData = daysOnLotData.table[vehicleKey];
     const dealRatings = ['greatDeal', 'goodDeal', 'fairDeal', 'highPriced', 'overPriced'];
     
     // Calculate inventory totals
@@ -480,7 +481,7 @@ function getInventoryTotal(vehicleKey, month) {
 }
 
 function generateInventoryBar(vehicleKey, month) {
-    const vehicleData = leadsData.table[vehicleKey];
+    const vehicleData = daysOnLotData.table[vehicleKey];
     const dealRatings = ['greatDeal', 'goodDeal', 'fairDeal', 'highPriced', 'overPriced'];
     const dealNames = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
     const colors = {
@@ -549,7 +550,7 @@ function initializeMarketTrendChart(vehicleKey) {
     if (!ctx) return;
     
     // Generate market data for similar dealerships
-    const vehicleData = leadsData.table[vehicleKey];
+    const vehicleData = daysOnLotData.table[vehicleKey];
     const yourSeptember = vehicleData.total.september;
     const yourOctober = vehicleData.total.october;
     
@@ -569,7 +570,8 @@ function initializeMarketTrendChart(vehicleKey) {
                     data: [yourChange, marketAvgChange],
                     backgroundColor: function(context) {
                         const value = context.parsed.y;
-                        return value >= 0 ? '#10B981' : '#EF4444';
+                        // For days on lot, negative change (decrease) is good (green)
+                        return value <= 0 ? '#10B981' : '#EF4444';
                     },
                     borderRadius: 4,
                     barPercentage: 0.5,
@@ -680,22 +682,13 @@ function initializeLeadsPerVehicleChart(vehicleKey) {
     const ctx = document.getElementById(`leads-per-vehicle-${vehicleKey}`);
     if (!ctx) return;
     
-    const vehicleData = leadsData.table[vehicleKey];
+    const vehicleData = daysOnLotData.table[vehicleKey];
     const dealRatings = ['greatDeal', 'goodDeal', 'fairDeal', 'highPriced', 'overPriced'];
     const dealNames = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
     
-    // Calculate leads per vehicle for each deal rating
-    const septemberData = dealRatings.map(rating => {
-        const leads = vehicleData[rating].september;
-        const inventory = Math.round(leads / 2.5); // Using the same calculation as inventory bar
-        return inventory > 0 ? (leads / inventory).toFixed(1) : 0;
-    });
-    
-    const octoberData = dealRatings.map(rating => {
-        const leads = vehicleData[rating].october;
-        const inventory = Math.round(leads / 2.5);
-        return inventory > 0 ? (leads / inventory).toFixed(1) : 0;
-    });
+    // Use days on lot data for each deal rating
+    const septemberData = dealRatings.map(rating => vehicleData[rating].september);
+    const octoberData = dealRatings.map(rating => vehicleData[rating].october);
     
     new Chart(ctx, {
         type: 'bar',
@@ -757,7 +750,7 @@ function initializeLeadsPerVehicleChart(vehicleKey) {
                     boxHeight: 10,
                     callbacks: {
                         label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y + ' leads/vehicle';
+                            return context.dataset.label + ': ' + context.parsed.y + ' days';
                         }
                     }
                 }
@@ -781,7 +774,7 @@ function initializeLeadsPerVehicleChart(vehicleKey) {
                     },
                     title: {
                         display: true,
-                        text: 'Leads per Vehicle',
+                        text: 'Days on Lot',
                         color: '#6B7280',
                         font: {
                             size: 11
@@ -940,7 +933,7 @@ function closeDetailPanel() {
 }
 
 function showDealDetails(vehicle, dealRating) {
-    const vehicleData = leadsData.table[vehicle];
+    const vehicleData = daysOnLotData.table[vehicle];
     const dealKey = Object.keys(vehicleData).find(key => {
         const dealName = key.replace(/([A-Z])/g, ' $1').trim();
         return dealName.toLowerCase().replace('deal', 'deal') === dealRating.toLowerCase();
@@ -963,28 +956,28 @@ function showDealDetails(vehicle, dealRating) {
         <div class="detail-section">
             <h2>${vehicleName} - ${dealRating}</h2>
             
-            <!-- Leads per Vehicle -->
+            <!-- Days on Lot -->
             <div class="detail-metric-section">
-                <h3>Leads per Vehicle</h3>
+                <h3>Average Days on Lot</h3>
                 <div class="metric-grid">
                     <div class="metric-item">
                         <span class="metric-label">July 2025</span>
-                        <span class="metric-value">${(dealData.july / inventoryData.july).toFixed(1)}</span>
+                        <span class="metric-value">${dealData.july}</span>
                     </div>
                     <div class="metric-item">
                         <span class="metric-label">August 2025</span>
-                        <span class="metric-value">${(dealData.august / inventoryData.august).toFixed(1)}</span>
+                        <span class="metric-value">${dealData.august}</span>
                     </div>
                     <div class="metric-item">
                         <span class="metric-label">October 2025</span>
-                        <span class="metric-value">${(dealData.october / inventoryData.october).toFixed(1)}</span>
+                        <span class="metric-value">${dealData.october}</span>
                     </div>
                 </div>
             </div>
             
             <!-- Inventory Breakdown -->
             <div class="detail-inventory-section">
-                <h3>Inventory Breakdown by Deal Rating</h3>
+                <h3>Days on Lot by Deal Rating</h3>
                 <table class="inventory-breakdown-table">
                     <thead>
                         <tr>
@@ -1019,20 +1012,20 @@ function generateInsights(dealData, dealRating, vehicleName) {
     const julyToAugust = ((dealData.august - dealData.july) / dealData.july * 100).toFixed(1);
     const augustToOctober = ((dealData.october - dealData.august) / dealData.august * 100).toFixed(1);
     
-    // Trend insight
+    // Trend insight (for days on lot, increase is bad, decrease is good)
     if (parseFloat(augustToOctober) > 0) {
-        insights.push(`<li>Leads increased by ${augustToOctober}% from August to October</li>`);
+        insights.push(`<li>Days on lot increased by ${augustToOctober}% from August to October (needs improvement)</li>`);
     } else if (parseFloat(augustToOctober) < 0) {
-        insights.push(`<li>Leads decreased by ${Math.abs(augustToOctober)}% from August to October</li>`);
+        insights.push(`<li>Days on lot decreased by ${Math.abs(augustToOctober)}% from August to October (improving)</li>`);
     } else {
-        insights.push(`<li>Leads remained stable from August to October</li>`);
+        insights.push(`<li>Days on lot remained stable from August to October</li>`);
     }
     
-    // Performance insight
-    if (dealData.october > 20) {
-        insights.push(`<li>Strong performance with ${dealData.october} leads in October</li>`);
-    } else if (dealData.october < 10) {
-        insights.push(`<li>Opportunity to improve lead generation for ${dealRating.toLowerCase()} inventory</li>`);
+    // Performance insight (for days on lot, lower is better)
+    if (dealData.october < 50) {
+        insights.push(`<li>Strong performance with average ${dealData.october} days on lot in October</li>`);
+    } else if (dealData.october > 70) {
+        insights.push(`<li>Opportunity to reduce inventory aging for ${dealRating.toLowerCase()} vehicles</li>`);
     }
     
     // Consistency insight
