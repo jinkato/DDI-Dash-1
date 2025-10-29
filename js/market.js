@@ -177,80 +177,153 @@ function initializeCharts() {
         }
     });
 
-    // VDP Views Chart
-    const maxMileageCtx = document.getElementById('maxMileageChart').getContext('2d');
-    new Chart(maxMileageCtx, {
-        type: 'line',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'VDP views',
-                data: [3200, 3500, 3800, 4100, 4500, 5200, 4800],
-                borderColor: '#3B82F6',
-                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                borderWidth: 2,
-                fill: true,
-                tension: 0.4,
-                pointBackgroundColor: '#3B82F6',
-                pointBorderColor: '#3B82F6',
-                pointRadius: 4,
-                pointHoverRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: {
-                    grid: {
+    // VDP Views Line Chart
+    const vdpViewsCanvas = document.getElementById('vdpViewsLineChart');
+    if (vdpViewsCanvas) {
+        new Chart(vdpViewsCanvas, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'VDP Views',
+                    data: [3200, 3500, 3800, 4100, 4500, 5200, 4800],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#3B82F6',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
                         display: false
                     },
-                    ticks: {
-                        font: {
-                            size: 11
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        cornerRadius: 6,
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 14
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                return 'Views: ' + context.parsed.y.toLocaleString();
+                            }
                         }
                     }
                 },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'VDP views',
-                        font: {
-                            size: 12
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 13
+                            },
+                            color: '#6B7280'
                         }
                     },
-                    grid: {
-                        color: '#F3F4F6',
-                        drawBorder: false
-                    },
-                    border: {
-                        display: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 11
-                        }
-                    }
-                }
-            },
-            plugins: {
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    padding: 8,
-                    cornerRadius: 4,
-                    titleFont: {
-                        size: 12
-                    },
-                    bodyFont: {
-                        size: 12
-                    },
-                    callbacks: {
-                        label: function(context) {
-                            return 'VDP views: ' + context.formattedValue.toLocaleString();
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#E5E7EB',
+                            drawBorder: false
+                        },
+                        border: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 13
+                            },
+                            color: '#6B7280',
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
                         }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 }
+
+// Direct test - initialize VDP chart immediately when script loads
+window.addEventListener('load', function() {
+    console.log('Window loaded, looking for canvas...');
+    const testCanvas = document.getElementById('vdpViewsLineChart');
+    console.log('Canvas found:', testCanvas);
+    
+    if (testCanvas) {
+        console.log('Creating chart...');
+        try {
+            new Chart(testCanvas, {
+                type: 'line',
+                data: {
+                    labels: ['Oct 1', 'Oct 8', 'Oct 15', 'Oct 22', 'Oct 29'],
+                    datasets: [{
+                        label: 'VDP Views',
+                        data: [4200, 4300, 4250, 4350, 4280],
+                        borderColor: '#3B82F6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            console.log('Chart created successfully!');
+        } catch (error) {
+            console.error('Error creating chart:', error);
+        }
+    } else {
+        console.error('Canvas element not found!');
+    }
+    
+    // Create Leads per Vehicle chart
+    const leadsCanvas = document.getElementById('leadsPerVehicleChart');
+    if (leadsCanvas) {
+        console.log('Creating Leads per Vehicle chart...');
+        try {
+            new Chart(leadsCanvas, {
+                type: 'line',
+                data: {
+                    labels: ['Oct 1', 'Oct 8', 'Oct 15', 'Oct 22', 'Oct 29'],
+                    datasets: [{
+                        label: 'Leads per Vehicle',
+                        data: [1.8, 1.9, 1.7, 2.0, 1.8],
+                        borderColor: '#10B981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            console.log('Leads per Vehicle chart created successfully!');
+        } catch (error) {
+            console.error('Error creating Leads per Vehicle chart:', error);
+        }
+    }
+});

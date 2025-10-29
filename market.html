@@ -45,113 +45,41 @@
             
             <!-- Main content area -->
             <div class="content">
-                <!-- Filter Bar -->
-                <div class="filter-bar">
-                    <div class="filter-group">
-                        <span class="filter-label">Time frame:</span>
-                        <select class="filter-select">
-                            <option>14 days</option>
-                            <option>30 days</option>
-                            <option>90 days</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <span class="filter-label">Dealer set:</span>
-                        <select class="filter-select">
-                            <option>All dealers</option>
-                            <option>Selected dealers</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- VDP Views Panel - Full Width -->
-                <div class="panels-grid">
-                    <!-- VDP Views Chart -->
-                    <div class="panel panel-full-width">
+                <!-- Top Charts Row -->
+                <div class="panels-grid" style="margin-bottom: 24px;">
+                    <!-- VDP Views Panel -->
+                    <div class="panel">
                         <div class="panel-header">
                             <h3 class="panel-title">VDP views</h3>
-                                                </div>
-                        <div class="chart-container">
-                            <canvas id="maxMileageChart"></canvas>
+                        </div>
+                        <div class="panel-content">
+                            <div style="height: 210px; position: relative;">
+                                <canvas id="vdpViewsLineChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Leads per Vehicle Panel -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Leads per vehicle</h3>
+                        </div>
+                        <div class="panel-content">
+                            <div style="height: 210px; position: relative;">
+                                <canvas id="leadsPerVehicleChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Panels Grid -->
                 <div class="panels-grid">
-                    <!-- Top Features Panel -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="panel-title">Top features</h3>
-                                                    </div>
-                        <div class="panel-content">
-                            <table class="features-table">
-                            <thead>
-                                <tr>
-                                    <th>Feature</th>
-                                    <th>Count</th>
-                                    <th>Trend</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>All wheel drive</td>
-                                    <td>287</td>
-                                    <td><span class="trend-up">46%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Backup camera</td>
-                                    <td>121</td>
-                                    <td><span class="trend-up">29%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Blind spot monitoring</td>
-                                    <td>113</td>
-                                    <td><span class="trend-up">27%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Sunroof/moonroof</td>
-                                    <td>113</td>
-                                    <td><span class="trend-up">18%</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Heated seats</td>
-                                    <td>99</td>
-                                    <td><span class="trend-up">16%</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                        <div class="see-more">
-                            <a href="#">See more</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Search vs Vehicle Type Chart -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="panel-title">Search vs. vehicle type</h3>
-                                                    </div>
-                        <div class="chart-container">
-                            <canvas id="searchVsTypeChart"></canvas>
-                        </div>
-                        <div class="chart-legend">
-                            <div class="legend-item">
-                                <span class="legend-dot" style="background: #3b82f6;"></span>
-                                <span>Your inventory</span>
-                            </div>
-                            <div class="legend-item">
-                                <span class="legend-dot" style="background: #5E6976;"></span>
-                                <span>Local market</span>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <!-- Biggest Search Volume Changes Panel -->
                     <div class="panel">
                         <div class="panel-header">
                             <h3 class="panel-title">Biggest Search Volume Changes</h3>
-                                                </div>
+                            <a href="index.html" class="learn-more-link">Learn more</a>
+                        </div>
                         <div class="vehicle-table-container">
                             <table class="vehicle-table">
                                 <thead>
@@ -200,9 +128,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="see-all">
-                            <a href="#">See all vehicles</a>
                         </div>
                     </div>
                     
@@ -210,7 +135,8 @@
                     <div class="panel">
                         <div class="panel-header">
                             <h3 class="panel-title">What's Trending in Your Listings</h3>
-                                                </div>
+                            <a href="index.html" class="learn-more-link">Learn more</a>
+                        </div>
                         <div class="vehicle-table-container">
                             <table class="vehicle-table">
                                 <thead>
@@ -259,9 +185,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="see-all">
-                            <a href="#">See all vehicles</a>
                         </div>
                     </div>
                 </div>
@@ -340,6 +263,31 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                
+                <!-- Bottom Panels Grid -->
+                <div class="panels-grid">
+                    <!-- Panel 1 -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Panel 1</h3>
+                            <a href="index.html" class="learn-more-link">Learn more</a>
+                        </div>
+                        <div class="panel-content">
+                            <p style="padding: 20px; color: #6B7280;">Content for panel 1</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Panel 2 -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Panel 2</h3>
+                            <a href="index.html" class="learn-more-link">Learn more</a>
+                        </div>
+                        <div class="panel-content">
+                            <p style="padding: 20px; color: #6B7280;">Content for panel 2</p>
+                        </div>
                     </div>
                 </div>
                 

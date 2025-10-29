@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1300, initial-scale=1.0">
+    <title>Shopper Analysis - CarGurus Dealer Analysis</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/market.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <img src="img/logo.svg" alt="CarGurus" style="height: 19px;">
+            </div>
+            
+            <nav class="sidebar-nav">
+                <!-- Navigation content removed -->
+                <img src="img/sidenav.svg" alt="CarGurus" style="height: 656px;">
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            
+            <!-- Main content area -->
+            <div class="content">
+                <div class="header">
+                    <h1 class="page-title">Shopper Analysis</h1>
+                </div>
+                
+                <!-- Shopper Persona Panel - Full Width -->
+                <div class="panel" style="margin-bottom: 24px;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Shopper persona</h3>
+                    </div>
+                    <div class="panel-content" style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                            <!-- Persona 1 -->
+                            <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; background: #FAFAFA;">
+                                <img src="img/shopper/shopper1.png" alt="Local Value Seeker" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 12px;">
+                                <h4 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Local Value Seeker (45%)</h4>
+                                <p style="font-size: 12px; color: #6B7280; line-height: 1.5; margin: 0;">Within 15 miles • $18-28K budget • Filters for Good/Great deals only • 12+ listings viewed • Mobile evenings/weekends • Highly price-sensitive</p>
+                            </div>
+                            
+                            <!-- Persona 2 -->
+                            <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; background: #FAFAFA;">
+                                <img src="img/shopper/shopper2.png" alt="Distance Traveler" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 12px;">
+                                <h4 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Distance Traveler (30%)</h4>
+                                <p style="font-size: 12px; color: #6B7280; line-height: 1.5; margin: 0;">50+ miles away • $35-50K budget • Feature-focused, less price-sensitive • 5-7 listings viewed • Desktop during work hours • Compares specialty dealers</p>
+                            </div>
+                            
+                            <!-- Persona 3 -->
+                            <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; background: #FAFAFA;">
+                                <img src="img/shopper/shopper3.png" alt="Quick Decider" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 12px;">
+                                <h4 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Quick Decider (25%)</h4>
+                                <p style="font-size: 12px; color: #6B7280; line-height: 1.5; margin: 0;">Within 25 miles • $20-40K budget • 1-2 days research • 3-5 listings viewed • Mobile lunch/ commute • Needs immediate availability</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Top Charts Row -->
+                <div class="panels-grid" style="margin-bottom: 24px; grid-auto-rows: auto;">
+                    <!-- Chart 1 -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Shopper Age</h3>
+                        </div>
+                        <div class="panel-content" style="padding: 15px 20px;">
+                            <div style="height: 210px; position: relative;">
+                                <canvas id="shopperEngagementChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart 2 -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3 class="panel-title">Gender Distribution</h3>
+                        </div>
+                        <div class="panel-content" style="padding: 15px 20px;">
+                            <div style="height: 210px; position: relative;">
+                                <canvas id="conversionRateChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Location Panel - Full Width -->
+                <div class="panel" style="margin-bottom: 24px;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Location</h3>
+                    </div>
+                    <div class="panel-content" style="padding: 20px;">
+                        <div style="display: flex; gap: 40px;">
+                            <div style="flex: 1;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid #E5E7EB;">
+                                            <th style="text-align: left; padding: 12px 0; font-size: 12px; font-weight: 500; color: #6B7280;">Town/City</th>
+                                            <th style="text-align: left; padding: 12px 0; font-size: 12px; font-weight: 500; color: #6B7280;">Total leads</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid #F3F4F6;">
+                                            <td style="padding: 16px 0; font-size: 14px; color: #111827;">Acton, MA</td>
+                                            <td style="padding: 16px 0; font-size: 14px; color: #111827;">802</td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #F3F4F6;">
+                                            <td style="padding: 16px 0; font-size: 14px; color: #111827;">Westford, MA</td>
+                                            <td style="padding: 16px 0; font-size: 14px; color: #111827;">802</td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #F3F4F6;">
+                                            <td style="padding: 16px 0; font-size: 14px; color: #111827;">Littleton, MA</td>
+                                            <td style="padding: 16px 0; font-size: 14px; color: #111827;">802</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 16px 0; font-size: 14px; color: #111827;">Groton, MA</td>
+                                            <td style="padding: 16px 0; font-size: 14px; color: #111827;">802</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="locationMap" style="flex: 1; border-radius: 8px; min-height: 250px; height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Who Converted vs. Who You Lost Panel - Full Width -->
+                <div class="panel" style="margin-bottom: 24px;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Who Converted vs. Who You Lost</h3>
+                        <a href="segment.html" class="learn-more-link">Learn more</a>
+                    </div>
+                    <div class="panel-content" style="padding: 20px;">
+                        <p style="color: #6B7280;">Conversion and loss analytics coming soon...</p>
+                    </div>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/shopper.js"></script>
+</body>
+</html>
