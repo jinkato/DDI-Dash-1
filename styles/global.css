@@ -320,9 +320,45 @@ textarea,
     transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
+.ai-check-circle > svg:first-of-type {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 18px;
+    height: 18px;
+    transform: rotate(-90deg);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.ai-check-circle.loading > svg:first-of-type {
+    opacity: 1;
+}
+
+@keyframes circleGrow {
+    0% {
+        stroke-dasharray: 0 53.4; /* circumference of circle with r=8.5 (2π × 8.5 ≈ 53.4) */
+    }
+    100% {
+        stroke-dasharray: 53.4 0;
+    }
+}
+
+.ai-check-circle.loading svg circle {
+    fill: none;
+    stroke: #0763D3;
+    stroke-width: 1;
+    stroke-dasharray: 0 53.4;
+    animation: circleGrow var(--loader-duration, 0.6s) linear forwards;
+}
+
 .ai-check-circle.checked {
     border-color: #05317B;
     background-color: #05317B;
+}
+
+.ai-check-circle.checked > svg:first-of-type {
+    display: none;
 }
 
 .ai-check-mark {
@@ -336,11 +372,15 @@ textarea,
     align-items: center;
     justify-content: center;
     opacity: 0;
+    z-index: 2;
 }
 
 .ai-check-mark svg {
     width: 100%;
     height: 100%;
+    transform: none !important;
+    position: relative !important;
+    opacity: 1 !important;
 }
 
 @keyframes checkScale {
