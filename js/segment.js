@@ -161,12 +161,12 @@ function buildComparisonTable() {
     // Add description cells for each segment
     const segment1Cell = document.createElement('td');
     segment1Cell.className = 'segment-description-cell';
-    segment1Cell.textContent = 'Buyers who submitted a lead';
+    segment1Cell.textContent = 'Shoppers who submitted a lead';
     descriptiveRow.appendChild(segment1Cell);
     
     const segment2Cell = document.createElement('td');
     segment2Cell.className = 'segment-description-cell';
-    segment2Cell.textContent = 'Users who viewed your VDP but did not submit a lead';
+    segment2Cell.textContent = 'Shoppers who visited VDP but did not submit a lead';
     descriptiveRow.appendChild(segment2Cell);
     
     tbody.appendChild(descriptiveRow);
@@ -371,3 +371,85 @@ function createBarChart(segment, metricKey, chartId) {
 
 // Build comparison table on page load
 buildComparisonTable();
+
+// Filter functionality
+const vehicleTypeFilter = document.getElementById('vehicle-type-filter');
+const dealRatingFilter = document.getElementById('deal-rating-filter');
+
+if (vehicleTypeFilter && dealRatingFilter) {
+    // Add event listeners for filters
+    vehicleTypeFilter.addEventListener('change', applyFilters);
+    dealRatingFilter.addEventListener('change', applyFilters);
+}
+
+function applyFilters() {
+    const vehicleType = vehicleTypeFilter.value;
+    const dealRating = dealRatingFilter.value;
+    
+    console.log('Filters applied:', { vehicleType, dealRating });
+    
+    // Create filtered segments based on selections
+    const filteredSegments = userSegments.map(segment => {
+        const filteredSegment = JSON.parse(JSON.stringify(segment)); // Deep clone
+        
+        // Adjust data based on vehicle type filter
+        if (vehicleType !== 'all') {
+            // Modify metrics based on vehicle type
+            const multipliers = {
+                'compact': 0.8,
+                'sedans': 1.0,
+                'suv': 1.3,
+                'trucks': 1.2,
+                'luxury': 1.5
+            };
+            
+            const multiplier = multipliers[vehicleType] || 1.0;
+            filteredSegment.totalUsers = Math.round(segment.totalUsers * multiplier);
+            filteredSegment.pagesPerSession = +(segment.pagesPerSession * multiplier).toFixed(1);
+            
+            // Adjust engagement metrics
+            Object.keys(filteredSegment.engagementMetrics).forEach(key => {
+                filteredSegment.engagementMetrics[key] = +(segment.engagementMetrics[key] * multiplier).toFixed(1);
+            });
+        }
+        
+        // Adjust data based on deal rating filter
+        if (dealRating !== 'all') {
+            const ratingMultipliers = {
+                'great': 1.2,
+                'good': 1.1,
+                'fair': 0.95,
+                'high': 0.85,
+                'over': 0.7
+            };
+            
+            const multiplier = ratingMultipliers[dealRating] || 1.0;
+            filteredSegment.totalUsers = Math.round(filteredSegment.totalUsers * multiplier);
+            filteredSegment.pagesPerSession = +(filteredSegment.pagesPerSession * multiplier).toFixed(1);
+        }
+        
+        return filteredSegment;
+    });
+    
+    // Update only the cell values, not the table structure
+    updateTableValues(filteredSegments);
+}
+
+function updateTableValues(filteredSegments) {
+    const tbody = document.getElementById('compare-tbody');
+    const rows = tbody.querySelectorAll('tr:not(.category-row)');
+    
+    rows.forEach(row => {
+        const metricName = row.querySelector('.metric-name');
+        if (!metricName) return;
+        
+        const metricKey = metricName.textContent.trim();
+        const valueCells = row.querySelectorAll('.metric-value');
+        
+        valueCells.forEach((cell, index) => {
+            if (filteredSegments[index]) {
+                cell.textContent = getMetricValue(filteredSegments[index], metricKey, index);
+            }
+        });
+    });
+}

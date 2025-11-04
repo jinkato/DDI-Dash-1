@@ -12,6 +12,7 @@
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/sidebar.css">
     <link rel="stylesheet" href="styles/performance.css">
     
@@ -39,17 +40,35 @@
             <div class="dropdowns">
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
-            <div class="header">
+            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h1>Performance</h1>
+                <button class="ai-button" id="generateSummaryBtn">Generate summary</button>
             </div>
             
             <!-- Main content area -->
             <div class="content">
+                <!-- AI Summary Panel -->
+                <div id="aiSummaryPanel" class="ai-summary-panel">
+                    <div class="ai-summary-header">
+                        <div class="ai-summary-title">
+                            <span>Overall Performance Analysis</span>
+                        </div>
+                    </div>
+                    <div class="ai-summary-content">
+                        <p>Your dealership is performing at the 72nd percentile compared to the market, showing competitive positioning. Current inventory stands at 247 vehicles, representing a 7% decrease from the previous period, which may impact available selection but could indicate strong sales velocity.</p>
+                        
+                        <p><strong>Recommendations:</strong></p>
+                        <ul>
+                            <li>Review pricing strategy to increase percentage of competitively priced vehicles</li>
+                            <li>Implement targeted marketing campaigns to boost lead generation</li>
+                        </ul>
+                    </div>
+                </div>
                 <!-- Filter Bar -->
                 <div class="filter-bar">
-                    <div class="filter-group">
-                        <span class="filter-label">Time frame:</span>
-                        <select class="filter-select">
+                    <div class="dropdown-container">
+                        <span class="dropdown-label">Time frame:</span>
+                        <select class="dropdown-select">
                             <option>14 days</option>
                             <option>30 days</option>
                             <option>90 days</option>
@@ -95,7 +114,7 @@
                         <a href="dealandtype.html" class="metric-card-title-link">
                             <div class="metric-card-title">Merchandising Health</div>
                         </a>
-                        <div class="metric-card-value">Strong</div>
+                        <div class="metric-card-value">100%</div>
                         <div class="metric-card-change positive">
                             
                         </div>
@@ -219,5 +238,161 @@
 
     <!-- JavaScript Files -->
     <script src="js/performance.js"></script>
+    
+    <!-- AI Summary Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateSummaryBtn');
+            const summaryPanel = document.getElementById('aiSummaryPanel');
+            
+            function showText(element, text, callback) {
+                element.textContent = text;
+                element.classList.add('show');
+                if (callback) {
+                    setTimeout(callback, 400); // Wait for fade in to complete
+                }
+            }
+            
+            function createChecklistItem(text) {
+                const item = document.createElement('div');
+                item.className = 'ai-process-item';
+                
+                const circle = document.createElement('div');
+                circle.className = 'ai-check-circle';
+                
+                const checkMark = document.createElement('div');
+                checkMark.className = 'ai-check-mark';
+                checkMark.innerHTML = '<svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                
+                circle.appendChild(checkMark);
+                
+                const textEl = document.createElement('span');
+                textEl.className = 'ai-process-text';
+                textEl.textContent = text;
+                
+                item.appendChild(circle);
+                item.appendChild(textEl);
+                
+                return { item, circle, checkMark };
+            }
+            
+            function animateChecklist(content, callback) {
+                const processList = document.createElement('div');
+                processList.className = 'ai-process-list';
+                
+                const steps = [
+                    'Reviewing current performance',
+                    'Analyzing market trends',
+                    'Synthesizing the data',
+                    'Creating custom recommendations'
+                ];
+                
+                const checklistItems = steps.map(step => createChecklistItem(step));
+                checklistItems.forEach(({ item }) => processList.appendChild(item));
+                
+                content.appendChild(processList);
+                
+                let currentStep = 0;
+                
+                function checkNextStep() {
+                    if (currentStep < checklistItems.length) {
+                        const { item, circle, checkMark } = checklistItems[currentStep];
+                        
+                        // Show the item
+                        setTimeout(() => {
+                            item.classList.add('show');
+                            
+                            // Check it off after 0.5 second delay
+                            setTimeout(() => {
+                                item.classList.add('checked');
+                                circle.classList.add('checked');
+                                checkMark.classList.add('show');
+                                
+                                currentStep++;
+                                
+                                // Move to next step or finish
+                                if (currentStep < checklistItems.length) {
+                                    setTimeout(checkNextStep, 150);
+                                } else {
+                                    // All steps complete, show content
+                                    setTimeout(() => {
+                                        content.removeChild(processList);
+                                        callback();
+                                    }, 250);
+                                }
+                            }, 500);
+                        }, 50);
+                    }
+                }
+                
+                // Start the process
+                checkNextStep();
+            }
+            
+            generateBtn.addEventListener('click', function() {
+                if (!summaryPanel.classList.contains('show')) {
+                    // Reset content
+                    const content = summaryPanel.querySelector('.ai-summary-content');
+                    content.innerHTML = '';
+                    
+                    // Show panel smoothly
+                    summaryPanel.classList.add('show', 'generating');
+                    generateBtn.textContent = 'Close';
+                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/close.svg")');
+                    
+                    // Start with checklist animation
+                    setTimeout(() => {
+                        animateChecklist(content, () => {
+                            // Create elements for actual content
+                            const p1 = document.createElement('p');
+                            const p2 = document.createElement('p');
+                            const ul = document.createElement('ul');
+                            const li1 = document.createElement('li');
+                            const li2 = document.createElement('li');
+                            
+                            content.appendChild(p1);
+                            
+                            // Show first paragraph
+                            showText(p1, 'Your dealership is performing at the 72nd percentile compared to the market, showing competitive positioning. Current inventory stands at 247 vehicles, representing a 7% decrease from the previous period, which may impact available selection but could indicate strong sales velocity.', () => {
+                                
+                                // Recommendations section appears immediately after first paragraph
+                                content.appendChild(p2);
+                                p2.innerHTML = '<strong>Recommendations:</strong>';
+                                p2.classList.add('show');
+                                
+                                // Add list
+                                content.appendChild(ul);
+                                ul.classList.add('show');
+                                ul.appendChild(li1);
+                                ul.appendChild(li2);
+                                
+                                // Show list items with minimal delay
+                                setTimeout(() => {
+                                    li1.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Review pricing strategy to increase percentage of competitively priced vehicles</a>';
+                                    li1.classList.add('show');
+                                    
+                                    setTimeout(() => {
+                                        li2.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Implement targeted marketing campaigns to boost lead generation</a>';
+                                        li2.classList.add('show');
+                                        setTimeout(() => {
+                                            // Stop border animation when content is fully loaded
+                                            summaryPanel.classList.remove('generating');
+                                        });
+                                    }, 100);
+                                }, 50);
+                            });
+                        });
+                    }, 300); // Wait for panel to open before showing checklist
+                    
+                } else {
+                    // Hide panel smoothly
+                    summaryPanel.classList.remove('show', 'generating');
+                    
+                    generateBtn.textContent = 'Generate summary';
+                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/ai.svg")');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
