@@ -43,8 +43,27 @@
             
             <!-- Main content area -->
             <div class="content">
-                <div class="header">
+                <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                     <h1 class="page-title">Shopper Analysis</h1>
+                    <button class="ai-button" id="generateSummaryBtn">Generate summary</button>
+                </div>
+                
+                <!-- AI Summary Panel -->
+                <div id="aiSummaryPanel" class="ai-summary-panel">
+                    <div class="ai-summary-header">
+                        <div class="ai-summary-title">
+                            <span>Shopper Analysis Overview</span>
+                        </div>
+                    </div>
+                    <div class="ai-summary-content">
+                        <p>Your dealership attracts three distinct shopper personas: Local Value Seekers (45%) who are highly price-sensitive, Distance Travelers (30%) who prioritize features, and Quick Deciders (25%) who need immediate availability. The majority of your shoppers are within a 25-mile radius.</p>
+                        
+                        <p><strong>Recommendations:</strong></p>
+                        <ul>
+                            <li>Optimize inventory pricing for competitive deals to attract Local Value Seekers</li>
+                            <li>Highlight unique features and specialty vehicles for Distance Travelers</li>
+                        </ul>
+                    </div>
                 </div>
                 
                 <!-- Shopper Persona Panel - Full Width -->
@@ -162,5 +181,183 @@
 
     <!-- JavaScript Files -->
     <script src="js/shopper.js"></script>
+    
+    <!-- AI Summary Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateSummaryBtn');
+            const summaryPanel = document.getElementById('aiSummaryPanel');
+            
+            function showText(element, text, callback) {
+                element.textContent = text;
+                element.classList.add('show');
+                if (callback) {
+                    setTimeout(callback, 400); // Wait for fade in to complete
+                }
+            }
+            
+            function createChecklistItem(text) {
+                const item = document.createElement('div');
+                item.className = 'ai-process-item';
+                
+                const circle = document.createElement('div');
+                circle.className = 'ai-check-circle';
+                
+                // Set duration to 0.4 seconds
+                const duration = 0.4;
+                circle.style.setProperty('--loader-duration', duration + 's');
+                
+                // Add SVG for circle loading animation
+                const loaderSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                loaderSvg.setAttribute('viewBox', '0 0 18 18');
+                const loaderCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                loaderCircle.setAttribute('cx', '9');
+                loaderCircle.setAttribute('cy', '9');
+                loaderCircle.setAttribute('r', '8.5');
+                loaderCircle.setAttribute('fill', 'none');
+                loaderSvg.appendChild(loaderCircle);
+                circle.appendChild(loaderSvg);
+                
+                const checkMark = document.createElement('div');
+                checkMark.className = 'ai-check-mark';
+                checkMark.innerHTML = '<svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                
+                circle.appendChild(checkMark);
+                
+                const textEl = document.createElement('span');
+                textEl.className = 'ai-process-text';
+                textEl.textContent = text;
+                
+                item.appendChild(circle);
+                item.appendChild(textEl);
+                
+                return { item, circle, checkMark, duration: duration };
+            }
+            
+            function animateChecklist(content, callback) {
+                const processList = document.createElement('div');
+                processList.className = 'ai-process-list';
+                
+                const steps = [
+                    'Analyzing shopper personas',
+                    'Evaluating demographics',
+                    'Mapping geographic patterns',
+                    'Calculating conversion metrics',
+                    'Generating recommendations'
+                ];
+                
+                const checklistItems = steps.map(step => createChecklistItem(step));
+                checklistItems.forEach(({ item }) => processList.appendChild(item));
+                
+                content.appendChild(processList);
+                
+                let currentStep = 0;
+                
+                function checkNextStep() {
+                    if (currentStep < checklistItems.length) {
+                        const { item, circle, checkMark, duration } = checklistItems[currentStep];
+                        
+                        // Show the item
+                        setTimeout(() => {
+                            item.classList.add('show');
+                            
+                            // Start circle loading animation after 0.5 second delay
+                            setTimeout(() => {
+                                circle.classList.add('loading');
+                                
+                                // After loading animation, fill circle and show checkmark
+                                setTimeout(() => {
+                                    circle.classList.remove('loading');
+                                    item.classList.add('checked');
+                                    circle.classList.add('checked');
+                                    checkMark.classList.add('show');
+                                    
+                                    currentStep++;
+                                    
+                                    // Move to next step or finish
+                                    if (currentStep < checklistItems.length) {
+                                        setTimeout(checkNextStep, 150);
+                                    } else {
+                                        // All steps complete, show content
+                                        setTimeout(() => {
+                                            content.removeChild(processList);
+                                            callback();
+                                        }, 250);
+                                    }
+                                }, duration * 1000); // Use dynamic duration for each item
+                            }, 500);
+                        }, 50);
+                    }
+                }
+                
+                // Start the process
+                checkNextStep();
+            }
+            
+            generateBtn.addEventListener('click', function() {
+                if (!summaryPanel.classList.contains('show')) {
+                    // Reset content
+                    const content = summaryPanel.querySelector('.ai-summary-content');
+                    content.innerHTML = '';
+                    
+                    // Show panel smoothly
+                    summaryPanel.classList.add('show', 'generating');
+                    generateBtn.textContent = 'Close';
+                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/close.svg")');
+                    
+                    // Start with checklist animation
+                    setTimeout(() => {
+                        animateChecklist(content, () => {
+                            // Create elements for actual content
+                            const p1 = document.createElement('p');
+                            const p2 = document.createElement('p');
+                            const ul = document.createElement('ul');
+                            const li1 = document.createElement('li');
+                            const li2 = document.createElement('li');
+                            
+                            content.appendChild(p1);
+                            
+                            // Show first paragraph
+                            showText(p1, 'Your dealership attracts three distinct shopper personas: Local Value Seekers (45%) who are highly price-sensitive, Distance Travelers (30%) who prioritize features, and Quick Deciders (25%) who need immediate availability. The majority of your shoppers are within a 25-mile radius.', () => {
+                                
+                                // Recommendations section appears immediately after first paragraph
+                                content.appendChild(p2);
+                                p2.innerHTML = '<strong>Recommendations:</strong>';
+                                p2.classList.add('show');
+                                
+                                // Add list
+                                content.appendChild(ul);
+                                ul.classList.add('show');
+                                ul.appendChild(li1);
+                                ul.appendChild(li2);
+                                
+                                // Show list items with minimal delay
+                                setTimeout(() => {
+                                    li1.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Optimize inventory pricing for competitive deals to attract Local Value Seekers</a>';
+                                    li1.classList.add('show');
+                                    
+                                    setTimeout(() => {
+                                        li2.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Highlight unique features and specialty vehicles for Distance Travelers</a>';
+                                        li2.classList.add('show');
+                                        setTimeout(() => {
+                                            // Stop border animation when content is fully loaded
+                                            summaryPanel.classList.remove('generating');
+                                        });
+                                    }, 100);
+                                }, 50);
+                            });
+                        });
+                    }, 300); // Wait for panel to open before showing checklist
+                    
+                } else {
+                    // Hide panel smoothly
+                    summaryPanel.classList.remove('show', 'generating');
+                    
+                    generateBtn.textContent = 'Generate summary';
+                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/ai.svg")');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
