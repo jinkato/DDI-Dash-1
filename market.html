@@ -12,6 +12,7 @@
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/sidebar.css">
     <link rel="stylesheet" href="styles/market.css">
     
@@ -39,34 +40,90 @@
             <div class="dropdowns">
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
-            <div class="header">
+            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h1>Market Analysis</h1>
+                <button class="ai-button" id="generateSummaryBtn">Generate summary</button>
             </div>
             
             <!-- Main content area -->
             <div class="content">
+                <!-- AI Summary Panel -->
+                <div id="aiSummaryPanel" class="ai-summary-panel">
+                    <div class="ai-summary-header">
+                        <div class="ai-summary-title">
+                            <span>Market Analysis Overview</span>
+                        </div>
+                    </div>
+                    <div class="ai-summary-content">
+                        <p>Your dealership shows strong performance in the electric vehicle segment with 30% faster turnover than luxury vehicles. Current inventory mix is misaligned with market demand, particularly in SUVs where you're 15% below optimal levels.</p>
+                        
+                        <p><strong>Recommendations:</strong></p>
+                        <ul>
+                            <li>Increase SUV inventory by 15% to match market demand</li>
+                            <li>Reduce sedan inventory by 12% to optimize turnover rates</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <div class="dropdown-container">
+                        <span class="dropdown-label">Time frame:</span>
+                        <select class="dropdown-select">
+                            <option>14 days</option>
+                            <option>30 days</option>
+                            <option>90 days</option>
+                        </select>
+                    </div>
+                    <div class="dropdown-container">
+                        <span class="dropdown-label">Radius:</span>
+                        <select class="dropdown-select">
+                            <option>50ml</option>
+                            <option>100ml</option>
+                            <option>200ml</option>
+                        </select>
+                    </div>
+                </div>
+                
                 <!-- Top Charts Row -->
                 <div class="panels-grid" style="margin-bottom: 24px;">
-                    <!-- VDP Views Panel -->
+                    <!-- Inventory mix VS market demand Panel -->
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="panel-title">VDP views</h3>
+                            <h3 class="panel-title">Inventory mix VS market demand</h3>
                         </div>
                         <div class="panel-content">
                             <div style="height: 210px; position: relative;">
-                                <canvas id="vdpViewsLineChart"></canvas>
+                                <canvas id="inventoryMixChart"></canvas>
+                            </div>
+                            <div style="margin-top: 16px; padding: 0 20px;">
+                                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                    <img src="img/icon/ai_color.svg" alt="AI" style="width: 16px; height: 16px;">
+                                    <h4 style="font-size: 14px; font-weight: bold; color: #0D1722; margin: 0;">Key insights</h4>
+                                </div>
+                                <p style="font-size: 13px; color: #374151; line-height: 1.4; margin: 0; padding-left: 22px;">
+                                    Your SUV inventory is 15% below market demand, while sedan inventory exceeds demand by 12%.
+                                </p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Leads per Vehicle Panel -->
+                    <!-- Days on market by vehicle type Panel -->
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="panel-title">Leads per vehicle</h3>
+                            <h3 class="panel-title">Days on market by vehicle type</h3>
                         </div>
                         <div class="panel-content">
                             <div style="height: 210px; position: relative;">
-                                <canvas id="leadsPerVehicleChart"></canvas>
+                                <canvas id="daysOnMarketChart"></canvas>
+                            </div>
+                            <div style="margin-top: 16px; padding: 0 20px;">
+                                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                    <img src="img/icon/ai_color.svg" alt="AI" style="width: 16px; height: 16px;">
+                                    <h4 style="font-size: 14px; font-weight: bold; color: #0D1722; margin: 0;">Key insights</h4>
+                                </div>
+                                <p style="font-size: 13px; color: #374151; line-height: 1.4; margin: 0; padding-left: 22px;">
+                                    Electric vehicles sell 30 days faster than luxury vehicles. Consider adjusting your inventory mix to include more fast-moving categories.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -131,60 +188,16 @@
                         </div>
                     </div>
                     
-                    <!-- What's Trending in Your Listings Panel -->
+                    <!-- Top searched features Panel -->
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="panel-title">What's Trending in Your Listings</h3>
+                            <h3 class="panel-title">Top searched features</h3>
                             <a href="index.html" class="learn-more-link">Learn more</a>
                         </div>
-                        <div class="vehicle-table-container">
-                            <table class="vehicle-table">
-                                <thead>
-                                    <tr>
-                                        <th>Vehicle</th>
-                                        <th>Searches</th>
-                                        <th>Trend</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="vehicle-info">
-                                                <img src="img/car thumbnail/car3@2x.png" alt="Vehicle" class="vehicle-image">
-                                                <div class="vehicle-details">
-                                                    2017 Chevrolet Colorado Extended Cab
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>482</td>
-                                        <td><span class="trend-up">46%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="vehicle-info">
-                                                <img src="img/car thumbnail/car1@2x.png" alt="Vehicle" class="vehicle-image">
-                                                <div class="vehicle-details">
-                                                    2019 Nissan Sentra SV
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>351</td>
-                                        <td><span class="trend-up">38%</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="vehicle-info">
-                                                <img src="img/car thumbnail/car2@2x.png" alt="Vehicle" class="vehicle-image">
-                                                <div class="vehicle-details">
-                                                    2018 Honda HR-V EX
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>298</td>
-                                        <td><span class="trend-up">32%</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="panel-content">
+                            <div style="height: 320px; position: relative; padding: 10px;">
+                                <canvas id="topFeaturesChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -266,30 +279,6 @@
                     </div>
                 </div>
                 
-                <!-- Bottom Panels Grid -->
-                <div class="panels-grid">
-                    <!-- Panel 1 -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="panel-title">Panel 1</h3>
-                            <a href="index.html" class="learn-more-link">Learn more</a>
-                        </div>
-                        <div class="panel-content">
-                            <p style="padding: 20px; color: #6B7280;">Content for panel 1</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Panel 2 -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="panel-title">Panel 2</h3>
-                            <a href="index.html" class="learn-more-link">Learn more</a>
-                        </div>
-                        <div class="panel-content">
-                            <p style="padding: 20px; color: #6B7280;">Content for panel 2</p>
-                        </div>
-                    </div>
-                </div>
                 
             </div>
         </main>
@@ -297,5 +286,183 @@
 
     <!-- JavaScript Files -->
     <script src="js/market.js"></script>
+    
+    <!-- AI Summary Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateSummaryBtn');
+            const summaryPanel = document.getElementById('aiSummaryPanel');
+            
+            function showText(element, text, callback) {
+                element.textContent = text;
+                element.classList.add('show');
+                if (callback) {
+                    setTimeout(callback, 400); // Wait for fade in to complete
+                }
+            }
+            
+            function createChecklistItem(text) {
+                const item = document.createElement('div');
+                item.className = 'ai-process-item';
+                
+                const circle = document.createElement('div');
+                circle.className = 'ai-check-circle';
+                
+                // Set duration to 0.4 seconds
+                const duration = 0.4;
+                circle.style.setProperty('--loader-duration', duration + 's');
+                
+                // Add SVG for circle loading animation
+                const loaderSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                loaderSvg.setAttribute('viewBox', '0 0 18 18');
+                const loaderCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                loaderCircle.setAttribute('cx', '9');
+                loaderCircle.setAttribute('cy', '9');
+                loaderCircle.setAttribute('r', '8.5');
+                loaderCircle.setAttribute('fill', 'none');
+                loaderSvg.appendChild(loaderCircle);
+                circle.appendChild(loaderSvg);
+                
+                const checkMark = document.createElement('div');
+                checkMark.className = 'ai-check-mark';
+                checkMark.innerHTML = '<svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                
+                circle.appendChild(checkMark);
+                
+                const textEl = document.createElement('span');
+                textEl.className = 'ai-process-text';
+                textEl.textContent = text;
+                
+                item.appendChild(circle);
+                item.appendChild(textEl);
+                
+                return { item, circle, checkMark, duration: duration };
+            }
+            
+            function animateChecklist(content, callback) {
+                const processList = document.createElement('div');
+                processList.className = 'ai-process-list';
+                
+                const steps = [
+                    'Analyzing market trends',
+                    'Comparing inventory mix',
+                    'Evaluating competitor data',
+                    'Calculating turnover rates',
+                    'Generating insights'
+                ];
+                
+                const checklistItems = steps.map(step => createChecklistItem(step));
+                checklistItems.forEach(({ item }) => processList.appendChild(item));
+                
+                content.appendChild(processList);
+                
+                let currentStep = 0;
+                
+                function checkNextStep() {
+                    if (currentStep < checklistItems.length) {
+                        const { item, circle, checkMark, duration } = checklistItems[currentStep];
+                        
+                        // Show the item
+                        setTimeout(() => {
+                            item.classList.add('show');
+                            
+                            // Start circle loading animation after 0.5 second delay
+                            setTimeout(() => {
+                                circle.classList.add('loading');
+                                
+                                // After loading animation, fill circle and show checkmark
+                                setTimeout(() => {
+                                    circle.classList.remove('loading');
+                                    item.classList.add('checked');
+                                    circle.classList.add('checked');
+                                    checkMark.classList.add('show');
+                                    
+                                    currentStep++;
+                                    
+                                    // Move to next step or finish
+                                    if (currentStep < checklistItems.length) {
+                                        setTimeout(checkNextStep, 150);
+                                    } else {
+                                        // All steps complete, show content
+                                        setTimeout(() => {
+                                            content.removeChild(processList);
+                                            callback();
+                                        }, 250);
+                                    }
+                                }, duration * 1000); // Use dynamic duration for each item
+                            }, 500);
+                        }, 50);
+                    }
+                }
+                
+                // Start the process
+                checkNextStep();
+            }
+            
+            generateBtn.addEventListener('click', function() {
+                if (!summaryPanel.classList.contains('show')) {
+                    // Reset content
+                    const content = summaryPanel.querySelector('.ai-summary-content');
+                    content.innerHTML = '';
+                    
+                    // Show panel smoothly
+                    summaryPanel.classList.add('show', 'generating');
+                    generateBtn.textContent = 'Close';
+                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/close.svg")');
+                    
+                    // Start with checklist animation
+                    setTimeout(() => {
+                        animateChecklist(content, () => {
+                            // Create elements for actual content
+                            const p1 = document.createElement('p');
+                            const p2 = document.createElement('p');
+                            const ul = document.createElement('ul');
+                            const li1 = document.createElement('li');
+                            const li2 = document.createElement('li');
+                            
+                            content.appendChild(p1);
+                            
+                            // Show first paragraph
+                            showText(p1, 'Your dealership shows strong performance in the electric vehicle segment with 30% faster turnover than luxury vehicles. Current inventory mix is misaligned with market demand, particularly in SUVs where you\'re 15% below optimal levels.', () => {
+                                
+                                // Recommendations section appears immediately after first paragraph
+                                content.appendChild(p2);
+                                p2.innerHTML = '<strong>Recommendations:</strong>';
+                                p2.classList.add('show');
+                                
+                                // Add list
+                                content.appendChild(ul);
+                                ul.classList.add('show');
+                                ul.appendChild(li1);
+                                ul.appendChild(li2);
+                                
+                                // Show list items with minimal delay
+                                setTimeout(() => {
+                                    li1.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Increase SUV inventory by 15% to match market demand</a>';
+                                    li1.classList.add('show');
+                                    
+                                    setTimeout(() => {
+                                        li2.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Reduce sedan inventory by 12% to optimize turnover rates</a>';
+                                        li2.classList.add('show');
+                                        setTimeout(() => {
+                                            // Stop border animation when content is fully loaded
+                                            summaryPanel.classList.remove('generating');
+                                        });
+                                    }, 100);
+                                }, 50);
+                            });
+                        });
+                    }, 300); // Wait for panel to open before showing checklist
+                    
+                } else {
+                    // Hide panel smoothly
+                    summaryPanel.classList.remove('show', 'generating');
+                    
+                    generateBtn.textContent = 'Generate summary';
+                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/ai.svg")');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

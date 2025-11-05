@@ -177,26 +177,27 @@ function initializeCharts() {
         }
     });
 
-    // VDP Views Line Chart
-    const vdpViewsCanvas = document.getElementById('vdpViewsLineChart');
-    if (vdpViewsCanvas) {
-        new Chart(vdpViewsCanvas, {
-            type: 'line',
+    // Inventory Mix Chart
+    const inventoryMixCanvas = document.getElementById('inventoryMixChart');
+    if (inventoryMixCanvas) {
+        new Chart(inventoryMixCanvas, {
+            type: 'bar',
             data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                labels: ['SUVs', 'Sedans', 'Trucks', 'Electric', 'Luxury', 'Economy'],
                 datasets: [{
-                    label: 'VDP Views',
-                    data: [3200, 3500, 3800, 4100, 4500, 5200, 4800],
-                    borderColor: '#3B82F6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#3B82F6',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 5,
-                    pointHoverRadius: 7
+                    label: 'Your Inventory %',
+                    data: [25, 32, 18, 12, 8, 5],
+                    backgroundColor: '#6B8BF5',
+                    borderRadius: 4,
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.7
+                }, {
+                    label: 'Market Demand %',
+                    data: [40, 20, 15, 15, 6, 4],
+                    backgroundColor: '#9B7BB8',
+                    borderRadius: 4,
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.7
                 }]
             },
             options: {
@@ -204,7 +205,18 @@ function initializeCharts() {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false
+                        display: true,
+                        position: 'bottom',
+                        align: 'center',
+                        labels: {
+                            boxWidth: 15,
+                            padding: 15,
+                            font: {
+                                size: 13,
+                                weight: '500'
+                            },
+                            color: '#374151'
+                        }
                     },
                     tooltip: {
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -219,7 +231,7 @@ function initializeCharts() {
                         },
                         callbacks: {
                             label: function(context) {
-                                return 'Views: ' + context.parsed.y.toLocaleString();
+                                return context.dataset.label + ': ' + context.parsed.y + '%';
                             }
                         }
                     }
@@ -238,6 +250,7 @@ function initializeCharts() {
                     },
                     y: {
                         beginAtZero: true,
+                        max: 45,
                         grid: {
                             color: '#E5E7EB',
                             drawBorder: false
@@ -251,7 +264,86 @@ function initializeCharts() {
                             },
                             color: '#6B7280',
                             callback: function(value) {
-                                return value.toLocaleString();
+                                return value + '%';
+                            },
+                            stepSize: 5
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Top Features Pie Chart
+    const topFeaturesCanvas = document.getElementById('topFeaturesChart');
+    if (topFeaturesCanvas) {
+        new Chart(topFeaturesCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Backup Camera', 'Alloy Wheels', 'Bluetooth', 'Heated Seats', 'CarPlay', 'Navigation System', 'Android Auto', 'Remote Start', 'Other'],
+                datasets: [{
+                    data: [18, 15, 14, 12, 10, 9, 8, 7, 7],
+                    backgroundColor: [
+                        '#3B82F6',
+                        '#10B981',
+                        '#F59E0B',
+                        '#EF4444',
+                        '#8B5CF6',
+                        '#EC4899',
+                        '#14B8A6',
+                        '#F97316',
+                        '#6B7280'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                aspectRatio: 1.8,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        align: 'center',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 8,
+                            boxPadding: 20,
+                            usePointStyle: false,
+                            font: {
+                                size: 11,
+                                family: "'DM Sans', sans-serif"
+                            },
+                            color: '#374151',
+                            generateLabels: function(chart) {
+                                const data = chart.data;
+                                if (data.labels.length && data.datasets.length) {
+                                    return data.labels.map((label, i) => {
+                                        const value = data.datasets[0].data[i];
+                                        return {
+                                            text: label + ' ' + value + '%',
+                                            fillStyle: data.datasets[0].backgroundColor[i],
+                                            strokeStyle: data.datasets[0].backgroundColor[i],
+                                            lineWidth: 0,
+                                            index: i
+                                        };
+                                    });
+                                }
+                                return [];
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        cornerRadius: 6,
+                        bodyFont: {
+                            size: 14
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed + '%';
                             }
                         }
                     }
@@ -261,35 +353,69 @@ function initializeCharts() {
     }
 }
 
-// Direct test - initialize VDP chart immediately when script loads
+// Direct test - initialize charts immediately when script loads
+
 window.addEventListener('load', function() {
     console.log('Window loaded, looking for canvas...');
-    const testCanvas = document.getElementById('vdpViewsLineChart');
+    const testCanvas = document.getElementById('inventoryMixChart');
     console.log('Canvas found:', testCanvas);
     
     if (testCanvas) {
-        console.log('Creating chart...');
+        console.log('Creating inventory mix chart...');
         try {
             new Chart(testCanvas, {
-                type: 'line',
+                type: 'bar',
                 data: {
-                    labels: ['Oct 1', 'Oct 8', 'Oct 15', 'Oct 22', 'Oct 29'],
+                    labels: ['SUVs', 'Sedans', 'Trucks', 'Electric', 'Luxury', 'Economy'],
                     datasets: [{
-                        label: 'VDP Views',
-                        data: [4200, 4300, 4250, 4350, 4280],
-                        borderColor: '#3B82F6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4
+                        label: 'Your Inventory %',
+                        data: [25, 32, 18, 12, 8, 5],
+                        backgroundColor: '#6B8BF5',
+                        borderRadius: 4,
+                        barPercentage: 0.8,
+                        categoryPercentage: 0.7
+                    }, {
+                        label: 'Market Demand %',
+                        data: [40, 20, 15, 15, 6, 4],
+                        backgroundColor: '#9B7BB8',
+                        borderRadius: 4,
+                        barPercentage: 0.8,
+                        categoryPercentage: 0.7
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            align: 'center',
+                            labels: {
+                                boxWidth: 15,
+                                padding: 15,
+                                font: {
+                                    size: 13,
+                                    weight: '500'
+                                },
+                                color: '#374151'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 45,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
                 }
             });
-            console.log('Chart created successfully!');
+            console.log('Inventory mix chart created successfully!');
         } catch (error) {
             console.error('Error creating chart:', error);
         }
@@ -297,33 +423,184 @@ window.addEventListener('load', function() {
         console.error('Canvas element not found!');
     }
     
-    // Create Leads per Vehicle chart
-    const leadsCanvas = document.getElementById('leadsPerVehicleChart');
-    if (leadsCanvas) {
-        console.log('Creating Leads per Vehicle chart...');
+    // Create Top Features chart
+    const topFeaturesCanvas = document.getElementById('topFeaturesChart');
+    if (topFeaturesCanvas) {
+        console.log('Creating Top Features chart...');
         try {
-            new Chart(leadsCanvas, {
-                type: 'line',
+            new Chart(topFeaturesCanvas, {
+                type: 'doughnut',
                 data: {
-                    labels: ['Oct 1', 'Oct 8', 'Oct 15', 'Oct 22', 'Oct 29'],
+                    labels: ['Backup Camera', 'Alloy Wheels', 'Bluetooth', 'Heated Seats', 'CarPlay', 'Navigation System', 'Android Auto', 'Remote Start', 'Other'],
                     datasets: [{
-                        label: 'Leads per Vehicle',
-                        data: [1.8, 1.9, 1.7, 2.0, 1.8],
-                        borderColor: '#10B981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4
+                        data: [18, 15, 14, 12, 10, 9, 8, 7, 7],
+                        backgroundColor: [
+                            '#3B82F6',
+                            '#10B981',
+                            '#F59E0B',
+                            '#EF4444',
+                            '#8B5CF6',
+                            '#EC4899',
+                            '#14B8A6',
+                            '#F97316',
+                            '#6B7280'
+                        ],
+                        borderWidth: 0
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    maintainAspectRatio: true,
+                    aspectRatio: 1.8,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            align: 'center',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 8,
+                            boxPadding: 20,
+                                usePointStyle: false,
+                                font: {
+                                    size: 11,
+                                    family: "'DM Sans', sans-serif"
+                                },
+                                color: '#374151',
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map((label, i) => {
+                                            const value = data.datasets[0].data[i];
+                                            return {
+                                                text: label + ' ' + value + '%',
+                                                fillStyle: data.datasets[0].backgroundColor[i],
+                                                strokeStyle: data.datasets[0].backgroundColor[i],
+                                                lineWidth: 0,
+                                                index: i
+                                            };
+                                        });
+                                    }
+                                    return [];
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            cornerRadius: 6,
+                            bodyFont: {
+                                size: 14
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    }
                 }
             });
-            console.log('Leads per Vehicle chart created successfully!');
+            console.log('Top Features chart created successfully!');
         } catch (error) {
-            console.error('Error creating Leads per Vehicle chart:', error);
+            console.error('Error creating Top Features chart:', error);
+        }
+    }
+
+    // Create Days on Market chart
+    const daysCanvas = document.getElementById('daysOnMarketChart');
+    if (daysCanvas) {
+        console.log('Creating Days on Market chart...');
+        try {
+            new Chart(daysCanvas, {
+                type: 'bar',
+                data: {
+                    labels: ['Luxury', 'Sedans', 'Economy', 'Trucks', 'SUVs', 'Electric'],
+                    datasets: [{
+                        label: 'Days on Market',
+                        data: [58, 48, 42, 38, 35, 28],
+                        backgroundColor: [
+                            '#E06B6B',  // Luxury - reddish
+                            '#E89A9A',  // Sedans - light red
+                            '#F2B676',  // Economy - orange
+                            '#F5D171',  // Trucks - yellow
+                            '#6B8BF5',  // SUVs - blue
+                            '#7DC383'   // Electric - green
+                        ],
+                        borderRadius: 0,
+                        barPercentage: 0.7
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            cornerRadius: 6,
+                            titleFont: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                size: 14
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.x + ' days';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 60,
+                            grid: {
+                                color: '#E5E7EB',
+                                drawBorder: false
+                            },
+                            border: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 12
+                                },
+                                color: '#6B7280',
+                                stepSize: 10
+                            },
+                            title: {
+                                display: true,
+                                text: 'Days',
+                                font: {
+                                    size: 13
+                                },
+                                color: '#6B7280'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 13
+                                },
+                                color: '#374151'
+                            }
+                        }
+                    }
+                }
+            });
+            console.log('Days on Market chart created successfully!');
+        } catch (error) {
+            console.error('Error creating Days on Market chart:', error);
         }
     }
 });

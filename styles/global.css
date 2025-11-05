@@ -563,3 +563,10 @@ textarea,
     border-bottom: 1px solid #e5e7eb;
     height: 56px;
 }
+
+.panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
