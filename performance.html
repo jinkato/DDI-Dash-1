@@ -11,9 +11,18 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- CSS Files -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/global/main.css">
+    <link rel="stylesheet" href="styles/global/typography.css">
+    <link rel="stylesheet" href="styles/global/link.css">
+    <link rel="stylesheet" href="styles/global/button.css">
+    <link rel="stylesheet" href="styles/global/filter-group.css">
+    <link rel="stylesheet" href="styles/global/pill.css">
+    <link rel="stylesheet" href="styles/global/panel.css">
+    <link rel="stylesheet" href="styles/global/global.css">
+    <link rel="stylesheet" href="styles/global/dropdown.css">
+    <link rel="stylesheet" href="styles/global/table.css">
+    <link rel="stylesheet" href="styles/global/ai.css">
+    <link rel="stylesheet" href="styles/global/sidebar.css">
     <link rel="stylesheet" href="styles/performance.css">
     
     <!-- Chart.js -->
@@ -42,7 +51,7 @@
             </div>
             <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h1>Performance</h1>
-                <button class="ai-button" id="generateSummaryBtn">Generate summary</button>
+                <button class="ai-button">Generate summary</button>
             </div>
             
             <!-- Main content area -->
@@ -67,11 +76,20 @@
                 <!-- Filter Bar -->
                 <div class="filter-bar">
                     <div class="dropdown-container">
-                        <span class="dropdown-label">Time frame:</span>
+                        <span class="dropdown-label text-sm text-bold">Time frame:</span>
                         <select class="dropdown-select">
                             <option>14 days</option>
                             <option>30 days</option>
                             <option>90 days</option>
+                        </select>
+                    </div>
+                    <div class="dropdown-container">
+                        <span class="dropdown-label text-sm text-bold">Vehicle Type:</span>
+                        <select class="dropdown-select">
+                            <option>All</option>
+                            <option>New</option>
+                            <option>Used</option>
+                            <option>CPO</option>
                         </select>
                     </div>
                 </div>
@@ -130,7 +148,6 @@
                                 <h3 class="panel-title">Conversion Funnel</h3>
                                 <div class="availability high">Strong</div>
                             </div>
-                            <a href="why.html" class="learn-more-link">Learn more</a>
                         </div>
                         <div class="overall-conversion">
                             <span class="conversion-value">1.62% SRP to lead conversion</span>
@@ -141,14 +158,51 @@
                         </div>
                     </div>
                     
-                    <!-- Top Features Panel -->
+                    <!-- Leads per Vehicle Panel -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <h3 class="panel-title">Leads per Vehicle</h3>
+                                <div class="availability needs-attention">Needs attention</div>
+                            </div>
+                            <a href="why.html" class="learn-more-link">Learn More</a>
+                        </div>
+                        <div class="overall-conversion">
+                            <span class="conversion-value">2.3 leads per vehicle</span>
+                            <span class="conversion-label">↘ Down 0.4 from last month | Market average: 3.1</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="leadsPerVehicleChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row Panels -->
+                <div class="panels-grid">
+                    <!-- Price vs. Search Chart -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <h3 class="panel-title">Turn Time</h3>
+                                <div class="availability high">Strong</div>
+                            </div>
+                        </div>
+                        <div class="overall-conversion">
+                            <span class="conversion-value">34 days average turn time</span>
+                            <span class="conversion-label">↗ 8 days faster than market | Market average: 42 days</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="priceVsSearchChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Connection Summary Panel -->
                     <div class="panel connection-summary-panel">
                         <div class="panel-header">
                             <div style="display: flex; align-items: center; gap: 4px;">
                                 <h3 class="panel-title">Connection Summary</h3>
                                 <div class="availability high">Strong</div>
                             </div>
-                            <a href="why.html" class="learn-more-link">Learn more</a>
                         </div>
                         <div class="panel-content">
                             <table class="features-table">
@@ -196,41 +250,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Bottom Row Panels -->
-                <div class="panels-grid">
-                    <!-- Price vs. Search Chart -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <div style="display: flex; align-items: center; gap: 4px;">
-                                <h3 class="panel-title">Turn Time</h3>
-                                <div class="availability high">Strong</div>
-                            </div>
-                            <a href="why.html" class="learn-more-link">Learn more</a>
-                        </div>
-                        <div class="overall-conversion">
-                            <span class="conversion-label">Average turn time</span>
-                            <span class="conversion-value">34 days</span>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="priceVsSearchChart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- Max Mileage Chart -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <div style="display: flex; align-items: center; gap: 4px;">
-                                <h3 class="panel-title">Total leads</h3>
-                                <div class="availability needs-attention">Needs attention</div>
-                            </div>
-                            <a href="why.html" class="learn-more-link">Learn more</a>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="maxMileageChart"></canvas>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </main>
@@ -242,7 +261,7 @@
     <!-- AI Summary Toggle Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const generateBtn = document.getElementById('generateSummaryBtn');
+            const generateBtn = document.querySelector('.ai-button');
             const summaryPanel = document.getElementById('aiSummaryPanel');
             
             function showText(element, text, callback) {
@@ -360,7 +379,7 @@
                     // Show panel smoothly
                     summaryPanel.classList.add('show', 'generating');
                     generateBtn.textContent = 'Close';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/close.svg")');
+                    generateBtn.style.setProperty('--ai-icon', 'url("img/icon/close.svg")');
                     
                     // Start with checklist animation
                     setTimeout(() => {
@@ -411,7 +430,7 @@
                     summaryPanel.classList.remove('show', 'generating');
                     
                     generateBtn.textContent = 'Generate summary';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/ai.svg")');
+                    generateBtn.style.setProperty('--ai-icon', 'url("img/icon/ai.svg")');
                 }
             });
         });

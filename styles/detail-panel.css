@@ -1,24 +1,4 @@
-/* Detail Panel Styles */
-
-/* Detail Panel Container */
-.detail-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 540px;
-    height: 100vh;
-    background: white;
-    border-left: 1px solid #D8DBDE;
-    z-index: 1000;
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    overflow-y: auto;
-}
-
-/* Panel Active State */
-.detail-panel.active {
-    display: flex; /* Show instantly */
-}
+/* Detail Panel Styles - Panel classes removed */
 
 /* Chart Styles */
 .info-icon {
@@ -223,24 +203,6 @@
     font-style: italic;
 }
 
-/* Detail Panel Header */
-.detail-panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 24px;
-    border-bottom: 1px solid #e5e7eb;
-    background: #f9fafb;
-    min-height: 80px;
-}
-
-.detail-panel-header h2 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #111827;
-}
-
 /* Close Button */
 .close-btn {
     width: 32px;
@@ -265,13 +227,6 @@
     width: 20px;
     height: 20px;
     stroke: #6b7280;
-}
-
-/* Detail Panel Content */
-.detail-panel-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px;
 }
 
 /* Content Sections */
@@ -357,47 +312,6 @@
     margin: 2px 0 0;
     font-size: 13px;
     color: #6b7280;
-}
-
-/* When panel is open, adjust main content */
-body.detail-panel-open .header {
-    margin-right: 540px;
-}
-
-body.detail-panel-open .tab-navigation {
-    margin-right: 540px;
-}
-
-body.detail-panel-open .content {
-    margin-right: 520px;
-    gap: 0; /* Remove gap when filter panel is hidden */
-}
-
-body.detail-panel-open .filter-panel {
-    display: none;
-}
-
-body.detail-panel-open .table-container {
-    width: 100%;
-}
-
-/* Responsive */
-@media (max-width: 1400px) {
-    .detail-panel {
-        width: 400px;
-    }
-    
-    body.detail-panel-open .header {
-        margin-right: 400px;
-    }
-    
-    body.detail-panel-open .tab-navigation {
-        margin-right: 400px;
-    }
-    
-    body.detail-panel-open .content {
-        margin-right: 400px;
-    }
 }
 
 /* Detail Chart Section */
@@ -601,19 +515,5 @@ body.detail-panel-open .table-container {
 }
 
 @media (max-width: 1200px) {
-    .detail-panel {
-        width: 100%;
-    }
-    
-    body.detail-panel-open .header {
-        margin-right: 0;
-    }
-    
-    body.detail-panel-open .tab-navigation {
-        margin-right: 0;
-    }
-    
-    body.detail-panel-open .content {
-        margin-right: 0;
-    }
+    /* Responsive styles without panel references */
 }

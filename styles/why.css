@@ -38,49 +38,18 @@
 }
 
 /* Chart Section */
-.chart-section {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #E5E7EB;
-    padding: 24px;
-    margin-bottom: 32px;
+.panel {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.chart-section h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0 0 24px 0;
-    text-align: left;
+    margin-bottom: 32px;
 }
 
 .bar-chart-container {
     height: 300px;
-    padding: 0 16px;
 }
 
 /* Performance Table */
-.table-section {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #E5E7EB;
-    overflow: hidden;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-bottom: 2px;
-}
-
-.table-section h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-    margin: 0;
-    padding: 24px 24px 16px 24px;
-    text-align: left;
-}
 
 .performance-table {
     width: 100%;

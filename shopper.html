@@ -11,9 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- CSS Files -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/global/main.css">
+    <link rel="stylesheet" href="styles/global/typography.css">
+    <link rel="stylesheet" href="styles/global/link.css">
+    <link rel="stylesheet" href="styles/global/button.css">
+    <link rel="stylesheet" href="styles/global/panel.css">
+    <link rel="stylesheet" href="styles/global/global.css">
+    <link rel="stylesheet" href="styles/global/ai.css">
+    <link rel="stylesheet" href="styles/global/sidebar.css">
     <link rel="stylesheet" href="styles/market.css">
     
     <!-- Chart.js -->
@@ -45,7 +50,7 @@
             <div class="content">
                 <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                     <h1 class="page-title">Shopper Analysis</h1>
-                    <button class="ai-button" id="generateSummaryBtn">Generate summary</button>
+                    <button class="ai-button">Generate summary</button>
                 </div>
                 
                 <!-- AI Summary Panel -->
@@ -185,7 +190,7 @@
     <!-- AI Summary Toggle Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const generateBtn = document.getElementById('generateSummaryBtn');
+            const generateBtn = document.querySelector('.ai-button');
             const summaryPanel = document.getElementById('aiSummaryPanel');
             
             function showText(element, text, callback) {
@@ -303,7 +308,7 @@
                     // Show panel smoothly
                     summaryPanel.classList.add('show', 'generating');
                     generateBtn.textContent = 'Close';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/close.svg")');
+                    generateBtn.style.setProperty('--ai-icon', 'url("img/icon/close.svg")');
                     
                     // Start with checklist animation
                     setTimeout(() => {
@@ -354,7 +359,7 @@
                     summaryPanel.classList.remove('show', 'generating');
                     
                     generateBtn.textContent = 'Generate summary';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/ai.svg")');
+                    generateBtn.style.setProperty('--ai-icon', 'url("img/icon/ai.svg")');
                 }
             });
         });

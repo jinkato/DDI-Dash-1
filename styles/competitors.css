@@ -270,20 +270,6 @@
     font-size: 14px;
 }
 
-/* Reset Link */
-.reset-link {
-    display: inline-block;
-    margin-top: 4px;
-    font-size: 12px;
-    color: #6b7280;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.reset-link:hover {
-    color: #374151;
-    text-decoration: underline;
-}
 
 /* Adjustments when detail panel is open */
 body.detail-panel-open .competitors-table {
@@ -317,6 +303,16 @@ body.detail-panel-open .select-btn {
     width: 70px;
     font-size: 11px;
     padding: 0 8px;
+}
+
+/* Reset Link */
+.reset-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+    color: var(--link-secondary);
+    cursor: pointer;
 }
 
 /* Responsive */

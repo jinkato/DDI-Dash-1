@@ -1,0 +1,343 @@
+/* =================================
+   Global Button Styles
+   ================================= */
+
+/* Base Button Styles */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Primary Button */
+.btn-primary {
+    background-color: #0763D3;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #044691;
+    /* transform: translateY(-2px); */
+    /* box-shadow: 0 4px 16px rgba(7, 99, 211, 0.4); */
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: white;
+    color: #0D1722;
+    border: 1px solid #0D1722;
+    padding: 0 16px;
+    height: 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    /* border-color: #ccc;
+    transform: translateY(-2px);
+     */
+}
+
+/* Icon Button */
+.btn-icon {
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Size Variations */
+.btn-sm {
+    padding: 6px 12px;
+}
+
+.btn-lg {
+    padding: 14px 28px;
+}
+
+/* Button States */
+.btn:disabled,
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn:disabled:hover,
+button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.btn:active,
+button:active {
+    transform: scale(0.98);
+}
+
+/* Button with Icon */
+.btn svg,
+button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-sm svg {
+    width: 14px;
+    height: 14px;
+}
+
+.btn-lg svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Loading State */
+.btn.loading,
+button.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn.loading::after,
+button.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.6s linear infinite;
+}
+
+/* =================================
+   Specific Button Types
+   ================================= */
+
+/* AI Button */
+.ai-button {
+    background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-button::before {
+    content: '';
+    background: url("../../img/icon/ai.svg") no-repeat center;
+    background-size: 16px 16px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.ai-button:hover {
+    /* transform: translateY(-2px); */
+    /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); */
+}
+
+/* AI Summary Close Button */
+.ai-summary-close {
+    background: #FF5E57;
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-summary-close:hover {
+    background: #E04D45;
+    transform: scale(1.05);
+}
+
+
+/* Tab Buttons */
+.tab-button {
+    background: transparent;
+    border: none;
+    padding: 12px 24px;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab-button:hover {
+    color: #0763D3;
+    background: rgba(7, 99, 211, 0.05);
+}
+
+.tab-button.active {
+    color: #0763D3;
+    border-bottom-color: #0763D3;
+}
+
+
+/* Back Button */
+.back-btn {
+    background: white;
+    border: 2px solid #E0E0E0;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: #333;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    margin-bottom: 24px;
+}
+
+.back-btn:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+    transform: translateX(-4px);
+}
+
+.back-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Compare Button */
+.compare-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.compare-button svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.compare-button:hover svg {
+    transform: translateX(4px);
+}
+
+/* Action Buttons */
+.select-btn,
+.unselect-btn {
+    /* background: white;
+    border: 2px solid #0763D3;
+    color: #0763D3;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer; */
+    transition: all 0.3s ease;
+}
+
+.select-btn:hover,
+.unselect-btn:hover {
+    /* background: #0763D3; */
+    /* color: white; */
+}
+
+
+/* Close Button */
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #999;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+/* Timeline Arrow Buttons */
+.timeline-arrow {
+    background: white;
+    border: 2px solid #E0E0E0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+.timeline-arrow:hover {
+    background: #0763D3;
+    color: white;
+    border-color: #0763D3;
+}
+
+.timeline-arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.timeline-arrow:disabled:hover {
+    background: white;
+    color: #333;
+    border-color: #E0E0E0;
+}
+
+/* =================================
+   Animations
+   ================================= */
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -12,22 +12,9 @@ html {
 
 body {
     height: 100%;
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
     background-color: #f9fafb;
-    color: #111827;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography */
-h1 {
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: #111827;
-    margin-bottom: 1.5rem;
-}
 
 /* Header */
 .header {
@@ -50,12 +37,6 @@ h1 {
     overflow: hidden;
 }
 
-/* Sidebar */
-#sidebar {
-    flex-shrink: 0;
-    overflow-y: auto;
-}
-
 /* Main Content */
 .main-content {
     flex: 1;
@@ -63,15 +44,6 @@ h1 {
     background-color: #F4F6F9;
     margin: 0 auto;
     width: 100%;
-}
-.dropdowns{
-    background-color: white;
-    height: 67px;
-    width: 100%;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: right;
 }
 
 /* Global Button Styles */
@@ -150,22 +122,3 @@ h1 {
     box-shadow: none;
 }
 
-/* Global Link Styles */
-.link-primary {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-    color: #0D1722;
-    text-decoration: underline;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.link-primary:hover {
-    color: #0763D3;
-}
-
-.link-primary:active {
-    color: #0552B5;
-}

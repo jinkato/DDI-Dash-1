@@ -11,9 +11,18 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- CSS Files -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/global/main.css">
+    <link rel="stylesheet" href="styles/global/typography.css">
+    <link rel="stylesheet" href="styles/global/link.css">
+    <link rel="stylesheet" href="styles/global/button.css">
+    <link rel="stylesheet" href="styles/global/filter-group.css">
+    <link rel="stylesheet" href="styles/global/pill.css">
+    <link rel="stylesheet" href="styles/global/panel.css">
+    <link rel="stylesheet" href="styles/global/global.css">
+    <link rel="stylesheet" href="styles/global/dropdown.css">
+    <link rel="stylesheet" href="styles/global/table.css">
+    <link rel="stylesheet" href="styles/global/ai.css">
+    <link rel="stylesheet" href="styles/global/sidebar.css">
     <link rel="stylesheet" href="styles/market.css">
     
     <!-- Chart.js -->
@@ -42,7 +51,7 @@
             </div>
             <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h1>Market Analysis</h1>
-                <button class="ai-button" id="generateSummaryBtn">Generate summary</button>
+                <button class="ai-button">Generate summary</button>
             </div>
             
             <!-- Main content area -->
@@ -67,7 +76,7 @@
                 <!-- Filter Bar -->
                 <div class="filter-bar">
                     <div class="dropdown-container">
-                        <span class="dropdown-label">Time frame:</span>
+                        <span class="dropdown-label text-sm text-bold">Time frame:</span>
                         <select class="dropdown-select">
                             <option>14 days</option>
                             <option>30 days</option>
@@ -75,7 +84,7 @@
                         </select>
                     </div>
                     <div class="dropdown-container">
-                        <span class="dropdown-label">Radius:</span>
+                        <span class="dropdown-label text-sm text-bold">Radius:</span>
                         <select class="dropdown-select">
                             <option>50ml</option>
                             <option>100ml</option>
@@ -290,7 +299,7 @@
     <!-- AI Summary Toggle Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const generateBtn = document.getElementById('generateSummaryBtn');
+            const generateBtn = document.querySelector('.ai-button');
             const summaryPanel = document.getElementById('aiSummaryPanel');
             
             function showText(element, text, callback) {
@@ -408,7 +417,7 @@
                     // Show panel smoothly
                     summaryPanel.classList.add('show', 'generating');
                     generateBtn.textContent = 'Close';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/close.svg")');
+                    generateBtn.style.setProperty('--ai-icon', 'url("img/icon/close.svg")');
                     
                     // Start with checklist animation
                     setTimeout(() => {
@@ -459,7 +468,7 @@
                     summaryPanel.classList.remove('show', 'generating');
                     
                     generateBtn.textContent = 'Generate summary';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../img/icon/ai.svg")');
+                    generateBtn.style.setProperty('--ai-icon', 'url("img/icon/ai.svg")');
                 }
             });
         });

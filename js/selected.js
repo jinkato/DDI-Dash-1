@@ -64,7 +64,7 @@ function createSelectedTableRow(dealer) {
         <td>${dealer.sessionsPercentage}%</td>
         <td>${dealer.overlapSessions}</td>
         <td>
-            <button class="remove-btn" data-dealer-id="${dealer.id}" onclick="removeDealer(${dealer.id})">
+            <button class="btn btn-secondary" data-dealer-id="${dealer.id}" onclick="removeDealer(${dealer.id})">
                 Remove
             </button>
         </td>

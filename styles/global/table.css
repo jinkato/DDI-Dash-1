@@ -1,0 +1,441 @@
+/* =================================
+   Global Table Styles
+   ================================= */
+
+/* Base Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Table Container */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+}
+
+/* Vehicle Table Styles */
+.vehicle-table-container {
+    margin-bottom: 24px;
+}
+
+.vehicle-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vehicle-table thead {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.vehicle-table th {
+    padding: 12px 16px;
+    text-align: left;
+    color: #6b7280;
+    background-color: #f9fafb;
+}
+
+.vehicle-table th:first-child,
+.vehicle-table td:first-child {
+    width: auto;
+}
+
+.vehicle-table th:nth-child(2),
+.vehicle-table td:nth-child(2) {
+    width: 70px;
+}
+
+.vehicle-table th:nth-child(3),
+.vehicle-table td:nth-child(3) {
+    width: 70px;
+}
+
+.vehicle-table tr {
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.vehicle-table tr:last-child {
+    border-bottom: none;
+}
+
+.vehicle-table td {
+    padding: 12px 16px;
+    color: #111827;
+}
+
+.vehicle-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Vehicle Info Cell */
+.vehicle-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.vehicle-image {
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.vehicle-details {
+    color: #111827;
+}
+
+/* Features Table Styles */
+.features-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    table-layout: fixed;
+}
+
+.features-table th,
+.features-table td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+/* Default column widths for features table */
+.features-table th:first-child,
+.features-table td:first-child {
+    width: 40%;
+}
+
+.features-table th {
+    color: #6b7280;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.features-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #111827;
+}
+
+.features-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Performance Table Styles */
+.performance-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.performance-table thead {
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.performance-table th {
+    padding: 12px 16px;
+    text-align: left;
+    color: #6b7280;
+}
+
+.performance-table th.vehicle-header {
+    width: 40%;
+}
+
+.performance-table th.month-header {
+    text-align: center;
+}
+
+.performance-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.performance-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.performance-table td {
+    padding: 12px 16px;
+    color: #111827;
+}
+
+/* Compare Table Styles */
+.compare-table-container {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.compare-table thead {
+    display: none;
+}
+
+.competitor-header-row th {
+    padding: 16px;
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.competitor-header-row th.section-header {
+    background-color: #f3f4f6;
+    padding: 8px 16px;
+    color: #6b7280;
+}
+
+/* Competitors Table Styles */
+.competitors-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.competitors-table thead {
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.competitors-table th {
+    padding: 12px 16px;
+    text-align: left;
+    color: #6b7280;
+    position: relative;
+    user-select: none;
+}
+
+.competitors-table th.sortable {
+    cursor: pointer;
+    padding-right: 28px;
+}
+
+.competitors-table th.sortable:hover {
+    background-color: #f3f4f6;
+}
+
+.competitors-table th.sortable::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #9ca3af;
+    transition: all 0.2s ease;
+}
+
+.competitors-table th.sort-asc::after {
+    border-top: none;
+    border-bottom: 4px solid #374151;
+}
+
+.competitors-table th.sort-desc::after {
+    border-top-color: #374151;
+}
+
+.competitors-table th:first-child {
+    padding-left: 24px;
+}
+
+.competitors-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.2s ease;
+}
+
+.competitors-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.competitors-table tbody tr.selected {
+    background-color: #eff6ff;
+}
+
+.competitors-table td {
+    padding: 16px;
+    color: #111827;
+}
+
+.competitors-table td:first-child {
+    padding-left: 24px;
+}
+
+/* Stores Table Styles */
+.stores-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.stores-table thead {
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.stores-table th {
+    padding: 12px 16px;
+    text-align: left;
+    color: #6b7280;
+}
+
+.stores-table th.store-header {
+    width: 40%;
+}
+
+.stores-table th.metric-header {
+    text-align: center;
+}
+
+.stores-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.stores-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.stores-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.stores-table tbody tr.clickable-row:hover {
+    background-color: #f3f4f6;
+    cursor: pointer;
+}
+
+.stores-table td {
+    padding: 12px 16px;
+    text-align: left;
+    color: #111827;
+}
+
+/* Deal Ratings Table */
+.deal-ratings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.deal-ratings-table thead {
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.deal-ratings-table th {
+    padding: 12px 16px;
+    text-align: left;
+    color: #6b7280;
+}
+
+.deal-ratings-table th:not(:first-child) {
+    text-align: center;
+}
+
+.deal-ratings-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.deal-ratings-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Inventory Breakdown Table */
+.inventory-breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.inventory-breakdown-table th {
+    background-color: #f9fafb;
+    padding: 12px 16px;
+    text-align: left;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.inventory-breakdown-table th:not(:first-child) {
+    text-align: center;
+}
+
+.inventory-breakdown-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.inventory-breakdown-table td:not(:first-child) {
+    text-align: center;
+    color: #111827;
+}
+
+.inventory-breakdown-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.inventory-breakdown-table td:first-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #374151;
+}
+
+/* Table Section Container */
+.table-section {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+/* Common Table Utilities */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Trend Indicators */
+.trend-up {
+    color: #10B981;
+}
+
+.trend-down {
+    color: #EF4444;
+}
+
+/* Availability Badges */
+.availability {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    gap: 4px;
+}
+
+.availability.high {
+    background-color: #D1FAE5;
+    color: #065F46;
+}
+
+.availability.needs-attention {
+    background-color: #FEE2E2;
+    color: #991B1B;
+}
+
+.availability.low {
+    background-color: #FEF3C7;
+    color: #92400E;
+}

@@ -1,0 +1,114 @@
+/* =================================
+   Filter Group Styles
+   ================================= */
+
+/* Base Filter Group */
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Filter Containers */
+.filter-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.search-filters {
+    display: flex;
+    gap: 16px;
+    padding: 0 20px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+
+.segment-filters {
+    padding: 0 24px 16px 24px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Filter Group Variations */
+.search-filters .filter-group {
+    width: 200px;
+}
+
+/* Filter Labels */
+.filter-label {
+    color: #6b7280;
+}
+
+.filter-group label {
+    color: #374151;
+    white-space: nowrap;
+}
+
+/* Filter Select Elements */
+.filter-select {
+    padding: 8px 12px;
+    border: 1px solid #D8DBDE;
+    border-radius: 6px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.filter-dropdown {
+    padding: 8px 32px 8px 12px;
+    color: #111827;
+    background-color: white;
+    border: 1px solid #D8DBDE;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    min-width: 160px;
+}
+
+.search-filters select {
+    width: 100%;
+}
+
+/* Filter States */
+.filter-dropdown:hover {
+    border-color: #9CA3AF;
+}
+
+.filter-dropdown:focus {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Utility Classes */
+.filter-group.compact {
+    gap: 4px;
+}
+
+.filter-group.vertical {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .filter-bar,
+    .search-filters,
+    .segment-filters {
+        flex-wrap: wrap;
+    }
+    
+    .search-filters .filter-group {
+        width: 100%;
+    }
+    
+    .filter-dropdown {
+        min-width: 100%;
+    }
+}

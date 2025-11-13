@@ -1,0 +1,60 @@
+/* Global Dropdown Styles */
+.dropdowns {
+    background-color: white;
+    height: 67px;
+    width: 100%;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-label {
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    display: block;
+}
+
+.dropdown-select {
+    width: 100%;
+    min-width: 120px;
+    height: 32px;
+    padding: 0 8px 0 8px;
+    background-color: #ffffff;
+    border: var(--border-default);
+    border-radius: 4px;
+    color: #000000;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("../../img/icon/Chevron.svg");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 12px;
+    transition: border-color 0.2s ease;
+}
+
+.dropdown-select:hover {
+    border-color: #79828D;
+}
+
+.dropdown-select:focus {
+    outline: none;
+    border-color: #79828D;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.dropdown-select option {
+    padding: 8px 16px;
+}
+
+/* Additional dropdown variations */
+.dropdown-select {
+    background-color: #ffffff;
+}

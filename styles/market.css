@@ -6,68 +6,6 @@
 }
 
 
-/* Filter Bar */
-.filter-bar {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.filter-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.filter-label {
-    font-size: 14px;
-    color: #6b7280;
-}
-
-.filter-select {
-    padding: 8px 12px;
-    border: 1px solid #D8DBDE;
-    border-radius: 6px;
-    font-size: 14px;
-    background-color: white;
-    cursor: pointer;
-}
-
-/* Panel Grid */
-.panels-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 24px;
-    grid-auto-rows: minmax(400px, 1fr);
-}
-
-/* Panel Styles */
-.panel {
-    background: white;
-    border: 1px solid #D8DBDE;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-}
-
-.panel-full-width {
-    grid-column: 1 / -1;
-}
-
-
-/* Panel Content */
-.panel-content {
-    padding: 20px;
-}
-
-
-.learn-more-link {
-    font-size: 14px;
-    color: #0D1722;
-    text-decoration: underline;
-    font-weight: 500;
-}
 
 .info-icon {
     width: 20px;
@@ -87,21 +25,7 @@
     font-weight: 600;
 }
 
-/* Features Table */
-.features-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0;
-    table-layout: fixed;
-}
-
-.features-table th,
-.features-table td {
-    padding: 0;
-    text-align: left;
-}
-
-/* Column widths */
+/* Features Table - Market specific overrides */
 .features-table th:first-child,
 .features-table td:first-child {
     width: 60%;
@@ -117,29 +41,15 @@
     width: 20%;
 }
 
-/* Header styles */
 .features-table th {
-    font-size: 12px;
-    font-weight: 500;
-    color: #6b7280;
     padding-bottom: 12px;
-    border-bottom: 1px solid #e5e7eb;
 }
 
-/* Cell styles */
 .features-table td {
     padding: 12px 0;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 14px;
-    color: #111827;
-}
-
-.features-table tr:last-child td {
-    border-bottom: none;
 }
 
 .trend-up {
-    color: #10B981;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -153,17 +63,6 @@
     text-align: right;
     margin-top: 16px;
     padding: 0 20px 20px;
-}
-
-.see-more a {
-    font-size: 14px;
-    color: #0763D3;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.see-more a:hover {
-    text-decoration: underline;
 }
 
 /* Chart Container */
@@ -181,116 +80,26 @@
     max-height: 100%;
 }
 
-/* Vehicle Search Panel */
-.search-filters {
-    display: flex;
-    gap: 16px;
-    padding: 0 20px;
-    margin-bottom: 16px;
-    margin-top: 16px;
-}
-
-.search-filters .filter-group {
-    width: 200px;
-}
-
-.search-filters select {
-    width: 100%;
-}
-
-/* Vehicle Table */
+/* Vehicle Table - Market specific overrides */
 .vehicle-table-container {
     margin-top: 20px;
     padding: 0 20px;
 }
 
-.vehicle-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.vehicle-table thead {
-    border-bottom: 1px solid #e5e7eb;
-}
-
 .vehicle-table th {
-    text-align: left;
-    font-size: 12px;
-    font-weight: 500;
-    color: #6b7280;
     padding-bottom: 12px;
-}
-
-.vehicle-table th:first-child,
-.vehicle-table td:first-child {
-    width: auto;
-}
-
-.vehicle-table th:nth-child(2),
-.vehicle-table td:nth-child(2) {
-    width: 70px;
-}
-
-.vehicle-table th:nth-child(3),
-.vehicle-table td:nth-child(3) {
-    width: 70px;
-}
-
-.vehicle-table tr {
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.vehicle-table tr:last-child {
-    border-bottom: none;
 }
 
 .vehicle-table td {
     padding: 16px 0;
-    font-size: 14px;
-    color: #111827;
 }
 
-.vehicle-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
+/* Vehicle Image - Market specific */
 .vehicle-image {
     width: 60px;
     height: 45px;
-    object-fit: cover;
-    border-radius: 4px;
 }
 
-.vehicle-details {
-    font-size: 14px;
-    color: #111827;
-}
-
-/* Availability Badges */
-.availability {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.availability.high {
-    background-color: #DEF7EC;
-    color: #065F46;
-}
-
-.availability.medium {
-    background-color: #FEF3C7;
-    color: #92400E;
-}
-
-.availability.needs-attention {
-    background-color: #FFE2E2;
-    color: #991B1B;
-}
 
 .vehicle-stats {
     display: flex;
@@ -299,24 +108,6 @@
 }
 
 
-/* Availability Badge */
-.availability {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.availability.high {
-    background-color: #DEF7EC;
-    color: #065F46;
-}
-
-.availability.medium {
-    background-color: #FEF3C7;
-    color: #92400E;
-}
 
 /* Chart Legend */
 .chart-legend {
@@ -348,8 +139,21 @@
     padding: 0 20px 20px;
 }
 
+/* Learn More Link */
+.learn-more-link {
+    display: inline-block;
+    font-weight: 500;
+    color: var(--link-primary);
+    cursor: pointer;
+}
+
+/* See More Link */
+.see-more a {
+    font-weight: 500;
+    color: var(--link-primary);
+}
+
+/* See All Link */
 .see-all a {
-    font-size: 14px;
-    color: #0763D3;
-    text-decoration: underline;
+    color: var(--link-primary);
 }

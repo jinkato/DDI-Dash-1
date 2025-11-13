@@ -1,0 +1,56 @@
+/* Global Link Styles */
+/* Note: sidebar-link styles remain in sidebar.css as they are component-specific */
+
+/* Link Color Variables */
+:root {
+    --link-primary: #0D1722;        /* Primary link color - dark */
+    --link-secondary: #5E6976;      /* Secondary link color - gray */
+}
+
+/* Base anchor tag styling */
+a {
+    color: var(--link-primary);
+    text-decoration: underline;
+    transition: text-decoration 0.2s ease;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* Primary Link Style - for important CTAs */
+.link-primary {
+    display: inline-block;
+    font-weight: 500;
+    color: var(--link-primary);
+    cursor: pointer;
+}
+
+.link-primary:hover {
+    text-decoration: none;
+}
+
+.link-primary:active {
+    text-decoration: none;
+}
+
+/* Utility classes for link variations */
+.link-secondary {
+    color: var(--link-secondary);
+}
+
+.link-underline {
+    text-decoration: underline;
+}
+
+.link-no-underline {
+    text-decoration: none;
+}
+
+.link-underline-hover:hover {
+    text-decoration: underline;
+}
+
+.link-no-underline-hover:hover {
+    text-decoration: none;
+}

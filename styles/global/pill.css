@@ -1,0 +1,234 @@
+/* =================================
+   Pill & Badge Styles
+   ================================= */
+
+/* Base Pill/Badge Styles */
+.pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Availability Pills */
+.availability {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.availability.high {
+    background-color: #DEF7EC;
+    color: #065F46;
+}
+
+.availability.medium {
+    background-color: #FEF3C7;
+    color: #92400E;
+}
+
+.availability.low,
+.availability.needs-attention {
+    background-color: #FFE2E2;
+    color: #991B1B;
+}
+
+/* Compact Availability (for tables/tight spaces) */
+.availability.compact {
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Large Availability Pills */
+.availability.large {
+    padding: 6px 16px;
+    font-size: 14px;
+    border-radius: 20px;
+}
+
+/* Status Pills */
+.status-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-pill.success {
+    background-color: #DEF7EC;
+    color: #065F46;
+}
+
+.status-pill.warning {
+    background-color: #FEF3C7;
+    color: #92400E;
+}
+
+.status-pill.error,
+.status-pill.danger {
+    background-color: #FFE2E2;
+    color: #991B1B;
+}
+
+.status-pill.info {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+}
+
+.status-pill.neutral {
+    background-color: #F3F4F6;
+    color: #374151;
+}
+
+/* Badge Variations */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background-color: #6b7280;
+    color: white;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.badge.primary {
+    background-color: #0763D3;
+    color: white;
+}
+
+.badge.success {
+    background-color: #065F46;
+    color: white;
+}
+
+.badge.warning {
+    background-color: #92400E;
+    color: white;
+}
+
+.badge.danger {
+    background-color: #991B1B;
+    color: white;
+}
+
+/* New/Alert Badge */
+.badge.new,
+.new-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #FEE2E2;
+    color: #DC2626;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 12px;
+    margin-left: 8px;
+}
+
+/* Trend Indicators */
+.trend-indicator {
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.trend-indicator.positive {
+    color: #10B981;
+}
+
+.trend-indicator.negative {
+    color: #EF4444;
+}
+
+.trend-indicator.stable {
+    color: #6B7280;
+}
+
+/* Conversion Badge */
+.conversion-badge {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 4px 0;
+}
+
+/* Label Pills */
+.label-pill {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6B7280;
+    background: white;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid #E5E7EB;
+}
+
+/* Pill with Icon */
+.pill-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pill-icon svg,
+.pill-icon img {
+    width: 14px;
+    height: 14px;
+}
+
+/* Pill States */
+.pill.clickable,
+.badge.clickable {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pill.clickable:hover,
+.badge.clickable:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Pill Group */
+.pill-group {
+    display: inline-flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .pill,
+    .availability {
+        font-size: 11px;
+        padding: 3px 10px;
+    }
+    
+    .availability.large {
+        font-size: 13px;
+        padding: 5px 14px;
+    }
+    
+    .badge {
+        font-size: 10px;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+    }
+}

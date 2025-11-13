@@ -14,8 +14,6 @@
     background: none;
     border: none;
     border-bottom: 2px solid transparent;
-    font-size: 14px;
-    font-weight: 500;
     color: #6b7280;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -39,24 +37,6 @@
     /* background-color: transparent; */
 }
 
-/* Tab Badge */
-.tab-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 6px;
-    background-color: white;
-    color: #0763D3;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 10px;
-}
-
-.tab-button:not(.active) .tab-badge {
-    background-color: #6b7280;
-}
 
 /* Tab Content */
 .tab-content {
@@ -100,13 +80,10 @@
 }
 
 .empty-state h3 {
-    font-size: 18px;
-    font-weight: 600;
     color: #374151;
     margin-bottom: 8px;
 }
 
 .empty-state p {
-    font-size: 14px;
     color: #6b7280;
 }

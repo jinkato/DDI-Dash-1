@@ -69,19 +69,3 @@
     transform: translateY(-1px);
 }
 
-/* Selected Badge Animation */
-@keyframes badgePulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.tab-badge {
-    animation: badgePulse 0.3s ease-out;
-}

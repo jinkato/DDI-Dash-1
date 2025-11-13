@@ -1,0 +1,100 @@
+/* Global Border Style */
+:root {
+    --border-default: 1px solid #79828D;
+    --border-light: 1px solid #D8DBDE;
+}
+
+/* Apply default border to common elements */
+input,
+select,
+textarea,
+.card,
+.box,
+.border {
+    border: var(--border-default);
+}
+
+/* Light border variant */
+.border-light {
+    border: var(--border-light);
+}
+
+
+
+/* Metric Cards */
+.metric-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.metric-card {
+    background: white;
+    border: 1px solid #D8DBDE;
+    border-radius: 16px;
+    padding: 16px 20px;
+}
+
+.metric-card-title-link {
+    text-decoration: none;
+}
+
+.metric-card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0C0C11;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+.metric-card-title:hover {
+    text-decoration: underline;
+}
+
+.metric-card-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.metric-card-value-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0px;
+}
+
+.metric-card-change {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.metric-card-change.positive {
+    color: #10B981;
+}
+
+.metric-card-change.negative {
+    color: #EF4444;
+}
+
+.metric-card-change.neutral {
+    color: #5E6976;
+}
+
+.trend-icon {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* Content max-width constraint */
+.content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
