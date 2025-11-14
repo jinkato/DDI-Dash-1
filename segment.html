@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="styles/global/filter-group.css">
     <link rel="stylesheet" href="styles/global/sidebar.css">
     <link rel="stylesheet" href="styles/segment.css">
+    <link rel="stylesheet" href="styles/global/global.css">
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -58,10 +59,11 @@
                 <h1>User Segments</h1>
             </div>
             
-            <div class="segment-filters">
-                <div class="filter-group">
-                    <label for="vehicle-type-filter">Vehicle Type:</label>
-                    <select id="vehicle-type-filter" class="filter-dropdown">
+            <!-- Filters Row -->
+            <div class="filters-row">
+                <div class="dropdown-container">
+                    <span class="dropdown-label text-sm">Vehicle Type:</span>
+                    <select class="dropdown-select" id="vehicle-type-filter">
                         <option value="all">All Types</option>
                         <option value="compact">Compact</option>
                         <option value="sedans">Sedans</option>
@@ -70,9 +72,9 @@
                         <option value="luxury">Luxury</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label for="deal-rating-filter">Deal Rating:</label>
-                    <select id="deal-rating-filter" class="filter-dropdown">
+                <div class="dropdown-container">
+                    <span class="dropdown-label text-sm">Deal Rating:</span>
+                    <select class="dropdown-select" id="deal-rating-filter">
                         <option value="all">All Ratings</option>
                         <option value="great">Great Deal</option>
                         <option value="good">Good Deal</option>

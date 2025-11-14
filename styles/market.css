@@ -205,3 +205,9 @@
 .see-all a {
     color: var(--link-primary);
 }
+
+/* Lead Driver Table - Specific width for estimated leads column */
+.lead-driver-table th:nth-child(2),
+.lead-driver-table td:nth-child(2) {
+    width: 140px;
+}
