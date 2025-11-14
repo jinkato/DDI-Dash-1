@@ -416,26 +416,3 @@ table {
     color: #EF4444;
 }
 
-/* Availability Badges */
-.availability {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 12px;
-    border-radius: 20px;
-    gap: 4px;
-}
-
-.availability.high {
-    background-color: #D1FAE5;
-    color: #065F46;
-}
-
-.availability.needs-attention {
-    background-color: #FEE2E2;
-    color: #991B1B;
-}
-
-.availability.low {
-    background-color: #FEF3C7;
-    color: #92400E;
-}

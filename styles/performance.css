@@ -6,6 +6,125 @@
 }
 
 
+/* Panel Grid */
+.panels-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+    grid-auto-rows: minmax(400px, 1fr);
+}
+
+/* Three Column Grid */
+.panels-grid.three-column {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: minmax(280px, auto);
+}
+
+/* Metric Display */
+.metric-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.metric-change {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.metric-change.positive {
+    color: #10B981;
+}
+
+.metric-change.negative {
+    color: #EF4444;
+}
+
+.metric-comparison {
+    font-size: 13px;
+    color: #6B7280;
+}
+
+/* Small Chart Container */
+.chart-container.small {
+    height: 120px;
+    padding: 10px;
+}
+
+/* Vehicles Without List */
+.vehicles-without-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.without-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #F9FAFB;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.without-label {
+    font-size: 14px;
+    color: #374151;
+}
+
+.without-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.without-value-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.without-item.success {
+    background: #F0FDF4;
+    border-color: #BBF7D0;
+}
+
+.without-item.success .without-value {
+    color: #065F46;
+}
+
+.checkmark {
+    flex-shrink: 0;
+}
+
+/* Panel Styles */
+.panel {
+    background: white;
+    border: 1px solid #D8DBDE;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Panel Content */
+.panel-content {
+    padding: 20px;
+}
+
+
 .info-icon {
     width: 20px;
     height: 20px;
@@ -24,13 +143,34 @@
     font-weight: 600;
 }
 
-/* Features Table - Performance specific overrides */
+/* Features Table */
+.features-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    table-layout: fixed;
+}
+
+/* Connection Summary Panel - Vertically center content */
+.connection-summary-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.connection-summary-panel .panel-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .features-table th,
 .features-table td {
     padding: 0;
+    text-align: left;
 }
 
-/* Column widths - 4 equal columns */
+/* Column widths */
 .features-table th:first-child,
 .features-table td:first-child {
     width: 25%;
@@ -51,15 +191,29 @@
     width: 25%;
 }
 
+/* Header styles */
 .features-table th {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
     padding-bottom: 12px;
+    border-bottom: 1px solid #e5e7eb;
 }
 
+/* Cell styles */
 .features-table td {
     padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+    color: #111827;
+}
+
+.features-table tr:last-child td {
+    border-bottom: none;
 }
 
 .trend-up {
+    color: #10B981;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -112,13 +266,26 @@
     max-height: 100%;
 }
 
-/* Vehicle Table - Performance specific overrides */
+/* Vehicle Table */
 .vehicle-table-container {
     margin-top: 20px;
     padding: 0 20px;
 }
 
+.vehicle-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vehicle-table thead {
+    border-bottom: 1px solid #e5e7eb;
+}
+
 .vehicle-table th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
     padding-bottom: 12px;
 }
 
@@ -126,15 +293,37 @@
     width: 40%;
 }
 
-.vehicle-table td {
-    padding: 16px 0;
+.vehicle-table tr {
+    border-bottom: 1px solid #e5e7eb;
 }
 
-/* Vehicle Image - Performance specific */
+.vehicle-table tr:last-child {
+    border-bottom: none;
+}
+
+.vehicle-table td {
+    padding: 16px 0;
+    font-size: 14px;
+    color: #111827;
+}
+
+.vehicle-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .vehicle-image {
     width: 60px;
     height: 45px;
+    object-fit: cover;
+    border-radius: 4px;
     border: 1px solid #E5E7EB;
+}
+
+.vehicle-details {
+    font-size: 14px;
+    color: #111827;
 }
 
 .vehicle-stats {
@@ -257,6 +446,15 @@
     font-weight: 500;
 }
 
+.funnel-conversion {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 4px 0;
+}
 
 .funnel-summary {
     margin-top: 24px;

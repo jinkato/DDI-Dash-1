@@ -391,4 +391,259 @@ function initializeCharts() {
             }
         }
     });
+
+    // Deal Rating Chart - Small Line Chart
+    const dealRatingCtx = document.getElementById('dealRatingChart').getContext('2d');
+    new Chart(dealRatingCtx, {
+        type: 'line',
+        data: {
+            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            datasets: [{
+                label: 'Your Dealership',
+                data: [85, 84.5, 84, 83.5, 83, 82],
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderColor: '#3B82F6',
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 3,
+                pointHoverRadius: 4,
+                pointBackgroundColor: '#3B82F6',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 1,
+                fill: true
+            }, {
+                label: 'Market Average',
+                data: [78, 78, 78, 78, 78, 78],
+                backgroundColor: 'transparent',
+                borderColor: '#9CA3AF',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                tension: 0,
+                pointRadius: 0,
+                pointHoverRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#FFFFFF',
+                    titleColor: '#111827',
+                    bodyColor: '#6B7280',
+                    borderColor: '#E5E7EB',
+                    borderWidth: 1,
+                    padding: 10,
+                    cornerRadius: 6,
+                    titleFont: {
+                        size: 12,
+                        weight: '600'
+                    },
+                    bodyFont: {
+                        size: 11
+                    },
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            return tooltipItems[0].label + ' 2025';
+                        },
+                        label: function(context) {
+                            let label = context.dataset.label + ': ';
+                            label += context.parsed.y.toFixed(1) + '%';
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    border: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        },
+                        color: '#9CA3AF',
+                        padding: 4
+                    }
+                },
+                y: {
+                    min: 75,
+                    max: 90,
+                    grid: {
+                        color: '#F3F4F6',
+                        drawBorder: false
+                    },
+                    border: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        },
+                        color: '#9CA3AF',
+                        stepSize: 5,
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Inventory Count Chart - Small Bar Chart
+    const inventoryCountCtx = document.getElementById('inventoryCountChart').getContext('2d');
+    new Chart(inventoryCountCtx, {
+        type: 'bar',
+        data: {
+            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            datasets: [{
+                label: 'Inventory Count',
+                data: [258, 261, 254, 252, 249, 247],
+                backgroundColor: '#3B82F6',
+                borderRadius: 4,
+                barPercentage: 0.7
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#FFFFFF',
+                    titleColor: '#111827',
+                    bodyColor: '#6B7280',
+                    borderColor: '#E5E7EB',
+                    borderWidth: 1,
+                    padding: 10,
+                    cornerRadius: 6,
+                    titleFont: {
+                        size: 12,
+                        weight: '600'
+                    },
+                    bodyFont: {
+                        size: 11
+                    },
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            return tooltipItems[0].label + ' 2025';
+                        },
+                        label: function(context) {
+                            return 'Inventory: ' + context.parsed.y + ' vehicles';
+                        },
+                        afterLabel: function(context) {
+                            const monthIndex = context.dataIndex;
+                            const previousValue = monthIndex > 0 ? context.dataset.data[monthIndex - 1] : context.parsed.y;
+                            const change = context.parsed.y - previousValue;
+                            const changePercent = ((change / previousValue) * 100).toFixed(1);
+                            
+                            if (change !== 0) {
+                                return 'Change: ' + (change > 0 ? '+' : '') + change + ' (' + (change > 0 ? '+' : '') + changePercent + '%)';
+                            }
+                            return '';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    border: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        },
+                        color: '#9CA3AF',
+                        padding: 4
+                    }
+                },
+                y: {
+                    min: 200,
+                    max: 350,
+                    grid: {
+                        color: '#F3F4F6',
+                        drawBorder: false
+                    },
+                    border: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        },
+                        color: '#9CA3AF',
+                        stepSize: 50
+                    }
+                },
+                marketAverage: {
+                    type: 'linear',
+                    display: false,
+                    position: 'right',
+                    min: 200,
+                    max: 350
+                }
+            },
+            // Custom plugin to draw market average line
+            plugins: {
+                annotation: {
+                    annotations: {
+                        line1: {
+                            type: 'line',
+                            yMin: 312,
+                            yMax: 312,
+                            borderColor: '#9CA3AF',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        plugins: [{
+            // Custom plugin to draw the market average line
+            afterDraw: function(chart) {
+                const ctx = chart.ctx;
+                const yScale = chart.scales.y;
+                const xScale = chart.scales.x;
+                const marketAvg = 312;
+                
+                // Calculate y position for market average
+                const y = yScale.getPixelForValue(marketAvg);
+                
+                // Draw dashed line
+                ctx.save();
+                ctx.beginPath();
+                ctx.setLineDash([5, 5]);
+                ctx.strokeStyle = '#9CA3AF';
+                ctx.lineWidth = 2;
+                ctx.moveTo(xScale.left, y);
+                ctx.lineTo(xScale.right, y);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }]
+    });
 }

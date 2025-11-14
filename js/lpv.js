@@ -76,103 +76,80 @@ function initializeWhyPage() {
 function initializeBarChart() {
     const ctx = document.getElementById('totalLeadsChart').getContext('2d');
     
+    // Calculate leads per vehicle for each month
+    const totalLeads = [
+        leadsData.barChart.october2024,
+        leadsData.barChart.november2024,
+        leadsData.barChart.december2024,
+        leadsData.barChart.january2025,
+        leadsData.barChart.february2025,
+        leadsData.barChart.march2025,
+        leadsData.barChart.april2025,
+        leadsData.barChart.may2025,
+        leadsData.barChart.june2025,
+        leadsData.barChart.july2025,
+        leadsData.barChart.august2025,
+        leadsData.barChart.september2025,
+        leadsData.barChart.october2025
+    ];
+    
+    // Mock inventory data (assuming average 120 vehicles in inventory)
+    const avgInventory = 120;
+    const leadsPerVehicle = totalLeads.map(leads => (leads / avgInventory).toFixed(1));
+    
     new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: ['Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025', 'Mar 2025', 'Apr 2025', 
                      'May 2025', 'Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025', 'Oct 2025'],
             datasets: [{
-                label: 'Total Leads',
-                data: [
-                    leadsData.barChart.october2024,
-                    leadsData.barChart.november2024,
-                    leadsData.barChart.december2024,
-                    leadsData.barChart.january2025,
-                    leadsData.barChart.february2025,
-                    leadsData.barChart.march2025,
-                    leadsData.barChart.april2025,
-                    leadsData.barChart.may2025,
-                    leadsData.barChart.june2025,
-                    leadsData.barChart.july2025,
-                    leadsData.barChart.august2025,
-                    leadsData.barChart.september2025,
-                    leadsData.barChart.october2025
-                ],
+                label: 'Your Dealership',
+                data: leadsPerVehicle,
                 backgroundColor: '#3B82F6',
-                borderRadius: 4,
-                barPercentage: 0.7,
-                categoryPercentage: 0.8
+                borderColor: '#3B82F6',
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#3B82F6',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: false
+            }, {
+                label: 'Market Average',
+                data: [2.7, 2.6, 2.4, 2.8, 2.6, 2.7, 2.5, 2.9, 2.8, 3.0, 2.5, 2.6, 2.4],
+                backgroundColor: '#9CA3AF',
+                borderColor: '#9CA3AF',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                tension: 0.3,
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                pointBackgroundColor: '#9CA3AF',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: false
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
             animation: {
                 duration: 500,
                 easing: 'easeInOutQuart'
             },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    backgroundColor: 'white',
-                    titleColor: '#111827',
-                    bodyColor: '#374151',
-                    borderColor: '#E5E7EB',
-                    borderWidth: 1,
-                    cornerRadius: 6,
-                    padding: 12,
-                    displayColors: false,
-                    callbacks: {
-                        label: function(context) {
-                            return 'Total Leads: ' + context.parsed.y;
-                        }
-                    }
-                },
-                datalabels: {
-                    display: true,
-                    anchor: 'end',
-                    align: 'end',
-                    color: '#111827',
-                    font: {
-                        weight: 'bold',
-                        size: 14
-                    }
-                }
-            },
-            layout: {
-                padding: {
-                    left: 0,
-                    right: 0,
-                    top: 20,
-                    bottom: 0
-                }
-            },
             scales: {
-                y: {
-                    beginAtZero: true,
-                    position: 'left',
-                    grid: {
-                        color: '#F3F4F6',
-                        drawBorder: false
-                    },
-                    ticks: {
-                        color: '#6B7280',
-                        padding: 8,
-                        font: {
-                            size: 12
-                        }
-                    }
-                },
                 x: {
                     grid: {
                         display: false,
                         drawBorder: false
                     },
                     ticks: {
-                        color: '#374151',
-                        padding: 8,
+                        color: '#6B7280',
                         font: {
                             size: 11
                         },
@@ -180,41 +157,82 @@ function initializeBarChart() {
                         maxRotation: 45,
                         minRotation: 45
                     }
+                },
+                y: {
+                    grid: {
+                        color: '#E5E7EB',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 8
+                    },
+                    title: {
+                        display: true,
+                        text: 'Leads per Vehicle',
+                        font: {
+                            size: 13,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 8
+                    }
                 }
             },
-            onComplete: function() {
-                const chart = this;
-                const ctx = chart.ctx;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
-                ctx.font = 'bold 14px DM Sans';
-                ctx.fillStyle = '#111827';
-                
-                chart.data.datasets.forEach(function(dataset, i) {
-                    const meta = chart.getDatasetMeta(i);
-                    meta.data.forEach(function(bar, index) {
-                        const data = dataset.data[index];
-                        ctx.fillText(data, bar.x, bar.y - 5);
-                    });
-                });
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 15,
+                        usePointStyle: true,
+                        pointStyle: 'rectRounded'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    cornerRadius: 6,
+                    titleFont: {
+                        size: 13,
+                        weight: '600'
+                    },
+                    bodyFont: {
+                        size: 12
+                    },
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.parsed.y;
+                            const datasetLabel = context.dataset.label;
+                            const dataIndex = context.dataIndex;
+                            
+                            if (datasetLabel === 'Your Dealership') {
+                                // Get the market average for this specific month
+                                const marketData = context.chart.data.datasets[1].data;
+                                const marketAvg = marketData[dataIndex];
+                                const diff = (value - marketAvg).toFixed(1);
+                                const status = parseFloat(diff) < 0 ? 'Below market' : parseFloat(diff) > 0 ? 'Above market' : 'At market';
+                                return [
+                                    datasetLabel + ': ' + value + ' leads/vehicle',
+                                    status + ' by ' + Math.abs(diff) + ' leads'
+                                ];
+                            } else {
+                                return datasetLabel + ': ' + value + ' leads/vehicle';
+                            }
+                        }
+                    }
+                }
             }
-        },
-        plugins: [{
-            afterDatasetsDraw: function(chart) {
-                const ctx = chart.ctx;
-                chart.data.datasets.forEach(function(dataset, i) {
-                    const meta = chart.getDatasetMeta(i);
-                    meta.data.forEach(function(bar, index) {
-                        const data = dataset.data[index];
-                        ctx.fillStyle = '#111827';
-                        ctx.font = 'bold 14px DM Sans';
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-                        ctx.fillText(data, bar.x, bar.y - 5);
-                    });
-                });
-            }
-        }]
+        }
     });
 }
 

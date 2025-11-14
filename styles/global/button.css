@@ -211,7 +211,7 @@ button.loading::after {
 
 /* Back Button */
 .back-btn {
-    background: white;
+    /* background: white;
     border: 2px solid #E0E0E0;
     padding: 10px 20px;
     border-radius: 8px;
@@ -220,7 +220,7 @@ button.loading::after {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; */
     margin-bottom: 24px;
 }
 
