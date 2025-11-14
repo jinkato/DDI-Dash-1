@@ -8,7 +8,6 @@
     padding: 4px 12px;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: 500;
     line-height: 1.2;
     text-align: center;
     white-space: nowrap;
@@ -17,10 +16,9 @@
 /* Availability Pills */
 .availability {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 4px 8px;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: 500;
 }
 
 .availability.high {
@@ -48,7 +46,6 @@
 /* Large Availability Pills */
 .availability.large {
     padding: 6px 16px;
-    font-size: 14px;
     border-radius: 4px;
 }
 
@@ -84,7 +81,6 @@
     padding: 4px 12px;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: 500;
 }
 
 .status-pill.success {
@@ -124,8 +120,7 @@
     background-color: #6b7280;
     color: white;
     border-radius: 10px;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px;
 }
 
 .badge.primary {
@@ -155,16 +150,13 @@
     padding: 2px 8px;
     background: #FEE2E2;
     color: #DC2626;
-    font-size: 11px;
-    font-weight: 500;
     border-radius: 4px;
+    font-size: 12px;
     margin-left: 8px;
 }
 
 /* Trend Indicators */
 .trend-indicator {
-    font-size: 16px;
-    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -189,19 +181,17 @@
     padding: 6px 16px;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: 500;
     margin: 4px 0;
 }
 
 /* Label Pills */
 .label-pill {
-    font-size: 14px;
-    font-weight: 500;
     color: #6B7280;
     background: white;
     padding: 4px 12px;
     border-radius: 6px;
     border: 1px solid #E5E7EB;
+    font-size: 12px;
 }
 
 /* Pill with Icon */
@@ -242,17 +232,14 @@
 @media (max-width: 768px) {
     .pill,
     .availability {
-        font-size: 11px;
         padding: 3px 10px;
     }
     
     .availability.large {
-        font-size: 13px;
         padding: 5px 14px;
     }
     
     .badge {
-        font-size: 10px;
         min-width: 18px;
         height: 18px;
         padding: 0 5px;

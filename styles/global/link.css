@@ -21,7 +21,6 @@ a:hover {
 /* Primary Link Style - for important CTAs */
 .link-primary {
     display: inline-block;
-    font-weight: 500;
     color: var(--link-primary);
     cursor: pointer;
 }

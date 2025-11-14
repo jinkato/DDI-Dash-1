@@ -41,15 +41,20 @@ textarea,
 }
 
 .metric-card-title {
-    font-size: 14px;
-    font-weight: 500;
     color: #0C0C11;
-    margin-bottom: 0px;
-    cursor: pointer;
+    margin-bottom: 4px;
+    cursor: help;
 }
 
-.metric-card-title:hover {
-    text-decoration: underline;
+/* When metric card title has tooltip functionality */
+.metric-card-title.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.metric-card-title .tooltip-trigger {
+    border-bottom: 2px dotted #6B7280;
+    cursor: help;
 }
 
 .metric-card-value {
@@ -57,7 +62,6 @@ textarea,
     font-weight: 700;
     color: #111827;
     margin-bottom: 0px;
-    font-family: 'DM Sans', sans-serif;
 }
 
 .metric-card-value-wrapper {
@@ -71,8 +75,6 @@ textarea,
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 14px;
-    font-weight: 500;
 }
 
 .metric-card-change.positive {

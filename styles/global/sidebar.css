@@ -53,8 +53,6 @@
     text-decoration: none;
     transition: all 0.2s;
     position: relative;
-    font-size: 14px;
-    font-weight: 500;
 }
 
 .nav-link:hover {
@@ -97,7 +95,6 @@
 
 /* Navigation Text */
 .nav-text {
-    font-size: 14px;
     color: inherit;
 }
 
@@ -136,8 +133,6 @@
     color: #FFFFFF;
     text-decoration: none;
     transition: all 0.2s;
-    font-size: 14px;
-    font-weight: 400;
     position: relative;
 }
 
@@ -152,7 +147,6 @@
 
 /* Subtext */
 .nav-subtext {
-    font-size: 14px;
     color: inherit;
 }
 
@@ -162,8 +156,6 @@
     color: #0D1722;
     padding: 2px 8px;
     border-radius: 12px;
-    font-size: 11px;
-    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }

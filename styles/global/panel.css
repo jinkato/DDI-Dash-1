@@ -52,13 +52,11 @@
 /* Panel Title */
 .panel-title {
     font-size: 14px;
-    font-weight: 600;
     color: #111827;
     margin: 0;
 }
 
 .panel-title.large {
-    font-size: 16px;
 }
 
 /* Panel Content */
@@ -286,6 +284,5 @@ body.detail-panel-open .filter-panel {
     }
     
     .panel-title {
-        font-size: 13px;
     }
 }

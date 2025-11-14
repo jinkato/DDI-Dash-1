@@ -1,8 +1,346 @@
 // Performance Page JavaScript
 
+// Store chart instances globally
+let chartInstances = {};
+
+// Mock data structure for different timeframes and vehicle types
+const performanceData = {
+    '14': {
+        'all': {
+            metrics: {
+                marketPercentile: '72th',
+                inventory: 247,
+                inventoryChange: -7,
+                dealRating: 82,
+                dealRatingChange: -29,
+                merchandisingHealth: 100,
+                conversionRate: 1.62,
+                leadsPerVehicle: 2.3,
+                turnTime: 34
+            },
+            charts: {
+                conversion: {
+                    yourData: [10000, 2450, 162],
+                    marketData: [10000, 2450, 145]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.3, 2.7, 2.5, 2.4, 2.6, 2.3],
+                    marketData: [2.8, 2.9, 3.0, 3.2, 3.1, 3.1]
+                },
+                turnTime: {
+                    yourData: [25, 37, 46, 24, 41],
+                    marketData: [42, 42, 42, 42, 42]
+                }
+            }
+        },
+        'new': {
+            metrics: {
+                marketPercentile: '68th',
+                inventory: 87,
+                inventoryChange: -5,
+                dealRating: 78,
+                dealRatingChange: -15,
+                merchandisingHealth: 98,
+                conversionRate: 1.45,
+                leadsPerVehicle: 2.1,
+                turnTime: 28
+            },
+            charts: {
+                conversion: {
+                    yourData: [4000, 980, 58],
+                    marketData: [4000, 980, 52]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.1, 2.3, 2.2, 2.0, 2.1, 2.1],
+                    marketData: [2.5, 2.6, 2.7, 2.8, 2.7, 2.8]
+                },
+                turnTime: {
+                    yourData: [22, 30, 35, 20, 32],
+                    marketData: [38, 38, 38, 38, 38]
+                }
+            }
+        },
+        'used': {
+            metrics: {
+                marketPercentile: '75th',
+                inventory: 160,
+                inventoryChange: -8,
+                dealRating: 85,
+                dealRatingChange: -32,
+                merchandisingHealth: 100,
+                conversionRate: 1.72,
+                leadsPerVehicle: 2.5,
+                turnTime: 38
+            },
+            charts: {
+                conversion: {
+                    yourData: [6000, 1470, 104],
+                    marketData: [6000, 1470, 93]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.5, 2.9, 2.7, 2.6, 2.8, 2.5],
+                    marketData: [3.0, 3.1, 3.2, 3.4, 3.3, 3.3]
+                },
+                turnTime: {
+                    yourData: [28, 42, 52, 26, 46],
+                    marketData: [45, 45, 45, 45, 45]
+                }
+            }
+        },
+        'cpo': {
+            metrics: {
+                marketPercentile: '80th',
+                inventory: 0,
+                inventoryChange: 0,
+                dealRating: 0,
+                dealRatingChange: 0,
+                merchandisingHealth: 0,
+                conversionRate: 0,
+                leadsPerVehicle: 0,
+                turnTime: 0
+            },
+            charts: {
+                conversion: {
+                    yourData: [0, 0, 0],
+                    marketData: [0, 0, 0]
+                },
+                leadsPerVehicle: {
+                    yourData: [0, 0, 0, 0, 0, 0],
+                    marketData: [0, 0, 0, 0, 0, 0]
+                },
+                turnTime: {
+                    yourData: [0, 0, 0, 0, 0],
+                    marketData: [0, 0, 0, 0, 0]
+                }
+            }
+        }
+    },
+    '30': {
+        'all': {
+            metrics: {
+                marketPercentile: '70th',
+                inventory: 255,
+                inventoryChange: -3,
+                dealRating: 80,
+                dealRatingChange: -25,
+                merchandisingHealth: 98,
+                conversionRate: 1.58,
+                leadsPerVehicle: 2.4,
+                turnTime: 36
+            },
+            charts: {
+                conversion: {
+                    yourData: [25000, 6250, 395],
+                    marketData: [25000, 6250, 363]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.4, 2.6, 2.5, 2.3, 2.4, 2.4],
+                    marketData: [2.9, 3.0, 3.1, 3.2, 3.1, 3.2]
+                },
+                turnTime: {
+                    yourData: [28, 38, 45, 26, 43],
+                    marketData: [44, 44, 44, 44, 44]
+                }
+            }
+        },
+        'new': {
+            metrics: {
+                marketPercentile: '66th',
+                inventory: 90,
+                inventoryChange: -2,
+                dealRating: 76,
+                dealRatingChange: -12,
+                merchandisingHealth: 96,
+                conversionRate: 1.42,
+                leadsPerVehicle: 2.2,
+                turnTime: 30
+            },
+            charts: {
+                conversion: {
+                    yourData: [10000, 2500, 142],
+                    marketData: [10000, 2500, 130]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.2, 2.3, 2.2, 2.1, 2.2, 2.2],
+                    marketData: [2.6, 2.7, 2.8, 2.9, 2.8, 2.9]
+                },
+                turnTime: {
+                    yourData: [24, 32, 36, 22, 34],
+                    marketData: [40, 40, 40, 40, 40]
+                }
+            }
+        },
+        'used': {
+            metrics: {
+                marketPercentile: '73th',
+                inventory: 165,
+                inventoryChange: -4,
+                dealRating: 83,
+                dealRatingChange: -28,
+                merchandisingHealth: 99,
+                conversionRate: 1.68,
+                leadsPerVehicle: 2.6,
+                turnTime: 40
+            },
+            charts: {
+                conversion: {
+                    yourData: [15000, 3750, 252],
+                    marketData: [15000, 3750, 233]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.6, 2.8, 2.7, 2.5, 2.6, 2.6],
+                    marketData: [3.1, 3.2, 3.3, 3.4, 3.3, 3.4]
+                },
+                turnTime: {
+                    yourData: [30, 44, 50, 28, 48],
+                    marketData: [47, 47, 47, 47, 47]
+                }
+            }
+        },
+        'cpo': {
+            metrics: {
+                marketPercentile: '78th',
+                inventory: 0,
+                inventoryChange: 0,
+                dealRating: 0,
+                dealRatingChange: 0,
+                merchandisingHealth: 0,
+                conversionRate: 0,
+                leadsPerVehicle: 0,
+                turnTime: 0
+            },
+            charts: {
+                conversion: {
+                    yourData: [0, 0, 0],
+                    marketData: [0, 0, 0]
+                },
+                leadsPerVehicle: {
+                    yourData: [0, 0, 0, 0, 0, 0],
+                    marketData: [0, 0, 0, 0, 0, 0]
+                },
+                turnTime: {
+                    yourData: [0, 0, 0, 0, 0],
+                    marketData: [0, 0, 0, 0, 0]
+                }
+            }
+        }
+    },
+    '90': {
+        'all': {
+            metrics: {
+                marketPercentile: '74th',
+                inventory: 260,
+                inventoryChange: 2,
+                dealRating: 84,
+                dealRatingChange: -18,
+                merchandisingHealth: 99,
+                conversionRate: 1.65,
+                leadsPerVehicle: 2.5,
+                turnTime: 35
+            },
+            charts: {
+                conversion: {
+                    yourData: [80000, 20000, 1320],
+                    marketData: [80000, 20000, 1160]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.5, 2.7, 2.6, 2.4, 2.5, 2.5],
+                    marketData: [3.0, 3.1, 3.2, 3.3, 3.2, 3.2]
+                },
+                turnTime: {
+                    yourData: [26, 36, 44, 25, 42],
+                    marketData: [43, 43, 43, 43, 43]
+                }
+            }
+        },
+        'new': {
+            metrics: {
+                marketPercentile: '70th',
+                inventory: 92,
+                inventoryChange: 3,
+                dealRating: 80,
+                dealRatingChange: -8,
+                merchandisingHealth: 97,
+                conversionRate: 1.48,
+                leadsPerVehicle: 2.3,
+                turnTime: 29
+            },
+            charts: {
+                conversion: {
+                    yourData: [32000, 8000, 473],
+                    marketData: [32000, 8000, 416]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.3, 2.4, 2.3, 2.2, 2.3, 2.3],
+                    marketData: [2.7, 2.8, 2.9, 3.0, 2.9, 2.9]
+                },
+                turnTime: {
+                    yourData: [23, 31, 35, 21, 33],
+                    marketData: [39, 39, 39, 39, 39]
+                }
+            }
+        },
+        'used': {
+            metrics: {
+                marketPercentile: '77th',
+                inventory: 168,
+                inventoryChange: 2,
+                dealRating: 87,
+                dealRatingChange: -20,
+                merchandisingHealth: 100,
+                conversionRate: 1.75,
+                leadsPerVehicle: 2.7,
+                turnTime: 39
+            },
+            charts: {
+                conversion: {
+                    yourData: [48000, 12000, 840],
+                    marketData: [48000, 12000, 744]
+                },
+                leadsPerVehicle: {
+                    yourData: [2.7, 2.9, 2.8, 2.6, 2.7, 2.7],
+                    marketData: [3.2, 3.3, 3.4, 3.5, 3.4, 3.4]
+                },
+                turnTime: {
+                    yourData: [29, 43, 49, 27, 47],
+                    marketData: [46, 46, 46, 46, 46]
+                }
+            }
+        },
+        'cpo': {
+            metrics: {
+                marketPercentile: '82th',
+                inventory: 0,
+                inventoryChange: 0,
+                dealRating: 0,
+                dealRatingChange: 0,
+                merchandisingHealth: 0,
+                conversionRate: 0,
+                leadsPerVehicle: 0,
+                turnTime: 0
+            },
+            charts: {
+                conversion: {
+                    yourData: [0, 0, 0],
+                    marketData: [0, 0, 0]
+                },
+                leadsPerVehicle: {
+                    yourData: [0, 0, 0, 0, 0, 0],
+                    marketData: [0, 0, 0, 0, 0, 0]
+                },
+                turnTime: {
+                    yourData: [0, 0, 0, 0, 0],
+                    marketData: [0, 0, 0, 0, 0]
+                }
+            }
+        }
+    }
+};
+
 // Initialize charts when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeCharts();
+    setupDropdownListeners();
 });
 
 function initializeCharts() {
@@ -12,7 +350,7 @@ function initializeCharts() {
     
     // Conversion Funnel Chart - Horizontal Bar
     const searchVsTypeCtx = document.getElementById('searchVsTypeChart').getContext('2d');
-    new Chart(searchVsTypeCtx, {
+    chartInstances.conversionChart = new Chart(searchVsTypeCtx, {
         type: 'bar',
         data: {
             labels: ['Search Result Pages (SRP)', 'Vehicle Detail Pages (VDP)', 'Leads Generated'],
@@ -136,7 +474,7 @@ function initializeCharts() {
 
     // Turn Time Chart - Deviation from Goal
     const priceVsSearchCtx = document.getElementById('priceVsSearchChart').getContext('2d');
-    new Chart(priceVsSearchCtx, {
+    chartInstances.turnTimeChart = new Chart(priceVsSearchCtx, {
         type: 'bar',
         data: {
             labels: ['Sedan', 'SUV', 'Truck', 'Coupe', 'Van'],
@@ -256,7 +594,7 @@ function initializeCharts() {
 
     // Leads per Vehicle Chart with Market Benchmark
     const leadsPerVehicleCtx = document.getElementById('leadsPerVehicleChart').getContext('2d');
-    new Chart(leadsPerVehicleCtx, {
+    chartInstances.leadsPerVehicleChart = new Chart(leadsPerVehicleCtx, {
         type: 'line',
         data: {
             labels: ['May 2025', 'Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025', 'Oct 2025'],
@@ -274,12 +612,12 @@ function initializeCharts() {
                 pointBorderWidth: 2
             }, {
                 label: 'Market Average',
-                data: [3.1, 3.1, 3.1, 3.1, 3.1, 3.1],
+                data: [2.8, 2.9, 3.0, 3.2, 3.1, 3.1],
                 backgroundColor: '#9CA3AF',
                 borderColor: '#9CA3AF',
                 borderWidth: 2,
                 borderDash: [5, 5],
-                tension: 0,
+                tension: 0.3,
                 pointRadius: 0,
                 pointHoverRadius: 0
             }]
@@ -394,7 +732,7 @@ function initializeCharts() {
 
     // Deal Rating Chart - Small Line Chart
     const dealRatingCtx = document.getElementById('dealRatingChart').getContext('2d');
-    new Chart(dealRatingCtx, {
+    chartInstances.dealRatingChart = new Chart(dealRatingCtx, {
         type: 'line',
         data: {
             labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
@@ -505,7 +843,7 @@ function initializeCharts() {
 
     // Inventory Count Chart - Small Bar Chart
     const inventoryCountCtx = document.getElementById('inventoryCountChart').getContext('2d');
-    new Chart(inventoryCountCtx, {
+    chartInstances.inventoryCountChart = new Chart(inventoryCountCtx, {
         type: 'bar',
         data: {
             labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
@@ -646,4 +984,138 @@ function initializeCharts() {
             }
         }]
     });
+}
+
+// Setup dropdown listeners
+function setupDropdownListeners() {
+    const timeframeSelect = document.getElementById('timeframeSelect');
+    const vehicleTypeSelect = document.getElementById('vehicleTypeSelect');
+    
+    // Add change event listeners
+    timeframeSelect.addEventListener('change', updatePageData);
+    vehicleTypeSelect.addEventListener('change', updatePageData);
+}
+
+// Main update function
+function updatePageData() {
+    const timeframe = document.getElementById('timeframeSelect').value;
+    const vehicleType = document.getElementById('vehicleTypeSelect').value;
+    
+    // Get the data for the selected combination
+    const data = performanceData[timeframe][vehicleType];
+    
+    // Update all components
+    updateMetricCards(data.metrics);
+    updateConversionValues(data.metrics);
+    updateCharts(data.charts);
+}
+
+// Update metric cards
+function updateMetricCards(metrics) {
+    // Update Market Percentile
+    const marketPercentileEl = document.getElementById('marketPercentileValue');
+    if (marketPercentileEl) {
+        marketPercentileEl.textContent = metrics.marketPercentile;
+    }
+    
+    // Update Inventory
+    const inventoryEl = document.getElementById('inventoryValue');
+    if (inventoryEl) {
+        inventoryEl.textContent = metrics.inventory;
+    }
+    
+    // Update inventory change
+    const inventoryChangeEl = inventoryEl.nextElementSibling.querySelector('span');
+    if (inventoryChangeEl) {
+        const changeText = metrics.inventoryChange < 0 ? 
+            `${metrics.inventoryChange}% decrease` : 
+            `+${metrics.inventoryChange}% increase`;
+        inventoryChangeEl.textContent = changeText;
+        
+        // Update change indicator class
+        const changeDiv = inventoryEl.nextElementSibling;
+        changeDiv.className = metrics.inventoryChange < 0 ? 'metric-card-change negative' : 'metric-card-change positive';
+    }
+    
+    // Update Deal Rating
+    const dealRatingEl = document.getElementById('dealRatingValue');
+    if (dealRatingEl) {
+        dealRatingEl.textContent = `${metrics.dealRating}%`;
+    }
+    
+    // Update deal rating change
+    const dealRatingChangeEl = dealRatingEl.nextElementSibling.querySelector('span');
+    if (dealRatingChangeEl) {
+        const changeText = metrics.dealRatingChange < 0 ? 
+            `${metrics.dealRatingChange}% decrease` : 
+            `+${metrics.dealRatingChange}% increase`;
+        dealRatingChangeEl.textContent = changeText;
+        
+        // Update change indicator class
+        const changeDiv = dealRatingEl.nextElementSibling;
+        changeDiv.className = metrics.dealRatingChange < 0 ? 'metric-card-change negative' : 'metric-card-change positive';
+    }
+    
+    // Update Merchandising Health
+    const merchandisingEl = document.getElementById('merchandisingHealthValue');
+    if (merchandisingEl) {
+        merchandisingEl.textContent = `${metrics.merchandisingHealth}%`;
+    }
+}
+
+// Update conversion values
+function updateConversionValues(metrics) {
+    // Update Conversion Rate
+    const conversionRateEl = document.getElementById('conversionRateValue');
+    if (conversionRateEl) {
+        conversionRateEl.textContent = `${metrics.conversionRate}%`;
+    }
+    
+    // Update Leads per Vehicle
+    const leadsPerVehicleEl = document.getElementById('leadsPerVehicleValue');
+    if (leadsPerVehicleEl) {
+        leadsPerVehicleEl.textContent = metrics.leadsPerVehicle;
+    }
+    
+    // Update Turn Time
+    const turnTimeEl = document.getElementById('turnTimeValue');
+    if (turnTimeEl) {
+        turnTimeEl.textContent = `${metrics.turnTime} days`;
+    }
+}
+
+// Update all charts
+function updateCharts(chartData) {
+    // Update Conversion Chart
+    if (chartInstances.conversionChart) {
+        chartInstances.conversionChart.data.datasets[0].data = chartData.conversion.yourData;
+        chartInstances.conversionChart.data.datasets[1].data = chartData.conversion.marketData;
+        chartInstances.conversionChart.update('active');
+    }
+    
+    // Update Leads per Vehicle Chart
+    if (chartInstances.leadsPerVehicleChart) {
+        chartInstances.leadsPerVehicleChart.data.datasets[0].data = chartData.leadsPerVehicle.yourData;
+        chartInstances.leadsPerVehicleChart.data.datasets[1].data = chartData.leadsPerVehicle.marketData;
+        chartInstances.leadsPerVehicleChart.update('active');
+    }
+    
+    // Update Turn Time Chart
+    if (chartInstances.turnTimeChart) {
+        chartInstances.turnTimeChart.data.datasets[0].data = chartData.turnTime.yourData;
+        chartInstances.turnTimeChart.data.datasets[1].data = chartData.turnTime.marketData;
+        chartInstances.turnTimeChart.update('active');
+    }
+    
+    // Update Deal Rating Chart
+    if (chartInstances.dealRatingChart) {
+        // For now, keep the same data as it's a trend chart
+        chartInstances.dealRatingChart.update('active');
+    }
+    
+    // Update Inventory Count Chart
+    if (chartInstances.inventoryCountChart) {
+        // For now, keep the same data as it's a trend chart
+        chartInstances.inventoryCountChart.update('active');
+    }
 }
