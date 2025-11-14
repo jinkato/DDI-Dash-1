@@ -940,49 +940,8 @@ function initializeCharts() {
                     min: 200,
                     max: 350
                 }
-            },
-            // Custom plugin to draw market average line
-            plugins: {
-                annotation: {
-                    annotations: {
-                        line1: {
-                            type: 'line',
-                            yMin: 312,
-                            yMax: 312,
-                            borderColor: '#9CA3AF',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: false
-                            }
-                        }
-                    }
-                }
             }
-        },
-        plugins: [{
-            // Custom plugin to draw the market average line
-            afterDraw: function(chart) {
-                const ctx = chart.ctx;
-                const yScale = chart.scales.y;
-                const xScale = chart.scales.x;
-                const marketAvg = 312;
-                
-                // Calculate y position for market average
-                const y = yScale.getPixelForValue(marketAvg);
-                
-                // Draw dashed line
-                ctx.save();
-                ctx.beginPath();
-                ctx.setLineDash([5, 5]);
-                ctx.strokeStyle = '#9CA3AF';
-                ctx.lineWidth = 2;
-                ctx.moveTo(xScale.left, y);
-                ctx.lineTo(xScale.right, y);
-                ctx.stroke();
-                ctx.restore();
-            }
-        }]
+        }
     });
 }
 

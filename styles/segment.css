@@ -3,6 +3,8 @@
 /* Back Navigation */
 .back-navigation {
     padding: 16px 24px 0 24px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .back-btn svg {
@@ -10,9 +12,18 @@
     height: 16px;
 }
 
+/* Filters Row */
+.filters-row {
+    max-width: 1400px;
+    margin: 0 auto 12px auto;
+    padding: 0 24px;
+}
+
 /* Compare Content */
 .compare-content {
     padding: 0 24px 24px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 /* Compare Table */

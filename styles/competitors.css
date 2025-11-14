@@ -3,6 +3,8 @@
 /* Back Navigation */
 .back-navigation {
     padding: 16px 24px 0 24px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .back-btn svg {
@@ -15,6 +17,15 @@
     display: flex;
     gap: 24px;
     padding: 12px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
 /* Table Container */
