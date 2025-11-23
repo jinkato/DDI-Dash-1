@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Set up filter event listeners
     initializeFilterEventListeners();
+
+    // Initialize tab switching for Leads panel
+    initializeLeadsTabSwitching();
 });
 
 /**
@@ -663,7 +666,7 @@ function updateLeadsPerVehicleChart(data) {
 }
 
 /**
- * Update Buyer Overlap Chart (Line Chart by Deal Rating or Vehicle Type)
+ * Update Buyer Overlap Chart (Average buyer overlap per vehicle)
  */
 function updateBuyerOverlapChart(data) {
     const ctx = document.getElementById('buyer-overlap-chart');
@@ -675,108 +678,25 @@ function updateBuyerOverlapChart(data) {
     }
 
     const months = data.months;
-    const groupBy = window.currentFilters.groupBy || 'deal-rating';
 
-    const allDealRatings = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
-    const allVehicleTypes = ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'];
-
-    let datasets;
-
-    if (groupBy === 'none') {
-        // No grouping - show total buyer overlap
-        datasets = [{
-            label: 'Buyer Overlap',
-            data: data.buyerOverlap,
-            backgroundColor: '#0763D3',
-            borderColor: '#0763D3',
-            borderWidth: 2,
-            tension: 0.3,
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            pointBackgroundColor: '#0763D3',
-            pointBorderColor: '#FFFFFF',
-            pointBorderWidth: 2,
-            fill: false
-        }];
-    } else if (groupBy === 'vehicle-type') {
-        // Group by vehicle type
-        const buyerOverlapByVehicleType = data.buyerOverlapByVehicleType;
-        const selectedVehicleTypes = window.currentFilters.vehicleTypes || allVehicleTypes;
-        const allColorVars = ['--color-compact', '--color-sedans', '--color-suv-co', '--color-truck', '--color-luxury'];
-
-        // Calculate total share of selected types to normalize
-        let totalShare = 0;
-        selectedVehicleTypes.forEach(type => {
-            totalShare += EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
-        });
-
-        datasets = selectedVehicleTypes.map((type) => {
-            const typeIndex = allVehicleTypes.indexOf(type);
-            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
-            const buyerOverlapData = buyerOverlapByVehicleType[type] || [];
-
-            // Normalize share so selected types add up to 100%
-            const normalizedShare = typeData.inventoryShare / totalShare;
-            const normalizedBuyerOverlap = buyerOverlapData.map(val => parseFloat((val * normalizedShare * totalShare).toFixed(1)));
-
-            const color = getComputedStyle(document.documentElement).getPropertyValue(allColorVars[typeIndex]);
-            return {
-                label: type,
-                data: normalizedBuyerOverlap,
-                backgroundColor: color,
-                borderColor: color,
-                borderWidth: 2,
-                tension: 0.3,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-                pointBackgroundColor: color,
-                pointBorderColor: '#FFFFFF',
-                pointBorderWidth: 2,
-                fill: false
-            };
-        });
-    } else {
-        // Group by deal rating (default)
-        const buyerOverlapByDealRating = data.buyerOverlapByDealRating;
-        const selectedDealRatings = window.currentFilters.dealRatings || allDealRatings;
-        const allColorVars = ['--color-great-deal', '--color-good-deal', '--color-fair-deal', '--color-high-priced', '--color-over-priced'];
-
-        // Calculate total share of selected ratings to normalize
-        let totalShare = 0;
-        selectedDealRatings.forEach(rating => {
-            totalShare += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
-        });
-
-        datasets = selectedDealRatings.map((rating) => {
-            const ratingIndex = allDealRatings.indexOf(rating);
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
-            const buyerOverlapData = buyerOverlapByDealRating[rating] || [];
-
-            // Normalize share so selected ratings add up to 100%
-            const normalizedShare = ratingData.inventoryShare / totalShare;
-            const normalizedBuyerOverlap = buyerOverlapData.map(val => parseFloat((val * normalizedShare * totalShare).toFixed(1)));
-
-            const color = getComputedStyle(document.documentElement).getPropertyValue(allColorVars[ratingIndex]);
-            return {
-                label: rating,
-                data: normalizedBuyerOverlap,
-                backgroundColor: color,
-                borderColor: color,
-                borderWidth: 2,
-                tension: 0.3,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-                pointBackgroundColor: color,
-                pointBorderColor: '#FFFFFF',
-                pointBorderWidth: 2,
-                fill: false
-            };
-        });
-    }
+    // Always show average buyer overlap per vehicle (Your Dealership)
+    const datasets = [{
+        label: 'Your Dealership',
+        data: data.buyerOverlap,
+        backgroundColor: '#3B82F6',
+        borderColor: '#3B82F6',
+        borderWidth: 2,
+        tension: 0.3,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBackgroundColor: '#3B82F6',
+        pointBorderColor: '#FFFFFF',
+        pointBorderWidth: 2,
+        fill: false
+    }];
 
     // Add market average line if checkbox is checked
     if (window.currentFilters.showMarketAverage) {
-        // Use the unfiltered baseline buyer overlap as market average
         datasets.push({
             label: 'Market Average',
             data: data.buyerOverlapBaseline,
@@ -785,8 +705,8 @@ function updateBuyerOverlapChart(data) {
             borderWidth: 2,
             borderDash: [5, 5],
             tension: 0.3,
-            pointRadius: 0,
-            pointHoverRadius: 6,
+            pointRadius: 3,
+            pointHoverRadius: 5,
             pointBackgroundColor: '#9CA3AF',
             pointBorderColor: '#FFFFFF',
             pointBorderWidth: 2,
@@ -827,29 +747,9 @@ function updateBuyerOverlapChart(data) {
                     cornerRadius: 6,
                     titleFont: { size: 13, weight: '600' },
                     bodyFont: { size: 12 },
-                    itemSort: function(a, b) {
-                        // Sort tooltip items by their order
-                        const dealRatingOrder = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
-                        const vehicleTypeOrder = ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'];
-
-                        const aIndexDeal = dealRatingOrder.indexOf(a.dataset.label);
-                        const bIndexDeal = dealRatingOrder.indexOf(b.dataset.label);
-                        const aIndexType = vehicleTypeOrder.indexOf(a.dataset.label);
-                        const bIndexType = vehicleTypeOrder.indexOf(b.dataset.label);
-
-                        // If both are deal ratings
-                        if (aIndexDeal !== -1 && bIndexDeal !== -1) {
-                            return aIndexDeal - bIndexDeal;
-                        }
-                        // If both are vehicle types
-                        if (aIndexType !== -1 && bIndexType !== -1) {
-                            return aIndexType - bIndexType;
-                        }
-                        return 0;
-                    },
                     callbacks: {
                         label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.y + ' buyers/vehicle';
+                            return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + ' buyers/vehicle';
                         }
                     }
                 }
@@ -886,7 +786,7 @@ function updateBuyerOverlapChart(data) {
                     },
                     title: {
                         display: true,
-                        text: 'Buyers per Vehicle',
+                        text: 'Average Buyers per Vehicle',
                         font: {
                             size: 13,
                             weight: '500'
@@ -1055,6 +955,36 @@ function initializeFilterEventListeners() {
             onFiltersChanged();
         });
     }
+}
+
+/**
+ * Initialize tab switching for Leads panel
+ */
+function initializeLeadsTabSwitching() {
+    const tabButtons = document.querySelectorAll('.tab-navigation .tab-button');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+
+            // Remove active class from all tab buttons in this panel
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            // Hide all tab contents
+            document.getElementById('total-leads-tab').classList.remove('active');
+            document.getElementById('leads-per-vehicle-tab').classList.remove('active');
+
+            // Show the selected tab content
+            if (tabName === 'total-leads') {
+                document.getElementById('total-leads-tab').classList.add('active');
+            } else if (tabName === 'leads-per-vehicle') {
+                document.getElementById('leads-per-vehicle-tab').classList.add('active');
+            }
+        });
+    });
 }
 
 /**

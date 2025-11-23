@@ -12,7 +12,8 @@ window.currentFilters = {
     vehicleTypes: ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'],
     dealRatings: ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'],
     brand: 'All',
-    groupBy: 'deal-rating'
+    groupBy: 'none',
+    showMarketAverage: true
 };
 // Create a local alias for convenience
 const currentFilters = window.currentFilters;
@@ -98,6 +99,9 @@ function getFilteredData() {
     // Get buyer overlap data
     const buyerOverlap = getBuyerOverlapTimeSeries(startIndex);
 
+    // Get baseline buyer overlap (unfiltered, for market average comparison)
+    const buyerOverlapBaseline = EXPLORE_MOCK_DATA.buyerOverlapData.marketAverageBaseline.slice(startIndex);
+
     // Get buyer overlap breakdown by deal rating (for buyer overlap stacked chart)
     const buyerOverlapByDealRating = getBuyerOverlapByDealRating();
 
@@ -118,6 +122,7 @@ function getFilteredData() {
         marketAvg: marketAvg,
         marketSampleSize: marketSampleSize,
         buyerOverlap: buyerOverlap,
+        buyerOverlapBaseline: buyerOverlapBaseline,
         buyerOverlapByDealRating: buyerOverlapByDealRating,
         buyerOverlapByVehicleType: buyerOverlapByVehicleType,
         inventoryByDealRating: inventoryByDealRating,
