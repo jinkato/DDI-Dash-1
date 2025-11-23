@@ -1,16 +1,6 @@
 /* Competitors Page Styles */
 
-/* Back Navigation */
-.back-navigation {
-    padding: 16px 24px 0 24px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
 
-.back-btn svg {
-    width: 16px;
-    height: 16px;
-}
 
 /* Content Layout */
 .content {
@@ -28,27 +18,23 @@
     padding: 0 24px;
 }
 
-/* Table Container */
-.table-container {
+/* Panel extension for competitors layout */
+.content .panel {
     flex: 1;
-    background: white;
-    border-radius: 16px;
-    border: 1px solid #D8DBDE;
     overflow: visible;
     align-self: flex-start;
+    padding: 0 20px;
 }
 
 /* Table Styles */
 .competitors-table {
-    width: 100%;
-    border-collapse: collapse;
     font-size: 14px;
     table-layout: auto;
 }
 
 .competitors-table thead {
     /* background-color: #ffffff; */
-    border-bottom: 1px solid #e5e7eb;
+    /* border-bottom: 1px solid #e5e7eb; */
 }
 
 .competitors-table th {
@@ -95,30 +81,13 @@
     transform: translateY(-50%);
 }
 
-.competitors-table th:first-child {
-    padding-left: 24px;
-}
-
 .competitors-table tbody tr {
     border-bottom: 1px solid #e5e7eb;
     transition: background-color 0.1s;
 }
 
-.competitors-table tbody tr:hover {
-    background-color: #f9fafb;
-}
-
 .competitors-table tbody tr.selected {
     background-color: #F4F6F9;
-}
-
-.competitors-table td {
-    padding: 16px;
-    color: #111827;
-}
-
-.competitors-table td:first-child {
-    padding-left: 24px;
 }
 
 /* Dealer Info Cell */
@@ -193,95 +162,6 @@
     padding: 6px 0;
 }
 
-/* Filter Panel */
-.filter-panel {
-    width: 320px;
-    background: white;
-    border-radius: 16px;
-    border: 1px solid #D8DBDE;
-    padding: 24px;
-    align-self: flex-start;
-}
-
-.filter-panel h2 {
-    margin: 0 0 24px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-}
-
-.filter-section {
-    margin-bottom: 24px;
-}
-
-.filter-section label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #374151;
-}
-
-/* Search Input */
-.search-input {
-    width: 100%;
-    padding: 10px 12px 10px 40px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.2s;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="%236b7280"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>') no-repeat 12px center;
-    background-size: 20px;
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: #9ca3af;
-}
-
-/* Select Inputs */
-.filter-select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
-    background: white;
-    cursor: pointer;
-    transition: border-color 0.2s;
-}
-
-.filter-select:focus {
-    outline: none;
-    border-color: #9ca3af;
-}
-
-/* Range Inputs */
-.range-inputs {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.range-input {
-    width: 80px;
-    padding: 10px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
-}
-
-.range-input:focus {
-    outline: none;
-    border-color: #9ca3af;
-}
-
-.range-separator {
-    color: #9ca3af;
-    font-size: 14px;
-}
-
-
 /* Adjustments when detail panel is open */
 body.detail-panel-open .competitors-table {
     font-size: 13px;
@@ -316,30 +196,9 @@ body.detail-panel-open .select-btn {
     padding: 0 8px;
 }
 
-/* Reset Link */
-.reset-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-weight: 500;
-    color: var(--link-secondary);
-    cursor: pointer;
-}
-
 /* Responsive */
-@media (max-width: 1400px) {
-    .filter-panel {
-        width: 280px;
-    }
-}
-
 @media (max-width: 1200px) {
     .content {
         flex-direction: column;
-    }
-    
-    .filter-panel {
-        width: 100%;
-        order: -1;
     }
 }

@@ -1,7 +1,19 @@
-/* Global Border Style */
+/* Global Border Style and Deal Rating Colors */
 :root {
     --border-default: 1px solid #79828D;
     --border-light: 1px solid #D8DBDE;
+
+    /* Deal Rating Colors */
+    --color-great-deal: #078A0B;
+    --color-good-deal: #09AD0E;
+    --color-fair-deal: #FFC651;
+    --color-high-priced: #FF7F57;
+    --color-over-priced: #BD1A2E;
+    --border-great-deal: 1px solid #078A0B;
+    --border-good-deal: 1px solid #09AD0E;
+    --border-fair-deal: 1px solid #FFC651;
+    --border-high-priced: 1px solid #FF7F57;
+    --border-over-priced: 1px solid #BD1A2E;
 }
 
 /* Apply default border to common elements */
@@ -17,6 +29,69 @@ textarea,
 /* Light border variant */
 .border-light {
     border: var(--border-light);
+}
+
+/* Deal rating border variants */
+.border-great-deal {
+    border: var(--border-great-deal);
+}
+
+.border-good-deal {
+    border: var(--border-good-deal);
+}
+
+.border-fair-deal {
+    border: var(--border-fair-deal);
+}
+
+.border-high-priced {
+    border: var(--border-high-priced);
+}
+
+.border-over-priced {
+    border: var(--border-over-priced);
+}
+
+/* Deal rating background color utilities */
+.bg-great-deal {
+    background-color: var(--color-great-deal);
+}
+
+.bg-good-deal {
+    background-color: var(--color-good-deal);
+}
+
+.bg-fair-deal {
+    background-color: var(--color-fair-deal);
+}
+
+.bg-high-priced {
+    background-color: var(--color-high-priced);
+}
+
+.bg-over-priced {
+    background-color: var(--color-over-priced);
+}
+
+/* Deal rating text color utilities */
+.text-great-deal {
+    color: var(--color-great-deal);
+}
+
+.text-good-deal {
+    color: var(--color-good-deal);
+}
+
+.text-fair-deal {
+    color: var(--color-fair-deal);
+}
+
+.text-high-priced {
+    color: var(--color-high-priced);
+}
+
+.text-over-priced {
+    color: var(--color-over-priced);
 }
 
 

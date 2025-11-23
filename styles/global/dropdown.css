@@ -7,11 +7,14 @@
     display: flex;
     align-items: center;
     justify-content: right;
+    padding-right: 20px;
 }
 
 .dropdown-container {
     position: relative;
-    display: inline-block;
+    display: block;
+    width: 100%;
+    /* margin-bottom: 24px; */
 }
 
 .dropdown-label {
@@ -24,11 +27,10 @@
     width: 100%;
     min-width: 120px;
     height: 32px;
-    padding: 0 8px 0 8px;
+    padding: 0 28px 0 8px;
     background-color: #ffffff;
     border: var(--border-default);
     border-radius: 4px;
-    color: #000000;
     cursor: pointer;
     appearance: none;
     -webkit-appearance: none;
@@ -47,7 +49,7 @@
 .dropdown-select:focus {
     outline: none;
     border-color: #79828D;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+    /* box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1); */
 }
 
 .dropdown-select option {

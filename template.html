@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1300, initial-scale=1.0">
-    <title>Market Analysis - CarGurus Dealer Analysis</title>
-    
+    <title>Template Page - CarGurus Dealer Analysis</title>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="styles/global/main.css">
     <link rel="stylesheet" href="styles/global/typography.css">
@@ -22,10 +22,9 @@
     <link rel="stylesheet" href="styles/global/dropdown.css">
     <link rel="stylesheet" href="styles/global/table.css">
     <link rel="stylesheet" href="styles/global/header.css">
-    <link rel="stylesheet" href="styles/global/ai.css">
     <link rel="stylesheet" href="styles/global/sidebar.css">
-    <link rel="stylesheet" href="styles/market.css">
-    
+    <!-- Add page-specific CSS here if needed -->
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -38,7 +37,7 @@
             <div class="sidebar-logo">
                 <img src="img/logo.svg" alt="CarGurus" style="height: 19px;">
             </div>
-            
+
             <nav class="sidebar-nav">
                 <ul class="nav-list">
                     <!-- Dashboard -->
@@ -50,7 +49,7 @@
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    
+
                     <!-- Pricing (parent) -->
                     <li class="nav-item nav-item-parent expanded">
                         <a href="#" class="nav-link nav-parent">
@@ -80,7 +79,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <!-- Analysis (parent) -->
                     <li class="nav-item nav-item-parent expanded">
                         <a href="#" class="nav-link nav-parent">
@@ -96,7 +95,7 @@
                                 </a>
                             </li>
                             <li class="nav-subitem">
-                                <a href="market.html" class="nav-sublink active">
+                                <a href="market.html" class="nav-sublink">
                                     <span class="nav-subtext">Market Trends</span>
                                 </a>
                             </li>
@@ -105,14 +104,9 @@
                                     <span class="nav-subtext">Shopper</span>
                                 </a>
                             </li>
-                            <li class="nav-subitem">
-                                <a href="market.html" class="nav-sublink">
-                                    <span class="nav-subtext">Market Analysis</span>
-                                </a>
-                            </li>
                         </ul>
                     </li>
-                    
+
                     <!-- Leads (parent) -->
                     <li class="nav-item nav-item-parent expanded">
                         <a href="#" class="nav-link nav-parent">
@@ -134,7 +128,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <!-- IMV Lookup -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -144,7 +138,7 @@
                             <span class="nav-text">IMV Lookup</span>
                         </a>
                     </li>
-                    
+
                     <!-- Sell My Car -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -154,7 +148,7 @@
                             <span class="nav-text">Sell My Car</span>
                         </a>
                     </li>
-                    
+
                     <!-- Advertising -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -164,7 +158,7 @@
                             <span class="nav-text">Advertising</span>
                         </a>
                     </li>
-                    
+
                     <!-- Digital Deal -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -174,7 +168,7 @@
                             <span class="nav-text">Digital Deal</span>
                         </a>
                     </li>
-                    
+
                     <!-- Listings -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -184,7 +178,7 @@
                             <span class="nav-text">Listings</span>
                         </a>
                     </li>
-                    
+
                     <!-- Scheduled Reports -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -194,7 +188,7 @@
                             <span class="nav-text">Scheduled Reports</span>
                         </a>
                     </li>
-                    
+
                     <!-- Manage Account -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -210,38 +204,31 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <div class="dropdowns">
-                <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
-            </div>
+            
+
+            <!-- Header with Title -->
             <div class="header">
+                <!-- Back Navigation -->
+                <div class="back-navigation">
+                    <a href="#" class="link-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        Back
+                    </a>
+                </div>
                 <div class="header-actions">
-                    <h1 class="header-title">Market Trends</h1>
+                    <h1 class="header-title">Template Page</h1>
                     <div class="button-group">
-                        <button class="ai-button">Generate summary</button>
+                        <button class="btn-primary">Action Button</button>
+                        <button class="btn-primary">Action Button 2</button>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Main content area -->
             <div class="content">
-                <!-- AI Summary Panel -->
-                <div id="aiSummaryPanel" class="ai-summary-panel">
-                    <div class="ai-summary-header">
-                        <div class="ai-summary-title">
-                            <span>Market Analysis Overview</span>
-                        </div>
-                    </div>
-                    <div class="ai-summary-content">
-                        <p>Your dealership shows strong performance in the electric vehicle segment with 30% faster turnover than luxury vehicles. Current inventory mix is misaligned with market demand, particularly in SUVs where you're 15% below optimal levels.</p>
-                        
-                        <p><strong>Recommendations:</strong></p>
-                        <ul>
-                            <li>Increase SUV inventory by 15% to match market demand</li>
-                            <li>Reduce sedan inventory by 12% to optimize turnover rates</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Filter Bar -->
+                <!-- Filter Bar with Dropdowns -->
                 <div class="filter-bar">
                     <div class="dropdown-container">
                         <span class="dropdown-label text-sm">Time frame:</span>
@@ -261,225 +248,102 @@
                         </select>
                     </div>
                     <div class="dropdown-container">
-                        <span class="dropdown-label text-sm">Radius:</span>
+                        <span class="dropdown-label text-sm">Category:</span>
                         <select class="dropdown-select">
-                            <option>50ml</option>
-                            <option>100ml</option>
-                            <option>200ml</option>
+                            <option>All Categories</option>
+                            <option>Category 1</option>
+                            <option>Category 2</option>
                         </select>
                     </div>
                 </div>
-                
-                <!-- Top Charts Row -->
+
+                <!-- Panels Grid - Two Column Layout -->
                 <div class="panels-grid" style="margin-bottom: 24px;">
-                    <!-- Inventory mix VS market demand Panel -->
+                    <!-- Panel 1 - Chart Example -->
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="panel-title">Inventory mix VS market demand</h3>
-                        </div>
-                        <div class="panel-content">
-                            <div style="height: 210px; position: relative;">
-                                <canvas id="inventoryMixChart"></canvas>
-                            </div>
-                            <div style="margin-top: 16px; padding: 0 20px;">
-                                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-                                    <img src="img/icon/ai_color.svg" alt="AI" style="width: 16px; height: 16px;">
-                                    <h4 style="font-size: 14px; font-weight: bold; color: #0D1722; margin: 0;">Key insights</h4>
-                                </div>
-                                <p style="font-size: 13px; color: #374151; line-height: 1.4; margin: 0; padding-left: 22px;">
-                                    Your SUV inventory is 15% below market demand, while sedan inventory exceeds demand by 12%.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Days on market by vehicle type Panel -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="panel-title">Days on market by vehicle type</h3>
-                        </div>
-                        <div class="panel-content">
-                            <div style="height: 210px; position: relative;">
-                                <canvas id="daysOnMarketChart"></canvas>
-                            </div>
-                            <div style="margin-top: 16px; padding: 0 20px;">
-                                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-                                    <img src="img/icon/ai_color.svg" alt="AI" style="width: 16px; height: 16px;">
-                                    <h4 style="font-size: 14px; font-weight: bold; color: #0D1722; margin: 0;">Key insights</h4>
-                                </div>
-                                <p style="font-size: 13px; color: #374151; line-height: 1.4; margin: 0; padding-left: 22px;">
-                                    Electric vehicles sell 30 days faster than luxury vehicles. Consider adjusting your inventory mix to include more fast-moving categories.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Panels Grid -->
-                <div class="panels-grid">
-                    <!-- Biggest Lead Driver Panel -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="panel-title">Biggest Lead Driver</h3>
+                            <h3 class="panel-title">Chart Panel Example</h3>
                             <a href="#" class="learn-more-link">Learn more</a>
                         </div>
-                        <div class="vehicle-table-container">
-                            <table class="vehicle-table lead-driver-table">
-                                <thead>
-                                    <tr>
-                                        <th>Vehicle</th>
-                                        <th>Estimated leads in the next 30 days</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="vehicle-info">
-                                                <img src="img/car thumbnail/car3@2x.png" alt="Vehicle" class="vehicle-image">
-                                                <div class="vehicle-details">
-                                                    2017 Chevrolet Colorado Extended Cab
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>12</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="vehicle-info">
-                                                <img src="img/car thumbnail/car1@2x.png" alt="Vehicle" class="vehicle-image">
-                                                <div class="vehicle-details">
-                                                    2019 Nissan Sentra SV
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>9</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="vehicle-info">
-                                                <img src="img/car thumbnail/car2@2x.png" alt="Vehicle" class="vehicle-image">
-                                                <div class="vehicle-details">
-                                                    2018 Honda HR-V EX
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>7</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="panel-content">
+                            <div style="height: 300px; position: relative;">
+                                <canvas id="exampleChart"></canvas>
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Top searched features Panel -->
+
+                    <!-- Panel 2 - Metrics Example -->
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="panel-title">Top searched features</h3>
+                            <h3 class="panel-title">Metrics Panel Example</h3>
                         </div>
                         <div class="panel-content">
-                            <div style="height: 320px; position: relative; padding: 10px;">
-                                <canvas id="topFeaturesChart"></canvas>
+                            <div style="padding: 20px;">
+                                <div style="margin-bottom: 20px;">
+                                    <div style="font-size: 13px; color: #5E6976; margin-bottom: 4px;">Total Count</div>
+                                    <div style="font-size: 24px; font-weight: 600; color: #0D1722;">1,234</div>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <div style="font-size: 13px; color: #5E6976; margin-bottom: 4px;">Conversion Rate</div>
+                                    <div style="font-size: 24px; font-weight: 600; color: #0D1722;">23.5%</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; color: #5E6976; margin-bottom: 4px;">Average Value</div>
+                                    <div style="font-size: 24px; font-weight: 600; color: #0D1722;">$45,678</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Your Top Competitors Panel - Full Width -->
+
+                <!-- Panel 3 - Table Example (Full Width) -->
                 <div class="panel" style="margin-bottom: 24px;">
                     <div class="panel-header">
-                        <h3 class="panel-title">Your Top Competitors</h3>
-                        <a href="select.html" class="learn-more-link">Select Your Competitors</a>
+                        <h3 class="panel-title">Table Panel Example</h3>
+                        <a href="#" class="learn-more-link">View all</a>
                     </div>
                     <div class="vehicle-table-container">
-                        <table class="vehicle-table competitors-overview-table">
+                        <table class="vehicle-table">
                             <thead>
                                 <tr>
-                                    <th>Dealer</th>
-                                    <th>
-                                        <div class="tooltip-container">
-                                            <span class="tooltip-trigger">Distance</span>
-                                            <div class="tooltip-content">
-                                                Physical distance between your dealership and this competitor. Closer competitors typically have more overlap in customer base.
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="tooltip-container">
-                                            <span class="tooltip-trigger">Search overlap</span>
-                                            <div class="tooltip-content">
-                                                Percentage of shoppers who view both your inventory and this competitor's inventory during their search.
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="tooltip-container">
-                                            <span class="tooltip-trigger">VDP overlap</span>
-                                            <div class="tooltip-content">
-                                                Percentage of Vehicle Detail Page views where shoppers look at both your vehicles and this competitor's vehicles.
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="tooltip-container">
-                                            <span class="tooltip-trigger">Impact</span>
-                                            <div class="tooltip-content">
-                                                Overall competitive impact on your dealership. Based on overlap metrics and market positioning.
-                                            </div>
-                                        </div>
-                                    </th>
+                                    <th>Item</th>
+                                    <th>Metric 1</th>
+                                    <th>Metric 2</th>
+                                    <th>Metric 3</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <div class="vehicle-info">
-                                            <img src="img/store_logo/store_1@2x.png" alt="Boston Volvo Cars" class="vehicle-image">
-                                            <div class="vehicle-details">
-                                                Boston Volvo Cars
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>2.4 miles</td>
-                                    <td>21%</td>
-                                    <td>18%</td>
-                                    <td>
-                                        <div class="availability needs-attention">
-                                            Losing traffic
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="vehicle-info">
-                                            <img src="img/store_logo/store_2@2x.png" alt="Toyota of Watertown" class="vehicle-image">
-                                            <div class="vehicle-details">
-                                                Toyota of Watertown
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>8.5 miles</td>
-                                    <td>14%</td>
-                                    <td>15%</td>
+                                    <td>Example Item 1</td>
+                                    <td>100</td>
+                                    <td>25%</td>
+                                    <td>$12,345</td>
                                     <td>
                                         <div class="availability high">
-                                            Taking traffic
+                                            Active
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <div class="vehicle-info">
-                                            <img src="img/store_logo/store_3@2x.png" alt="Jaffarian Toyota Volvo" class="vehicle-image">
-                                            <div class="vehicle-details">
-                                                Jaffarian Toyota Volvo
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>6.2 miles</td>
-                                    <td>4%</td>
-                                    <td>12%</td>
+                                    <td>Example Item 2</td>
+                                    <td>85</td>
+                                    <td>18%</td>
+                                    <td>$9,876</td>
                                     <td>
                                         <div class="availability needs-attention">
-                                            Losing traffic
+                                            Needs Attention
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Example Item 3</td>
+                                    <td>120</td>
+                                    <td>32%</td>
+                                    <td>$15,432</td>
+                                    <td>
+                                        <div class="availability high">
+                                            Active
                                         </div>
                                     </td>
                                 </tr>
@@ -487,193 +351,47 @@
                         </table>
                     </div>
                 </div>
-                
-                
+
             </div>
         </main>
     </div>
 
     <!-- JavaScript Files -->
-    <script src="js/market.js"></script>
-    
-    <!-- AI Summary Toggle Script -->
     <script>
+        // Example Chart.js initialization
         document.addEventListener('DOMContentLoaded', function() {
-            const generateBtn = document.querySelector('.ai-button');
-            const summaryPanel = document.getElementById('aiSummaryPanel');
-            
-            function showText(element, text, callback) {
-                element.textContent = text;
-                element.classList.add('show');
-                if (callback) {
-                    setTimeout(callback, 400); // Wait for fade in to complete
-                }
-            }
-            
-            function createChecklistItem(text) {
-                const item = document.createElement('div');
-                item.className = 'ai-process-item';
-                
-                const circle = document.createElement('div');
-                circle.className = 'ai-check-circle';
-                
-                // Set duration to 0.4 seconds
-                const duration = 0.4;
-                circle.style.setProperty('--loader-duration', duration + 's');
-                
-                // Add SVG for circle loading animation
-                const loaderSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                loaderSvg.setAttribute('viewBox', '0 0 18 18');
-                const loaderCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                loaderCircle.setAttribute('cx', '9');
-                loaderCircle.setAttribute('cy', '9');
-                loaderCircle.setAttribute('r', '8.5');
-                loaderCircle.setAttribute('fill', 'none');
-                loaderSvg.appendChild(loaderCircle);
-                circle.appendChild(loaderSvg);
-                
-                const checkMark = document.createElement('div');
-                checkMark.className = 'ai-check-mark';
-                checkMark.innerHTML = '<svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-                
-                circle.appendChild(checkMark);
-                
-                const textEl = document.createElement('span');
-                textEl.className = 'ai-process-text';
-                textEl.textContent = text;
-                
-                item.appendChild(circle);
-                item.appendChild(textEl);
-                
-                return { item, circle, checkMark, duration: duration };
-            }
-            
-            function animateChecklist(content, callback) {
-                const processList = document.createElement('div');
-                processList.className = 'ai-process-list';
-                
-                const steps = [
-                    'Analyzing market trends',
-                    'Comparing inventory mix',
-                    'Evaluating competitor data',
-                    'Calculating turnover rates',
-                    'Generating insights'
-                ];
-                
-                const checklistItems = steps.map(step => createChecklistItem(step));
-                checklistItems.forEach(({ item }) => processList.appendChild(item));
-                
-                content.appendChild(processList);
-                
-                let currentStep = 0;
-                
-                function checkNextStep() {
-                    if (currentStep < checklistItems.length) {
-                        const { item, circle, checkMark, duration } = checklistItems[currentStep];
-                        
-                        // Show the item
-                        setTimeout(() => {
-                            item.classList.add('show');
-                            
-                            // Start circle loading animation after 0.5 second delay
-                            setTimeout(() => {
-                                circle.classList.add('loading');
-                                
-                                // After loading animation, fill circle and show checkmark
-                                setTimeout(() => {
-                                    circle.classList.remove('loading');
-                                    item.classList.add('checked');
-                                    circle.classList.add('checked');
-                                    checkMark.classList.add('show');
-                                    
-                                    currentStep++;
-                                    
-                                    // Move to next step or finish
-                                    if (currentStep < checklistItems.length) {
-                                        setTimeout(checkNextStep, 150);
-                                    } else {
-                                        // All steps complete, show content
-                                        setTimeout(() => {
-                                            content.removeChild(processList);
-                                            callback();
-                                        }, 250);
-                                    }
-                                }, duration * 1000); // Use dynamic duration for each item
-                            }, 500);
-                        }, 50);
+            const ctx = document.getElementById('exampleChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Sample Data',
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: '#3B82F6',
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
                     }
-                }
-                
-                // Start the process
-                checkNextStep();
+                });
             }
-            
-            generateBtn.addEventListener('click', function() {
-                if (!summaryPanel.classList.contains('show')) {
-                    // Reset content
-                    const content = summaryPanel.querySelector('.ai-summary-content');
-                    content.innerHTML = '';
-                    
-                    // Show panel smoothly
-                    summaryPanel.classList.add('show', 'generating');
-                    generateBtn.textContent = 'Close';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../../img/icon/close.svg")');
-                    
-                    // Start with checklist animation
-                    setTimeout(() => {
-                        animateChecklist(content, () => {
-                            // Create elements for actual content
-                            const p1 = document.createElement('p');
-                            const p2 = document.createElement('p');
-                            const ul = document.createElement('ul');
-                            const li1 = document.createElement('li');
-                            const li2 = document.createElement('li');
-                            
-                            content.appendChild(p1);
-                            
-                            // Show first paragraph
-                            showText(p1, 'Your dealership shows strong performance in the electric vehicle segment with 30% faster turnover than luxury vehicles. Current inventory mix is misaligned with market demand, particularly in SUVs where you\'re 15% below optimal levels.', () => {
-                                
-                                // Recommendations section appears immediately after first paragraph
-                                content.appendChild(p2);
-                                p2.innerHTML = '<strong>Recommendations:</strong>';
-                                p2.classList.add('show');
-                                
-                                // Add list
-                                content.appendChild(ul);
-                                ul.classList.add('show');
-                                ul.appendChild(li1);
-                                ul.appendChild(li2);
-                                
-                                // Show list items with minimal delay
-                                setTimeout(() => {
-                                    li1.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Increase SUV inventory by 15% to match market demand</a>';
-                                    li1.classList.add('show');
-                                    
-                                    setTimeout(() => {
-                                        li2.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Reduce sedan inventory by 12% to optimize turnover rates</a>';
-                                        li2.classList.add('show');
-                                        setTimeout(() => {
-                                            // Stop border animation when content is fully loaded
-                                            summaryPanel.classList.remove('generating');
-                                        });
-                                    }, 100);
-                                }, 50);
-                            });
-                        });
-                    }, 300); // Wait for panel to open before showing checklist
-                    
-                } else {
-                    // Hide panel smoothly
-                    summaryPanel.classList.remove('show', 'generating');
-                    
-                    generateBtn.textContent = 'Generate summary';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../../img/icon/ai.svg")');
-                }
-            });
         });
     </script>
-    
+
     <!-- Sidebar Navigation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

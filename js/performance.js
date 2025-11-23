@@ -5,7 +5,7 @@ let chartInstances = {};
 
 // Mock data structure for different timeframes and vehicle types
 const performanceData = {
-    '14': {
+    'last-7-days': {
         'all': {
             metrics: {
                 marketPercentile: '72th',
@@ -115,7 +115,7 @@ const performanceData = {
             }
         }
     },
-    '30': {
+    'last-30-days': {
         'all': {
             metrics: {
                 marketPercentile: '70th',
@@ -225,7 +225,7 @@ const performanceData = {
             }
         }
     },
-    '90': {
+    'last-60-days': {
         'all': {
             metrics: {
                 marketPercentile: '74th',
@@ -348,7 +348,35 @@ function initializeCharts() {
     Chart.defaults.font.family = "'DM Sans', sans-serif";
     Chart.defaults.plugins.legend.display = false;
     
-    // Conversion Funnel Chart - Horizontal Bar
+    // Conversion Funnel Chart - Normalized Percentages
+    // Store absolute numbers for tooltip display
+    const conversionAbsoluteData = {
+        dealer: {
+            srp: 10000,
+            vdp: 2450,
+            leads: 162
+        },
+        market: {
+            srp: 10000,
+            vdp: 2000,
+            leads: 145
+        }
+    };
+
+    // Calculate percentages (normalized to SRP = 100%)
+    const conversionPercentageData = {
+        dealer: {
+            srp: 100,
+            vdp: (conversionAbsoluteData.dealer.vdp / conversionAbsoluteData.dealer.srp) * 100, // 24.5%
+            leads: (conversionAbsoluteData.dealer.leads / conversionAbsoluteData.dealer.srp) * 100 // 1.62%
+        },
+        market: {
+            srp: 100,
+            vdp: (conversionAbsoluteData.market.vdp / conversionAbsoluteData.market.srp) * 100, // 20%
+            leads: (conversionAbsoluteData.market.leads / conversionAbsoluteData.market.srp) * 100 // 1.45%
+        }
+    };
+
     const searchVsTypeCtx = document.getElementById('searchVsTypeChart').getContext('2d');
     chartInstances.conversionChart = new Chart(searchVsTypeCtx, {
         type: 'bar',
@@ -356,13 +384,21 @@ function initializeCharts() {
             labels: ['Search Result Pages (SRP)', 'Vehicle Detail Pages (VDP)', 'Leads Generated'],
             datasets: [{
                 label: 'Your Dealership',
-                data: [10000, 2450, 162],
+                data: [
+                    conversionPercentageData.dealer.srp,
+                    conversionPercentageData.dealer.vdp,
+                    conversionPercentageData.dealer.leads
+                ],
                 backgroundColor: '#3B82F6',
                 borderRadius: 4,
                 barPercentage: 0.8
             }, {
                 label: 'Market Average',
-                data: [10000, 2450, 145], // Market average conversion rate of 1.45%
+                data: [
+                    conversionPercentageData.market.srp,
+                    conversionPercentageData.market.vdp,
+                    conversionPercentageData.market.leads
+                ],
                 backgroundColor: '#E5E7EB',
                 borderRadius: 4,
                 barPercentage: 0.8
@@ -392,6 +428,7 @@ function initializeCharts() {
                 },
                 y: {
                     beginAtZero: true,
+                    max: 100,
                     grid: {
                         color: '#F3F4F6',
                         drawBorder: false
@@ -404,8 +441,18 @@ function initializeCharts() {
                             size: 12
                         },
                         callback: function(value) {
-                            return value.toLocaleString();
+                            return value + '%';
                         }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Percentage of Traffic',
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: { top: 0, bottom: 10 }
                     }
                 }
             },
@@ -440,30 +487,68 @@ function initializeCharts() {
                             return tooltipItems[0].label;
                         },
                         label: function(context) {
-                            const value = context.parsed.y;
+                            const percentage = context.parsed.y;
                             const label = context.label;
                             const datasetLabel = context.dataset.label;
+                            const isDealer = datasetLabel === 'Your Dealership';
                             let lines = [];
-                            
-                            lines.push(datasetLabel + ': ' + value.toLocaleString());
-                            
-                            if (datasetLabel === 'Your Dealership') {
+
+                            // Get absolute number based on stage and dataset
+                            let absoluteValue;
+                            if (isDealer) {
+                                if (label === 'Search Result Pages (SRP)') {
+                                    absoluteValue = conversionAbsoluteData.dealer.srp;
+                                } else if (label === 'Vehicle Detail Pages (VDP)') {
+                                    absoluteValue = conversionAbsoluteData.dealer.vdp;
+                                } else {
+                                    absoluteValue = conversionAbsoluteData.dealer.leads;
+                                }
+                            } else {
+                                if (label === 'Search Result Pages (SRP)') {
+                                    absoluteValue = conversionAbsoluteData.market.srp;
+                                } else if (label === 'Vehicle Detail Pages (VDP)') {
+                                    absoluteValue = conversionAbsoluteData.market.vdp;
+                                } else {
+                                    absoluteValue = conversionAbsoluteData.market.leads;
+                                }
+                            }
+
+                            // Show percentage (and absolute number for dealer only)
+                            if (isDealer) {
+                                lines.push(datasetLabel + ': ' + percentage.toFixed(2) + '% (' + absoluteValue.toLocaleString() + ')');
+                            } else {
+                                lines.push(datasetLabel + ': ' + percentage.toFixed(2) + '%');
+                            }
+
+                            // Additional context for dealer data
+                            if (isDealer) {
                                 if (label === 'Search Result Pages (SRP)') {
                                     lines.push('Starting point: 100%');
                                 } else if (label === 'Vehicle Detail Pages (VDP)') {
-                                    lines.push('Conversion from SRP: 24.5%');
-                                    lines.push('Drop-off: 7,550 (75.5%)');
+                                    const vdpConversion = (conversionAbsoluteData.dealer.vdp / conversionAbsoluteData.dealer.srp * 100).toFixed(2);
+                                    const dropOff = conversionAbsoluteData.dealer.srp - conversionAbsoluteData.dealer.vdp;
+                                    const dropOffPercent = ((dropOff / conversionAbsoluteData.dealer.srp) * 100).toFixed(1);
+                                    lines.push('Conversion from SRP: ' + vdpConversion + '%');
+                                    lines.push('Drop-off: ' + dropOff.toLocaleString() + ' (' + dropOffPercent + '%)');
                                 } else if (label === 'Leads Generated') {
-                                    lines.push('Conversion from VDP: 6.6%');
-                                    lines.push('Conversion from SRP: 1.62%');
-                                    lines.push('Drop-off from VDP: 2,288 (93.4%)');
+                                    const leadsFromVDP = (conversionAbsoluteData.dealer.leads / conversionAbsoluteData.dealer.vdp * 100).toFixed(1);
+                                    const leadsFromSRP = (conversionAbsoluteData.dealer.leads / conversionAbsoluteData.dealer.srp * 100).toFixed(2);
+                                    const dropOffVDP = conversionAbsoluteData.dealer.vdp - conversionAbsoluteData.dealer.leads;
+                                    const dropOffVDPPercent = ((dropOffVDP / conversionAbsoluteData.dealer.vdp) * 100).toFixed(1);
+                                    lines.push('Conversion from VDP: ' + leadsFromVDP + '%');
+                                    lines.push('Conversion from SRP: ' + leadsFromSRP + '%');
+                                    lines.push('Drop-off from VDP: ' + dropOffVDP.toLocaleString() + ' (' + dropOffVDPPercent + '%)');
                                 }
                             } else if (datasetLabel === 'Market Average') {
-                                if (label === 'Leads Generated') {
-                                    lines.push('Conversion from SRP: 1.45%');
+                                if (label === 'Vehicle Detail Pages (VDP)') {
+                                    const vdpConversion = (conversionAbsoluteData.market.vdp / conversionAbsoluteData.market.srp * 100).toFixed(2);
+                                    lines.push('Conversion from SRP: ' + vdpConversion + '%');
+                                } else if (label === 'Leads Generated') {
+                                    const leadsFromSRP = (conversionAbsoluteData.market.leads / conversionAbsoluteData.market.srp * 100).toFixed(2);
+                                    lines.push('Conversion from SRP: ' + leadsFromSRP + '%');
                                 }
                             }
-                            
+
                             return lines;
                         }
                     }
@@ -738,7 +823,7 @@ function initializeCharts() {
             labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
             datasets: [{
                 label: 'Your Dealership',
-                data: [85, 84.5, 84, 83.5, 83, 82],
+                data: [78, 79, 80, 81, 81.5, 82],
                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
                 borderColor: '#3B82F6',
                 borderWidth: 2,
@@ -751,12 +836,12 @@ function initializeCharts() {
                 fill: true
             }, {
                 label: 'Market Average',
-                data: [78, 78, 78, 78, 78, 78],
+                data: [74, 74.5, 75, 75.5, 75, 75],
                 backgroundColor: 'transparent',
                 borderColor: '#9CA3AF',
                 borderWidth: 2,
                 borderDash: [5, 5],
-                tension: 0,
+                tension: 0.3,
                 pointRadius: 0,
                 pointHoverRadius: 0
             }]
@@ -770,7 +855,18 @@ function initializeCharts() {
             },
             plugins: {
                 legend: {
-                    display: false
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 15,
+                        usePointStyle: true,
+                        pointStyle: 'line'
+                    }
                 },
                 tooltip: {
                     backgroundColor: '#FFFFFF',
@@ -817,8 +913,8 @@ function initializeCharts() {
                     }
                 },
                 y: {
-                    min: 75,
-                    max: 90,
+                    min: 70,
+                    max: 85,
                     grid: {
                         color: '#F3F4F6',
                         drawBorder: false
@@ -841,9 +937,9 @@ function initializeCharts() {
         }
     });
 
-    // Inventory Count Chart - Small Bar Chart
-    const inventoryCountCtx = document.getElementById('inventoryCountChart').getContext('2d');
-    chartInstances.inventoryCountChart = new Chart(inventoryCountCtx, {
+    // Inventory Summary Chart - Bar Chart
+    const inventorySummaryCtx = document.getElementById('inventorySummaryChart').getContext('2d');
+    chartInstances.inventorySummaryChart = new Chart(inventorySummaryCtx, {
         type: 'bar',
         data: {
             labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
@@ -882,18 +978,9 @@ function initializeCharts() {
                             return tooltipItems[0].label + ' 2025';
                         },
                         label: function(context) {
-                            return 'Inventory: ' + context.parsed.y + ' vehicles';
-                        },
-                        afterLabel: function(context) {
-                            const monthIndex = context.dataIndex;
-                            const previousValue = monthIndex > 0 ? context.dataset.data[monthIndex - 1] : context.parsed.y;
-                            const change = context.parsed.y - previousValue;
-                            const changePercent = ((change / previousValue) * 100).toFixed(1);
-                            
-                            if (change !== 0) {
-                                return 'Change: ' + (change > 0 ? '+' : '') + change + ' (' + (change > 0 ? '+' : '') + changePercent + '%)';
-                            }
-                            return '';
+                            let label = context.dataset.label + ': ';
+                            label += context.parsed.y + ' vehicles';
+                            return label;
                         }
                     }
                 }
@@ -916,8 +1003,8 @@ function initializeCharts() {
                     }
                 },
                 y: {
-                    min: 200,
-                    max: 350,
+                    min: 230,
+                    max: 280,
                     grid: {
                         color: '#F3F4F6',
                         drawBorder: false
@@ -930,15 +1017,8 @@ function initializeCharts() {
                             size: 10
                         },
                         color: '#9CA3AF',
-                        stepSize: 50
+                        stepSize: 10
                     }
-                },
-                marketAverage: {
-                    type: 'linear',
-                    display: false,
-                    position: 'right',
-                    min: 200,
-                    max: 350
                 }
             }
         }
@@ -949,20 +1029,27 @@ function initializeCharts() {
 function setupDropdownListeners() {
     const timeframeSelect = document.getElementById('timeframeSelect');
     const vehicleTypeSelect = document.getElementById('vehicleTypeSelect');
-    
+
     // Add change event listeners
-    timeframeSelect.addEventListener('change', updatePageData);
-    vehicleTypeSelect.addEventListener('change', updatePageData);
+    if (timeframeSelect) {
+        timeframeSelect.addEventListener('change', updatePageData);
+    }
+    if (vehicleTypeSelect) {
+        vehicleTypeSelect.addEventListener('change', updatePageData);
+    }
 }
 
 // Main update function
 function updatePageData() {
-    const timeframe = document.getElementById('timeframeSelect').value;
-    const vehicleType = document.getElementById('vehicleTypeSelect').value;
-    
+    const timeframeSelect = document.getElementById('timeframeSelect');
+    const vehicleTypeSelect = document.getElementById('vehicleTypeSelect');
+
+    const timeframe = timeframeSelect ? timeframeSelect.value : 'last-30-days';
+    const vehicleType = vehicleTypeSelect ? vehicleTypeSelect.value : 'all';
+
     // Get the data for the selected combination
     const data = performanceData[timeframe][vehicleType];
-    
+
     // Update all components
     updateMetricCards(data.metrics);
     updateConversionValues(data.metrics);
@@ -1001,20 +1088,13 @@ function updateMetricCards(metrics) {
     if (dealRatingEl) {
         dealRatingEl.textContent = `${metrics.dealRating}%`;
     }
-    
-    // Update deal rating change
-    const dealRatingChangeEl = dealRatingEl.nextElementSibling.querySelector('span');
-    if (dealRatingChangeEl) {
-        const changeText = metrics.dealRatingChange < 0 ? 
-            `${metrics.dealRatingChange}% decrease` : 
-            `+${metrics.dealRatingChange}% increase`;
-        dealRatingChangeEl.textContent = changeText;
-        
-        // Update change indicator class
-        const changeDiv = dealRatingEl.nextElementSibling;
-        changeDiv.className = metrics.dealRatingChange < 0 ? 'metric-card-change negative' : 'metric-card-change positive';
+
+    // Update Inventory Summary
+    const inventorySummaryEl = document.getElementById('inventorySummaryValue');
+    if (inventorySummaryEl) {
+        inventorySummaryEl.textContent = metrics.inventory;
     }
-    
+
     // Update Merchandising Health
     const merchandisingEl = document.getElementById('merchandisingHealthValue');
     if (merchandisingEl) {
@@ -1072,9 +1152,9 @@ function updateCharts(chartData) {
         chartInstances.dealRatingChart.update('active');
     }
     
-    // Update Inventory Count Chart
-    if (chartInstances.inventoryCountChart) {
+    // Update Inventory Summary Chart
+    if (chartInstances.inventorySummaryChart) {
         // For now, keep the same data as it's a trend chart
-        chartInstances.inventoryCountChart.update('active');
+        chartInstances.inventorySummaryChart.update('active');
     }
 }

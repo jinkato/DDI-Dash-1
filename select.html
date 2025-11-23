@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1300, initial-scale=1.0">
-    <title>Why Analysis - CarGurus Dealer Analysis</title>
+    <title>CarGurus Dealer Analysis</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,30 +13,20 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="styles/global/main.css">
     <link rel="stylesheet" href="styles/global/dropdown.css">
-    <link rel="stylesheet" href="styles/global/table.css">
     <link rel="stylesheet" href="styles/global/typography.css">
     <link rel="stylesheet" href="styles/global/link.css">
     <link rel="stylesheet" href="styles/global/button.css">
     <link rel="stylesheet" href="styles/global/pill.css">
     <link rel="stylesheet" href="styles/global/panel.css">
+    <link rel="stylesheet" href="styles/global/header.css">
+    <link rel="stylesheet" href="styles/global/table.css">
+    <link rel="stylesheet" href="styles/global/side-filter.css">
     <link rel="stylesheet" href="styles/global/sidebar.css">
-    <link rel="stylesheet" href="styles/why.css">
+    <link rel="stylesheet" href="styles/global/tabs.css">
+    <link rel="stylesheet" href="styles/competitors.css">
+    <link rel="stylesheet" href="styles/select.css">
     <link rel="stylesheet" href="styles/detail-panel.css">
     
-    <!-- Sidebar Navigation Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle parent navigation clicks
-            const parentLinks = document.querySelectorAll('.nav-parent');
-            parentLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const parentItem = this.closest('.nav-item-parent');
-                    parentItem.classList.toggle('expanded');
-                });
-            });
-        });
-    </script>
 </head>
 <body>
 
@@ -52,7 +42,7 @@
                 <ul class="nav-list">
                     <!-- Dashboard -->
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link">
+                        <a href="select.html" class="nav-link active">
                             <svg class="nav-icon" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="chart-bar" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                 <path fill="currentColor" d="M424 352h16c4.4 0 8-3.6 8-8V104c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v240c0 4.4 3.6 8 8 8zm-96 0h16c4.4 0 8-3.6 8-8V200c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v144c0 4.4 3.6 8 8 8zm-192 0h16c4.4 0 8-3.6 8-8v-80c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v80c0 4.4 3.6 8 8 8zm96 0h16c4.4 0 8-3.6 8-8V136c0-4.4-3.6-8-8-8h-16c-4.4 0-8 3.6-8 8v208c0 4.4 3.6 8 8 8zm272 64H32V72c0-4.42-3.58-8-8-8H8c-4.42 0-8 3.58-8 8v360c0 8.84 7.16 16 16 16h488c4.42 0 8-3.58 8-8v-16c0-4.42-3.58-8-8-8z"></path>
                             </svg>
@@ -125,8 +115,8 @@
                     <!-- Leads (parent) -->
                     <li class="nav-item nav-item-parent expanded">
                         <a href="#" class="nav-link nav-parent">
-                            <svg class="nav-icon" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="bullseye" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 464c-119.1 0-216-96.9-216-216S136.9 40 256 40s216 96.9 216 216-96.9 216-216 216zm0-392c-97 0-176 79-176 176s79 176 176 176 176-79 176-176-79-176-176-176zm0 320c-79.4 0-144-64.6-144-144s64.6-144 144-144 144 64.6 144 144-64.6 144-144 144zm0-256c-61.8 0-112 50.2-112 112s50.2 112 112 112 112-50.2 112-112-50.2-112-112-112zm0 192c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80zm0-128c-26.5 0-48 21.5-48 48s21.5 48 48 48 48-21.5 48-48-21.5-48-48-48zm0 64c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z"></path>
+                            <svg class="nav-icon" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="comment-alt-lines" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path fill="currentColor" d="M448 0H64C28.7 0 0 28.7 0 64v288c0 35.3 28.7 64 64 64h96v84c0 7.1 5.8 12 12 12 2.4 0 4.9-.7 7.1-2.4L304 416h144c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64zm32 352c0 17.6-14.4 32-32 32H293.3l-8.5 6.4L192 460v-76H64c-17.6 0-32-14.4-32-32V64c0-17.6 14.4-32 32-32h384c17.6 0 32 14.4 32 32v288zM280 240H136c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h144c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8zm96-96H136c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h240c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8z"></path>
                             </svg>
                             <span class="nav-text">Leads</span>
                         </a>
@@ -137,7 +127,7 @@
                                 </a>
                             </li>
                             <li class="nav-subitem">
-                                <a href="why.html" class="nav-sublink active">
+                                <a href="why.html" class="nav-sublink">
                                     <span class="nav-subtext">Why</span>
                                 </a>
                             </li>
@@ -208,7 +198,7 @@
                     <li class="nav-item">
                         <a href="account.html" class="nav-link">
                             <svg class="nav-icon" aria-hidden="true" focusable="false" data-prefix="fal" data-icon="cog" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path fill="currentColor" d="M482.696 299.276l-32.61-18.827a195.168 195.168 0 0 0 0-48.899l32.61-18.827c9.576-5.528 14.195-16.902 11.046-27.501-11.214-37.749-31.175-71.728-57.535-99.595-7.634-8.07-19.817-9.836-29.437-4.282l-32.562 18.798a194.125 194.125 0 0 0-42.339-24.48V38.049c0-11.13-7.652-20.804-18.484-23.367-37.644-8.909-77.118-8.91-114.77 0-10.831 2.563-18.484 12.236-18.484 23.367v37.614a194.101 194.101 0 0 0-42.339 24.48L105.23 81.345c-9.621-5.554-21.804-3.788-29.437 4.282-26.36 27.867-46.321 61.847-57.535 99.595-3.149 10.599 1.47 21.972 11.046 27.501l32.61 18.827a195.168 195.168 0 0 0 0 48.899l-32.61 18.827c-9.576 5.528-14.195 16.902-11.046 27.501 11.214 37.748 31.175 71.728 57.535 99.595 7.634 8.07 19.817 9.836 29.437 4.283l32.562-18.798a194.08 194.08 0 0 0 42.339 24.479v37.614c0 11.13 7.652 20.804 18.484 23.367 37.645 8.909 77.118 8.91 114.77 0 10.831-2.563 18.484-12.236 18.484-23.367v-37.614a194.138 194.138 0 0 0 42.339-24.479l32.562 18.798c9.62 5.554 21.803 3.788 29.437-4.283 26.36-27.867 46.321-61.847 57.535-99.595 3.149-10.599-1.47-21.972-11.046-27.501zm-65.479 100.461l-46.309-26.74c-26.988 23.071-36.559 28.876-71.039 41.059v53.479a217.145 217.145 0 0 1-87.738 0v-53.479c-33.621-11.879-43.355-17.395-71.039-41.059l-46.309 26.74c-19.71-22.09-34.689-47.989-43.649-75.958l46.309-26.74c-6.339-35.205-6.339-43.829 0-79.034L51.154 167.266c8.96-27.969 23.939-53.868 43.649-75.958l46.309 26.74c27.377-23.434 37.063-29.065 71.039-41.059V23.51a217.145 217.145 0 0 1 87.738 0v53.479c33.621 11.879 43.355 17.395 71.039 41.059l46.309-26.74c19.71 22.09 34.689 47.989 43.649 75.958l-46.309 26.74c6.339 35.205 6.339 43.829 0 79.034l46.309 26.74c-8.96 27.969-23.939 53.868-43.649 75.958zM256 160c-52.935 0-96 43.065-96 96s43.065 96 96 96 96-43.065 96-96-43.065-96-96-96zm0 160c-35.29 0-64-28.71-64-64s28.71-64 64-64 64 28.71 64 64-28.71 64-64 64z"></path>
+                                <path fill="currentColor" d="M482.696 299.276l-32.61-18.827a195.168 195.168 0 0 0 0-48.899l32.61-18.827c9.576-5.528 14.195-16.902 11.046-27.501-11.214-37.749-31.175-71.728-57.535-99.595-7.634-8.07-19.817-9.836-29.437-4.282l-32.562 18.798a194.125 194.125 0 0 0-42.339-24.48V38.049c0-11.13-7.652-20.804-18.484-23.367-37.644-8.909-77.118-8.91-114.77 0-10.831 2.563-18.484 12.236-18.484 23.367v37.614a194.101 194.101 0 0 0-42.339 24.48L105.23 81.345c-9.621-5.554-21.804-3.788-29.437 4.282-26.36 27.867-46.321 61.847-57.535 99.595-3.149 10.599 1.47 21.972 11.046 27.501l32.61 18.827a195.168 195.168 0 0 0 0 48.899l-32.61 18.827c-9.576 5.528-14.195 16.902-11.046 27.501 11.214 37.748 31.175 71.728 57.535 99.594 7.634 8.07 19.817 9.836 29.437 4.283l32.562-18.798a194.08 194.08 0 0 0 42.339 24.479v37.614c0 11.13 7.652 20.804 18.484 23.367 37.645 8.909 77.118 8.91 114.77 0 10.831-2.563 18.484-12.236 18.484-23.367v-37.614a194.138 194.138 0 0 0 42.339-24.479l32.562 18.798c9.62 5.554 21.803 3.788 29.437-4.283 26.36-27.866 46.321-61.846 57.535-99.594 3.149-10.599-1.47-21.972-11.046-27.501zm-65.479 100.461l-46.309-26.74c-26.988 23.071-36.559 28.876-71.039 41.059v53.479a217.145 217.145 0 0 1-87.738 0v-53.479c-33.621-11.879-43.355-17.395-71.039-41.059l-46.309 26.74c-19.71-22.09-34.689-47.989-43.649-75.958l46.309-26.74c-6.339-35.205-6.339-43.829 0-79.034L51.154 167.266c8.96-27.969 23.939-53.868 43.649-75.958l46.309 26.74c27.377-23.434 37.063-29.065 71.039-41.059V23.51a217.145 217.145 0 0 1 87.738 0v53.479c33.621 11.879 43.355 17.395 71.039 41.059l46.309-26.74c19.71 22.09 34.689 47.989 43.649 75.958l-46.309 26.74c6.339 35.205 6.339 43.829 0 79.034l46.309 26.74c-8.96 27.969-23.939 53.868-43.649 75.958zM256 160c-52.935 0-96 43.065-96 96s43.065 96 96 96 96-43.065 96-96-43.065-96-96-96zm0 160c-35.29 0-64-28.71-64-64s28.71-64 64-64 64 28.71 64 64-28.71 64-64 64z"></path>
                             </svg>
                             <span class="nav-text">Manage Account</span>
                         </a>
@@ -223,103 +213,160 @@
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
             
-            <div class="back-navigation">
-                <a href="performance.html" class="link-primary" style="display: inline-flex; align-items: center; gap: 8px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 16px; height: 16px;">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Performance Overview
-                </a>
-            </div>
-            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h1>Total leads</h1>
-                <div>
-                    <a href="#">Check out</a> <span class="pill pill-red">3 new hot leads</span>
+            <div class="header">
+                <div class="back-navigation">
+                    <a href="market.html" class="link-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Back
+                    </a>
+                </div>
+                <div class="header-actions">
+                    <h1 class="header-title">Select dealers you want to compare</h1>
+                    <div class="button-group">
+                        <button class="btn-primary compare-button" onclick="appState.navigateToCompare()">
+                            Compare Selected
+                            <span class="tab-badge" style="display: inline-flex;">2</span>
+                        </button>
+                    </div>
                 </div>
             </div>
             
-            <!-- Main content area -->
-            <div class="content">
-                <!-- Bar Chart Section -->
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-button active" data-tab="select">
+                    Select Competitors
+                </button>
+                <button class="tab-button" data-tab="selected">
+                    Selected Competitors
+                </button>
+            </div>
+            
+            <!-- Tab 1: Select Competitors -->
+            <div id="select-tab" class="tab-content active">
+                <div class="content">
+                <!-- Table Container -->
                 <div class="panel">
-                    <div class="panel-header">
-                        <h3 class="panel-title">Total Leads - Last 12 Months</h3>
-                    </div>
-                    <div class="panel-content">
-                        <div class="bar-chart-container">
-                            <canvas id="totalLeadsChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Performance Table -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h3 class="panel-title">Leads by vehicle type</h3>
-                    </div>
-                    <div class="panel-content">
-                        <!-- Market Context Callout -->
-                        <div class="market-callout">
-                            <svg class="callout-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <circle cx="8" cy="8" r="7" stroke="#3B82F6" stroke-width="1.5"/>
-                                <path d="M8 11V8M8 5.5V5" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                            <span>Market Update: SUV demand down 8% market-wide this month. Sedan demand up 3%.</span>
-                        </div>
-                        
-                        <table class="performance-table">
+                    <table class="competitors-table">
                         <thead>
                             <tr>
-                                <th class="vehicle-header"></th>
-                                <th class="month-header">
-                                    <select id="month-dropdown" class="month-dropdown">
-                                        <option value="september-2025">September 2025</option>
-                                        <option value="october-2024">October 2024</option>
-                                    </select>
-                                </th>
-                                <th class="month-header">October 2025</th>
+                                <th class="sortable" data-sort="name">Local competitor</th>
+                                <th class="sortable" data-sort="inventory">Inventory</th>
+                                <th class="sortable" data-sort="sessions">% of Sessions</th>
+                                <th class="sortable" data-sort="overlap">Total overlap sessions</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody id="performance-tbody">
-                            <!-- Table rows will be generated by JavaScript -->
+                        <tbody>
+                            <!-- Table rows will be dynamically populated from JSON data -->
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Filter Panel -->
+                <div class="filter-panel">
+                    <h2>Filters</h2>
+                    
+                    <div class="filter-section">
+                        <label for="search">Search</label>
+                        <input type="text" id="search" class="search-input" placeholder="Search...">
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="date-range">Date range</label>
+                        <select id="date-range" class="filter-select">
+                            <option value="All">All time</option>
+                            <option value="Last month">Last month</option>
+                            <option value="Last 3 months">Last 3 months</option>
+                            <option value="Last 6 month">Last 6 months</option>
+                            <option value="Last year">Last year</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="radius">Radius</label>
+                        <select id="radius" class="filter-select">
+                            <option value="All">All distances</option>
+                            <option value="5 miles">5 miles</option>
+                            <option value="10 miles">10 miles</option>
+                            <option value="25 miles">25 miles</option>
+                            <option value="50 miles">50 miles</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="franchise">Franchise type</label>
+                        <select id="franchise" class="filter-select">
+                            <option>All</option>
+                            <option>Franchise</option>
+                            <option>Independent</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="brand">Brand overlap</label>
+                        <select id="brand" class="filter-select">
+                            <option>All</option>
+                            <option>Toyota</option>
+                            <option>Honda</option>
+                            <option>Nissan</option>
+                            <option>Volvo</option>
+                            <option>Multi-brand</option>
+                            <option>Luxury</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-section">
+                        <label>Inventory size</label>
+                        <div class="range-inputs">
+                            <input type="number" class="range-input" placeholder="Min" id="inv-min">
+                            <span class="range-separator">to</span>
+                            <input type="number" class="range-input" placeholder="Max" id="inv-max">
+                        </div>
+                        <a href="#" class="reset-link">Reset</a>
+                    </div>
+
+                    <div class="filter-section">
+                        <label for="cross-shopper">Cross shopper</label>
+                        <select id="cross-shopper" class="filter-select">
+                            <option>All</option>
+                            <option>High overlap</option>
+                            <option>Medium overlap</option>
+                            <option>Low overlap</option>
+                        </select>
                     </div>
                 </div>
-                
-                <!-- Lead Type Panel -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h3 class="panel-title">Lead Type</h3>
-                    </div>
-                    <div class="panel-content">
-                        <div class="lead-type-legend">
-                            <div class="legend-item">
-                                <div class="legend-color" style="background-color: #EF4444;"></div>
-                                <span>Hot</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color" style="background-color: #F59E0B;"></div>
-                                <span>Warm</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color" style="background-color: #6B7280;"></div>
-                                <span>Standard</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color" style="background-color: #3B82F6;"></div>
-                                <span>Cold</span>
-                            </div>
-                        </div>
-                        <div class="lead-type-chart-container">
-                            <canvas id="leadTypeChart"></canvas>
-                        </div>
+                </div>
+            </div>
+            
+            <!-- Tab 2: Selected Competitors -->
+            <div id="selected-tab" class="tab-content">
+                <div class="content">
+                    <div class="panel">
+                        <table class="competitors-table selected-table">
+                            <thead>
+                                <tr>
+                                    <th>Local competitor</th>
+                                    <th>Inventory</th>
+                                    <th>% of Sessions</th>
+                                    <th>Total overlap sessions</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="selected-tbody">
+                                <!-- Selected dealers will be populated here -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <!-- Chart.js Library -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    
     <!-- Detail Panel -->
     <div id="detail-panel" class="detail-panel">
         <div class="detail-panel-header">
@@ -335,8 +382,23 @@
     </div>
 
     <!-- JavaScript Files -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/why.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/select-competitors.js"></script>
+    <script src="js/select-selected.js"></script>
     
+    <!-- Sidebar Navigation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle parent navigation clicks
+            const parentLinks = document.querySelectorAll('.nav-parent');
+            parentLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const parentItem = this.closest('.nav-item-parent');
+                    parentItem.classList.toggle('expanded');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

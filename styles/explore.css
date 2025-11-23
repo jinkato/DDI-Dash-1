@@ -1,0 +1,170 @@
+/* Explore Page Styles */
+
+/* Tabs Container */
+.tabs-container {
+    margin-bottom: 12px;
+}
+
+.tabs-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.tab-button {
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6B7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    bottom: -1px;
+}
+
+.tab-button:hover {
+    color: #111827;
+}
+
+.tab-button.active {
+    color: #0763D3;
+    border-bottom-color: #0763D3;
+}
+
+/* Content Layout */
+.content {
+    display: flex;
+    gap: 24px;
+    padding: 0px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Charts Row Container */
+.charts-row-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 8px 0;
+}
+
+.charts-row-container.second-row {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 0;
+}
+
+/* Inventory Charts Container */
+
+
+/* Inventory Month Container */
+.inventory-month-container {
+    margin-bottom: 12px;
+}
+
+.inventory-month-container:last-child {
+    margin-bottom: 0;
+}
+
+.month-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.month-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6B7280;
+}
+
+.total-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6B7280;
+}
+
+/* Inventory Bar */
+.inventory-bar {
+    height: 20px;
+    background-color: #F3F4F6;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.inventory-bar-segments {
+    display: flex;
+    height: 100%;
+}
+
+.inventory-segment {
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.inventory-segment:hover {
+    opacity: 0.8;
+}
+
+/* Leads Per Vehicle Container */
+
+.leads-per-vehicle-container canvas {
+    max-width: 100%;
+    height: 250px !important;
+    max-height: 250px;
+}
+
+/* Market Trend Container */
+.market-trend-container {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.market-trend-container h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.market-trend-container canvas {
+    max-width: 100%;
+    height: 200px !important;
+    max-height: 200px;
+}
+
+/* Buyer Overlap Container */
+.buyer-overlap-container {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.buyer-overlap-container h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 12px 0;
+}
+
+.buyer-overlap-container canvas {
+    max-width: 100%;
+    height: 200px !important;
+    max-height: 200px;
+}

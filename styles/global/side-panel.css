@@ -1,0 +1,125 @@
+/* Side Panel Styles */
+
+.side-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.side-panel-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.side-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    background-color: #FFFFFF;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-panel.active {
+    transform: translateX(0);
+}
+
+.side-panel-header {
+    padding: 24px;
+    border-bottom: 1px solid #E5E7EB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.side-panel-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.side-panel-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6B7280;
+    transition: color 0.2s ease;
+}
+
+.side-panel-close:hover {
+    color: #111827;
+}
+
+.side-panel-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.side-panel-content {
+    padding: 24px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.side-panel-footer {
+    padding: 24px;
+    border-top: 1px solid #E5E7EB;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+/* Form Elements in Side Panel */
+.side-panel-form-group {
+    margin-bottom: 20px;
+}
+
+.side-panel-form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.side-panel-form-group select,
+.side-panel-form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.side-panel-form-group select:focus,
+.side-panel-form-group input:focus {
+    outline: none;
+    border-color: #0763D3;
+}
+
+.side-panel-form-group .help-text {
+    font-size: 12px;
+    color: #6B7280;
+    margin-top: 4px;
+}

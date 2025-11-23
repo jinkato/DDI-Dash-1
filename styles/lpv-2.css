@@ -1,0 +1,49 @@
+/* LPV-2 Page Styles */
+
+/* Content Layout */
+.content {
+    display: flex;
+    gap: 24px;
+    padding: 0px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Chart Container */
+.bar-chart-container {
+    height: 350px;
+}
+
+/* Vehicle Table Column Widths */
+.vehicle-table th:nth-child(1),
+.vehicle-table td:nth-child(1) {
+    width: 20%;
+}
+
+.vehicle-table th:nth-child(2),
+.vehicle-table td:nth-child(2) {
+    width: 20%;
+}
+
+.vehicle-table th:nth-child(3),
+.vehicle-table td:nth-child(3) {
+    width: 25%;
+}
+
+.vehicle-table th:nth-child(4),
+.vehicle-table td:nth-child(4) {
+    width: 20%;
+}
+
+.vehicle-table th:nth-child(5),
+.vehicle-table td:nth-child(5) {
+    width: 15%;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .content {
+        min-width: 1200px;
+        overflow-x: auto;
+    }
+}

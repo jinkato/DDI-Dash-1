@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1300, initial-scale=1.0">
-    <title>Shopper Analysis - CarGurus Dealer Analysis</title>
+    <title>Leads per Vehicle - CarGurus Dealer Analysis</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,25 +11,28 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- CSS Files -->
+    <link rel="stylesheet" href="styles/global/global.css">
     <link rel="stylesheet" href="styles/global/main.css">
+    <link rel="stylesheet" href="styles/global/dropdown.css">
+    <link rel="stylesheet" href="styles/global/table.css">
     <link rel="stylesheet" href="styles/global/typography.css">
     <link rel="stylesheet" href="styles/global/link.css">
     <link rel="stylesheet" href="styles/global/button.css">
-    <link rel="stylesheet" href="styles/global/panel.css">
-    <link rel="stylesheet" href="styles/global/global.css">
-    <link rel="stylesheet" href="styles/global/dropdown.css">
     <link rel="stylesheet" href="styles/global/header.css">
-    <link rel="stylesheet" href="styles/global/table.css">
-    <link rel="stylesheet" href="styles/global/ai.css">
+    <link rel="stylesheet" href="styles/global/panel.css">
+    <link rel="stylesheet" href="styles/global/side-filter.css">
+    <link rel="stylesheet" href="styles/global/top-filter.css">
     <link rel="stylesheet" href="styles/global/sidebar.css">
-    <link rel="stylesheet" href="styles/market.css">
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <link rel="stylesheet" href="styles/global/checkbox.css">
+    <link rel="stylesheet" href="styles/global/tooltip.css">
+    <link rel="stylesheet" href="styles/global/side-panel.css">
+    <link rel="stylesheet" href="styles/global/text-color.css">
+    <link rel="stylesheet" href="styles/lpv-2.css">
+    <link rel="stylesheet" href="styles/detail-panel.css">
+
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
 </head>
 <body>
 
@@ -52,7 +55,7 @@
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    
+
                     <!-- Pricing (parent) -->
                     <li class="nav-item nav-item-parent expanded">
                         <a href="#" class="nav-link nav-parent">
@@ -82,7 +85,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <!-- Analysis (parent) -->
                     <li class="nav-item nav-item-parent expanded">
                         <a href="#" class="nav-link nav-parent">
@@ -103,7 +106,7 @@
                                 </a>
                             </li>
                             <li class="nav-subitem">
-                                <a href="shopper.html" class="nav-sublink active">
+                                <a href="shopper.html" class="nav-sublink">
                                     <span class="nav-subtext">Shopper</span>
                                 </a>
                             </li>
@@ -114,7 +117,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <!-- Leads (parent) -->
                     <li class="nav-item nav-item-parent expanded">
                         <a href="#" class="nav-link nav-parent">
@@ -136,7 +139,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <!-- IMV Lookup -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -146,7 +149,7 @@
                             <span class="nav-text">IMV Lookup</span>
                         </a>
                     </li>
-                    
+
                     <!-- Sell My Car -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -156,7 +159,7 @@
                             <span class="nav-text">Sell My Car</span>
                         </a>
                     </li>
-                    
+
                     <!-- Advertising -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -166,7 +169,7 @@
                             <span class="nav-text">Advertising</span>
                         </a>
                     </li>
-                    
+
                     <!-- Digital Deal -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -176,7 +179,7 @@
                             <span class="nav-text">Digital Deal</span>
                         </a>
                     </li>
-                    
+
                     <!-- Listings -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -186,7 +189,7 @@
                             <span class="nav-text">Listings</span>
                         </a>
                     </li>
-                    
+
                     <!-- Scheduled Reports -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -196,7 +199,7 @@
                             <span class="nav-text">Scheduled Reports</span>
                         </a>
                     </li>
-                    
+
                     <!-- Manage Account -->
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -209,334 +212,253 @@
                 </ul>
             </nav>
         </aside>
-        
+
+        <!-- Main Content -->
         <main class="main-content">
             <div class="dropdowns">
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
             <div class="header">
+                <div class="back-navigation">
+                    <a href="performance.html" class="link-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Performance Overview
+                    </a>
+                </div>
                 <div class="header-actions">
-                    <h1 class="header-title">Shopper Analysis</h1>
+                    <h1 class="header-title">Leads per vehicle</h1>
                     <div class="button-group">
-                        <button class="ai-button">Generate summary</button>
+                        <a href="explore.html" class="btn-primary" id="exploreBtn">Explore</a>
                     </div>
                 </div>
             </div>
 
             <!-- Main content area -->
-            <div class="content">
-                <!-- AI Summary Panel -->
-                <div id="aiSummaryPanel" class="ai-summary-panel">
-                    <div class="ai-summary-header">
-                        <div class="ai-summary-title">
-                            <span>Shopper Analysis Overview</span>
+            <div class="content" style="flex-direction: column; gap: 0;">
+                <!-- Filter Bar and Market Average -->
+                <div class="filter-wrapper">
+                    <div class="market-average">
+                        <div class="market-average-header">
+                            <span class="market-average-text">Market Average</span>
+                            <a href="#">Edit</a>
                         </div>
+                        <span class="market-average-value">50 miles, All</span>
                     </div>
-                    <div class="ai-summary-content">
-                        <p>Your dealership attracts three distinct shopper personas: Local Value Seekers (45%) who are highly price-sensitive, Distance Travelers (30%) who prioritize features, and Quick Deciders (25%) who need immediate availability. The majority of your shoppers are within a 25-mile radius.</p>
-                        
-                        <p><strong>Recommendations:</strong></p>
-                        <ul>
-                            <li>Optimize inventory pricing for competitive deals to attract Local Value Seekers</li>
-                            <li>Highlight unique features and specialty vehicles for Distance Travelers</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Shopper Persona Panel - Full Width -->
-                <div class="panel" style="margin-bottom: 24px;">
-                    <div class="panel-header">
-                        <h3 class="panel-title">Shopper persona</h3>
-                    </div>
-                    <div class="panel-content" style="padding: 20px;">
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-                            <!-- Persona 1 -->
-                            <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; background: #FAFAFA;">
-                                <img src="img/shopper/shopper1.png" alt="Local Value Seeker" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 12px;">
-                                <h4 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Local Value Seeker (45%)</h4>
-                                <p class="persona-description">Within 15 miles • $18-28K budget • Filters for Good/Great deals only • 12+ listings viewed • Mobile evenings/weekends • Highly price-sensitive</p>
-                            </div>
-                            
-                            <!-- Persona 2 -->
-                            <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; background: #FAFAFA;">
-                                <img src="img/shopper/shopper2.png" alt="Distance Traveler" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 12px;">
-                                <h4 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Distance Traveler (30%)</h4>
-                                <p class="persona-description">50+ miles away • $35-50K budget • Feature-focused, less price-sensitive • 5-7 listings viewed • Desktop during work hours • Compares specialty dealers</p>
-                            </div>
-                            
-                            <!-- Persona 3 -->
-                            <div style="border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; background: #FAFAFA;">
-                                <img src="img/shopper/shopper3.png" alt="Quick Decider" style="width: 60px; height: 60px; border-radius: 8px; margin-bottom: 12px;">
-                                <h4 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">Quick Decider (25%)</h4>
-                                <p class="persona-description">Within 25 miles • $20-40K budget • 1-2 days research • 3-5 listings viewed • Mobile lunch/ commute • Needs immediate availability</p>
-                            </div>
+
+                    <div class="filter-bar" style="margin-bottom: 0;">
+                        <div class="dropdown-container">
+                            <span class="dropdown-label text-sm">Date range:</span>
+                            <select class="dropdown-select" id="date-range">
+                                <option value="Last month">Last month</option>
+                                <option value="Last 3 months">Last 3 months</option>
+                                <option value="Last 6 months">Last 6 months</option>
+                                <option value="Last year">Last year</option>
+                                <option value="Last 13 months" selected>Last 13 months</option>
+                                <option value="All">All</option>
+                            </select>
+                        </div>
+                        <div class="dropdown-container">
+                            <span class="dropdown-label text-sm">Date group:</span>
+                            <select class="dropdown-select" id="date-group">
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly" selected>Monthly</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Top Charts Row -->
-                <div class="panels-grid" style="margin-bottom: 24px; grid-auto-rows: auto;">
-                    <!-- Chart 1 -->
+
+                <div style="display: flex; gap: 24px;">
+                    <div style="display: flex; flex-direction: column; gap: 24px; flex: 1;">
+                        <!-- Bar Chart Panel -->
                     <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="panel-title">Shopper Age</h3>
-                        </div>
-                        <div class="panel-content" style="padding: 15px 20px;">
-                            <div style="height: 210px; position: relative;">
-                                <canvas id="shopperEngagementChart"></canvas>
+                        <div class="panel-content">
+                            <div class="bar-chart-container">
+                                <canvas id="totalLeadsChart"></canvas>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Chart 2 -->
-                    <div class="panel">
-                        <div class="panel-header">
-                            <h3 class="panel-title">Gender Distribution</h3>
-                        </div>
-                        <div class="panel-content" style="padding: 15px 20px;">
-                            <div style="height: 210px; position: relative;">
-                                <canvas id="conversionRateChart"></canvas>
-                            </div>
+
+                            <table class="vehicle-table">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Your Total Leads</th>
+                                        <th>Market avg leads per vehicle</th>
+                                        <th>Your Leads per Vehicle</th>
+                                        <th>You vs market</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Static rows will be replaced by JavaScript -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Location Panel - Full Width -->
-                <div class="panel" style="margin-bottom: 24px;">
-                    <div class="panel-header">
-                        <h3 class="panel-title">Location</h3>
-                    </div>
-                    <div class="panel-content" style="padding: 20px;">
-                        <div style="display: flex; gap: 40px;">
-                            <div style="flex: 1;">
-                                <table class="vehicle-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Town/City</th>
-                                            <th>Total leads</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Acton, MA</td>
-                                            <td>802</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Westford, MA</td>
-                                            <td>802</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Littleton, MA</td>
-                                            <td>802</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Groton, MA</td>
-                                            <td>802</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                <!-- Filter Panels Container -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Filter Panel -->
+                    <div class="filter-panel">
+                        <h3>Filter</h3>
+
+                        <div class="filter-section">
+                            <label class="filter-label">Vehicle type</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input vehicle-type-checkbox" value="Compact" checked>
+                                    <span class="checkbox-label">Compact</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input vehicle-type-checkbox" value="Sedans" checked>
+                                    <span class="checkbox-label">Sedans</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input vehicle-type-checkbox" value="SUV/CO" checked>
+                                    <span class="checkbox-label">SUV/CO</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input vehicle-type-checkbox" value="Truck" checked>
+                                    <span class="checkbox-label">Truck</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input vehicle-type-checkbox" value="Luxury" checked>
+                                    <span class="checkbox-label">Luxury</span>
+                                </label>
                             </div>
-                            <div id="locationMap" style="flex: 1; border-radius: 8px; min-height: 250px; height: 300px;"></div>
+                        </div>
+
+                        <div class="filter-section">
+                            <label class="filter-label">Deal rating</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="Great Deal" checked>
+                                    <img src="img/deals/great.svg" alt="Great Deal" class="deal-rating-icon">
+                                    <span class="checkbox-label">Great Deal</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="Good Deal" checked>
+                                    <img src="img/deals/good.svg" alt="Good Deal" class="deal-rating-icon">
+                                    <span class="checkbox-label">Good Deal</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="Fair Deal" checked>
+                                    <img src="img/deals/fair.svg" alt="Fair Deal" class="deal-rating-icon">
+                                    <span class="checkbox-label">Fair Deal</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="High Priced" checked>
+                                    <img src="img/deals/high.svg" alt="High Priced" class="deal-rating-icon">
+                                    <span class="checkbox-label">High Priced</span>
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="Over Priced" checked>
+                                    <img src="img/deals/overpriced.svg" alt="Over Priced" class="deal-rating-icon">
+                                    <span class="checkbox-label">Over Priced</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-container">
+                            <span class="dropdown-label text-sm">Brand</span>
+                            <select id="brand" class="dropdown-select">
+                                <option>All</option>
+                                <option>Toyota</option>
+                                <option>Honda</option>
+                                <option>Nissan</option>
+                                <option>Volvo</option>
+                                <option>Multi-brand</option>
+                                <option>Luxury</option>
+                            </select>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Who Converted vs. Who You Lost Panel - Full Width -->
-                <div class="panel" style="margin-bottom: 24px;">
-                    <div class="panel-header">
-                        <h3 class="panel-title">Who Converted vs. Who You Lost</h3>
-                        <a href="segment.html" class="learn-more-link">Learn more</a>
-                    </div>
-                    <div class="panel-content" style="padding: 20px;">
-                        <p style="color: #6B7280;">Conversion and loss analytics coming soon...</p>
                     </div>
                 </div>
-                
             </div>
         </main>
     </div>
 
+    <!-- Detail Panel -->
+    <div id="detail-panel" class="detail-panel">
+        <div class="detail-panel-header">
+            <button class="close-btn" onclick="closeDetailPanel()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="detail-panel-content" id="detail-panel-content">
+            <!-- Content will be dynamically populated -->
+        </div>
+    </div>
+
+    <!-- Market Average Edit Side Panel -->
+    <div class="side-panel-overlay" id="marketAverageOverlay"></div>
+    <div class="side-panel" id="marketAveragePanel">
+        <div class="side-panel-header">
+            <h2 class="side-panel-title">Edit Market Average</h2>
+            <button class="side-panel-close" id="closePanelBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="side-panel-content">
+            <div style="margin-bottom: 16px; padding: 12px; background-color: #F3F4F6; border-radius: 8px; text-align: center;">
+                <div style="font-size: 13px; color: #6B7280; margin-bottom: 4px;">Dealers in market</div>
+                <div id="marketDealerCount" style="font-size: 24px; font-weight: 600; color: #111827;">1,530</div>
+            </div>
+
+            <div id="radiusMap" style="width: 100%; height: 300px; margin-bottom: 24px; border-radius: 8px; overflow: hidden;"></div>
+
+            <div class="side-panel-form-group">
+                <label for="radius">Radius</label>
+                <select id="radius" class="filter-select">
+                    <option>5 miles</option>
+                    <option>10 miles</option>
+                    <option>25 miles</option>
+                    <option selected>50 miles</option>
+                    <option>All distances</option>
+                </select>
+                <p class="help-text">Select the market radius for comparison</p>
+            </div>
+
+            <div class="side-panel-form-group">
+                <label for="franchise">Franchise Type</label>
+                <select id="franchise" class="filter-select">
+                    <option selected>All</option>
+                    <option>Franchise</option>
+                    <option>Independent</option>
+                </select>
+                <p class="help-text">Filter by dealership type</p>
+            </div>
+
+            <div class="side-panel-form-group">
+                <label class="filter-label">Inventory size</label>
+                <div class="range-inputs">
+                    <input type="number" id="inv-min" class="range-input" placeholder="Min">
+                    <span class="range-separator">-</span>
+                    <input type="number" id="inv-max" class="range-input" placeholder="Max">
+                </div>
+                <a href="#" class="reset-link">Reset</a>
+                <p class="help-text">Filter months by inventory size range</p>
+            </div>
+        </div>
+        <div class="side-panel-footer">
+            <button class="btn-secondary" id="cancelPanelBtn">Cancel</button>
+            <button class="btn-primary" id="applyPanelBtn">Apply</button>
+        </div>
+    </div>
+
     <!-- JavaScript Files -->
-    <script src="js/shopper.js"></script>
-    
-    <!-- AI Summary Toggle Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const generateBtn = document.querySelector('.ai-button');
-            const summaryPanel = document.getElementById('aiSummaryPanel');
-            
-            function showText(element, text, callback) {
-                element.textContent = text;
-                element.classList.add('show');
-                if (callback) {
-                    setTimeout(callback, 400); // Wait for fade in to complete
-                }
-            }
-            
-            function createChecklistItem(text) {
-                const item = document.createElement('div');
-                item.className = 'ai-process-item';
-                
-                const circle = document.createElement('div');
-                circle.className = 'ai-check-circle';
-                
-                // Set duration to 0.4 seconds
-                const duration = 0.4;
-                circle.style.setProperty('--loader-duration', duration + 's');
-                
-                // Add SVG for circle loading animation
-                const loaderSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                loaderSvg.setAttribute('viewBox', '0 0 18 18');
-                const loaderCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                loaderCircle.setAttribute('cx', '9');
-                loaderCircle.setAttribute('cy', '9');
-                loaderCircle.setAttribute('r', '8.5');
-                loaderCircle.setAttribute('fill', 'none');
-                loaderSvg.appendChild(loaderCircle);
-                circle.appendChild(loaderSvg);
-                
-                const checkMark = document.createElement('div');
-                checkMark.className = 'ai-check-mark';
-                checkMark.innerHTML = '<svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-                
-                circle.appendChild(checkMark);
-                
-                const textEl = document.createElement('span');
-                textEl.className = 'ai-process-text';
-                textEl.textContent = text;
-                
-                item.appendChild(circle);
-                item.appendChild(textEl);
-                
-                return { item, circle, checkMark, duration: duration };
-            }
-            
-            function animateChecklist(content, callback) {
-                const processList = document.createElement('div');
-                processList.className = 'ai-process-list';
-                
-                const steps = [
-                    'Analyzing shopper personas',
-                    'Evaluating demographics',
-                    'Mapping geographic patterns',
-                    'Calculating conversion metrics',
-                    'Generating recommendations'
-                ];
-                
-                const checklistItems = steps.map(step => createChecklistItem(step));
-                checklistItems.forEach(({ item }) => processList.appendChild(item));
-                
-                content.appendChild(processList);
-                
-                let currentStep = 0;
-                
-                function checkNextStep() {
-                    if (currentStep < checklistItems.length) {
-                        const { item, circle, checkMark, duration } = checklistItems[currentStep];
-                        
-                        // Show the item
-                        setTimeout(() => {
-                            item.classList.add('show');
-                            
-                            // Start circle loading animation after 0.5 second delay
-                            setTimeout(() => {
-                                circle.classList.add('loading');
-                                
-                                // After loading animation, fill circle and show checkmark
-                                setTimeout(() => {
-                                    circle.classList.remove('loading');
-                                    item.classList.add('checked');
-                                    circle.classList.add('checked');
-                                    checkMark.classList.add('show');
-                                    
-                                    currentStep++;
-                                    
-                                    // Move to next step or finish
-                                    if (currentStep < checklistItems.length) {
-                                        setTimeout(checkNextStep, 150);
-                                    } else {
-                                        // All steps complete, show content
-                                        setTimeout(() => {
-                                            content.removeChild(processList);
-                                            callback();
-                                        }, 250);
-                                    }
-                                }, duration * 1000); // Use dynamic duration for each item
-                            }, 500);
-                        }, 50);
-                    }
-                }
-                
-                // Start the process
-                checkNextStep();
-            }
-            
-            generateBtn.addEventListener('click', function() {
-                if (!summaryPanel.classList.contains('show')) {
-                    // Reset content
-                    const content = summaryPanel.querySelector('.ai-summary-content');
-                    content.innerHTML = '';
-                    
-                    // Show panel smoothly
-                    summaryPanel.classList.add('show', 'generating');
-                    generateBtn.textContent = 'Close';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../../img/icon/close.svg")');
-                    
-                    // Start with checklist animation
-                    setTimeout(() => {
-                        animateChecklist(content, () => {
-                            // Create elements for actual content
-                            const p1 = document.createElement('p');
-                            const p2 = document.createElement('p');
-                            const ul = document.createElement('ul');
-                            const li1 = document.createElement('li');
-                            const li2 = document.createElement('li');
-                            
-                            content.appendChild(p1);
-                            
-                            // Show first paragraph
-                            showText(p1, 'Your dealership attracts three distinct shopper personas: Local Value Seekers (45%) who are highly price-sensitive, Distance Travelers (30%) who prioritize features, and Quick Deciders (25%) who need immediate availability. The majority of your shoppers are within a 25-mile radius.', () => {
-                                
-                                // Recommendations section appears immediately after first paragraph
-                                content.appendChild(p2);
-                                p2.innerHTML = '<strong>Recommendations:</strong>';
-                                p2.classList.add('show');
-                                
-                                // Add list
-                                content.appendChild(ul);
-                                ul.classList.add('show');
-                                ul.appendChild(li1);
-                                ul.appendChild(li2);
-                                
-                                // Show list items with minimal delay
-                                setTimeout(() => {
-                                    li1.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Optimize inventory pricing for competitive deals to attract Local Value Seekers</a>';
-                                    li1.classList.add('show');
-                                    
-                                    setTimeout(() => {
-                                        li2.innerHTML = '<a href="#" style="color: #0D1722; text-decoration: underline;" onclick="return false;">Highlight unique features and specialty vehicles for Distance Travelers</a>';
-                                        li2.classList.add('show');
-                                        setTimeout(() => {
-                                            // Stop border animation when content is fully loaded
-                                            summaryPanel.classList.remove('generating');
-                                        });
-                                    }, 100);
-                                }, 50);
-                            });
-                        });
-                    }, 300); // Wait for panel to open before showing checklist
-                    
-                } else {
-                    // Hide panel smoothly
-                    summaryPanel.classList.remove('show', 'generating');
-                    
-                    generateBtn.textContent = 'Generate summary';
-                    generateBtn.style.setProperty('--ai-icon', 'url("../../img/icon/ai.svg")');
-                }
-            });
-        });
-    </script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/filter-url-utils.js"></script>
+    <script src="js/lpv-2-data.js"></script>
+    <script src="js/lpv-2-filters.js"></script>
+    <script src="js/lpv-2.js"></script>
+
     <!-- Sidebar Navigation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -549,7 +471,162 @@
                     parentItem.classList.toggle('expanded');
                 });
             });
+
+            // Update Explore button URL with current filter state
+            function updateExploreButtonURL() {
+                const exploreBtn = document.getElementById('exploreBtn');
+                if (exploreBtn && typeof buildExploreURL === 'function') {
+                    exploreBtn.href = buildExploreURL();
+                }
+            }
+
+            // Update Explore button URL on initial load
+            updateExploreButtonURL();
+
+            // Update Explore button URL whenever filters change
+            // This will be called by the filter change callback in lpv-2-filters.js
+            window.updateExploreButtonURL = updateExploreButtonURL;
+
+            // Market Average Side Panel
+            const marketAveragePanel = document.getElementById('marketAveragePanel');
+            const marketAverageOverlay = document.getElementById('marketAverageOverlay');
+            const closePanelBtn = document.getElementById('closePanelBtn');
+            const cancelPanelBtn = document.getElementById('cancelPanelBtn');
+            const applyPanelBtn = document.getElementById('applyPanelBtn');
+            const radiusSelect = document.getElementById('radius');
+
+            // Map variables
+            let radiusMap = null;
+            let radiusCircle = null;
+            const dealershipLocation = [42.3601, -71.0589]; // Example: Boston, MA
+
+            // Find the Edit link in the market average section
+            const editLink = document.querySelector('.market-average-header a');
+
+            if (editLink) {
+                editLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openMarketAveragePanel();
+                });
+            }
+
+            function openMarketAveragePanel() {
+                marketAveragePanel.classList.add('active');
+                marketAverageOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                // Initialize map after panel is visible
+                setTimeout(initializeRadiusMap, 100);
+
+                // Update dealer count (function is in lpv-2.js)
+                if (typeof updateMarketDealerCount === 'function') {
+                    updateMarketDealerCount();
+                }
+            }
+
+            function initializeRadiusMap() {
+                if (!radiusMap) {
+                    // Initialize the map
+                    radiusMap = L.map('radiusMap', {
+                        center: dealershipLocation,
+                        zoom: 10,
+                        zoomControl: true,
+                        scrollWheelZoom: false
+                    });
+
+                    // Add tile layer
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(radiusMap);
+
+                    // Add dealership marker
+                    L.marker(dealershipLocation).addTo(radiusMap)
+                        .bindPopup('Your Dealership');
+
+                    // Add initial radius circle
+                    updateRadiusCircle();
+                }
+
+                // Invalidate size to ensure map renders correctly
+                radiusMap.invalidateSize();
+            }
+
+            function updateRadiusCircle() {
+                if (!radiusMap) return;
+
+                const selectedValue = radiusSelect.value;
+
+                // Parse radius value from dropdown (e.g., "5 miles" -> 5)
+                let radiusMiles;
+                if (selectedValue === 'All distances') {
+                    radiusMiles = 100; // Default to 100 miles for "All distances"
+                } else {
+                    radiusMiles = parseInt(selectedValue);
+                }
+
+                const radiusMeters = radiusMiles * 1609.34; // Convert miles to meters
+
+                // Remove existing circle
+                if (radiusCircle) {
+                    radiusMap.removeLayer(radiusCircle);
+                }
+
+                // Add new circle
+                radiusCircle = L.circle(dealershipLocation, {
+                    color: '#0763D3',
+                    fillColor: '#0763D3',
+                    fillOpacity: 0.1,
+                    radius: radiusMeters,
+                    weight: 2
+                }).addTo(radiusMap);
+
+                // Fit map to circle bounds
+                radiusMap.fitBounds(radiusCircle.getBounds(), {
+                    padding: [20, 20]
+                });
+            }
+
+            // Update circle when radius changes
+            if (radiusSelect) {
+                radiusSelect.addEventListener('change', updateRadiusCircle);
+            }
+
+            function closeMarketAveragePanel() {
+                marketAveragePanel.classList.remove('active');
+                marketAverageOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // Close panel on close button click
+            if (closePanelBtn) {
+                closePanelBtn.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Close panel on cancel button click
+            if (cancelPanelBtn) {
+                cancelPanelBtn.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Close panel on overlay click
+            if (marketAverageOverlay) {
+                marketAverageOverlay.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Apply button - update market average and close panel
+            if (applyPanelBtn) {
+                applyPanelBtn.addEventListener('click', function() {
+                    closeMarketAveragePanel();
+                });
+            }
+
+            // Close panel on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && marketAveragePanel.classList.contains('active')) {
+                    closeMarketAveragePanel();
+                }
+            });
         });
     </script>
+
 </body>
 </html>

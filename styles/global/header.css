@@ -1,0 +1,64 @@
+/* =================================
+   Global Header Styles
+   ================================= */
+
+/* Main Header Container */
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 20px auto 16px auto;
+    padding: 0 20px;
+    max-width: 1400px;
+}
+
+/* Back Navigation (Optional) */
+.back-navigation {
+    width: 100%;
+}
+
+.back-navigation a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-navigation svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Header Actions Row */
+.header-actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Standardized Header Title */
+.header-title,
+.header h1 {
+    margin-bottom: 0;
+    /* font-size: 28px;
+    font-weight: 600;
+    color: #0D1722; */
+    /* margin: 0;
+    line-height: 1.2; */
+}
+
+/* Button Group (Optional) */
+.button-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* =================================
+   Header Variations
+   ================================= */
+
+/* Header with back navigation - add subtle separation */
+.header:has(.back-navigation) .header-actions {
+    /* padding-top: 8px; */
+}

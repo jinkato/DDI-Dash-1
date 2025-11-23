@@ -15,16 +15,17 @@
     <link rel="stylesheet" href="styles/global/typography.css">
     <link rel="stylesheet" href="styles/global/link.css">
     <link rel="stylesheet" href="styles/global/button.css">
-    <link rel="stylesheet" href="styles/global/filter-group.css">
+    <link rel="stylesheet" href="styles/global/top-filter.css">
     <link rel="stylesheet" href="styles/global/pill.css">
     <link rel="stylesheet" href="styles/global/panel.css">
     <link rel="stylesheet" href="styles/global/global.css">
     <link rel="stylesheet" href="styles/global/dropdown.css">
     <link rel="stylesheet" href="styles/global/table.css">
+    <link rel="stylesheet" href="styles/global/header.css">
     <link rel="stylesheet" href="styles/global/ai.css">
     <link rel="stylesheet" href="styles/global/sidebar.css">
     <link rel="stylesheet" href="styles/performance.css">
-    
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -227,9 +228,13 @@
             <div class="dropdowns">
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
-            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h1>Performance</h1>
-                <button class="ai-button">Generate summary</button>
+            <div class="header">
+                <div class="header-actions">
+                    <h1 class="header-title">Performance</h1>
+                    <div class="button-group">
+                        <button class="ai-button">Generate summary</button>
+                    </div>
+                </div>
             </div>
             
             <!-- Main content area -->
@@ -251,27 +256,36 @@
                         </ul>
                     </div>
                 </div>
-                <!-- Filter Bar -->
-                <div class="filter-bar">
-                    <div class="dropdown-container">
-                        <span class="dropdown-label text-sm">Time frame:</span>
-                        <select class="dropdown-select" id="timeframeSelect">
-                            <option value="14">Last 14 days</option>
-                            <option value="30">Last 30 days</option>
-                            <option value="90">Last 90 days</option>
-                        </select>
+                <!-- Filter Bar and Market Average -->
+                <div class="filter-wrapper">
+                    <div class="filter-bar" style="margin-bottom: 0;">
+                        <div class="dropdown-container">
+                            <span class="dropdown-label text-sm">Date range:</span>
+                            <select class="dropdown-select" id="timeframeSelect">
+                                <option value="last-7-days">Last 7 days</option>
+                                <option value="last-30-days" selected>Last 30 days</option>
+                                <option value="last-60-days">Last 60 days</option>
+                            </select>
+                        </div>
+                        <div class="dropdown-container">
+                            <span class="dropdown-label text-sm">Group by:</span>
+                            <select class="dropdown-select" id="groupBySelect">
+                                <option value="daily">Daily</option>
+                                <option value="weekly" selected>Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="dropdown-container">
-                        <span class="dropdown-label text-sm">Vehicle Type:</span>
-                        <select class="dropdown-select" id="vehicleTypeSelect">
-                            <option value="all">All</option>
-                            <option value="new">New</option>
-                            <option value="used">Used</option>
-                            <option value="cpo">CPO</option>
-                        </select>
+
+                    <div class="market-average">
+                        <div class="market-average-header">
+                            <span class="market-average-text">Market Average</span>
+                            <a href="#">Edit</a>
+                        </div>
+                        <span class="market-average-value">50ml, Franchise</span>
                     </div>
                 </div>
-                
+
                 <!-- Metric Cards -->
                 <div class="metric-cards-grid" style="display: none;">
                     <div class="metric-card">
@@ -364,7 +378,7 @@
                                 <h3 class="panel-title">Leads per Vehicle</h3>
                                 <div class="availability needs-attention">Needs attention</div>
                             </div>
-                            <a href="lpv.html" class="learn-more-link">Learn More</a>
+                            <a href="lpv-2.html" class="learn-more-link">Explore</a>
                         </div>
                         <div class="overall-conversion">
                             <span class="conversion-value" id="leadsPerVehicleValue">2.3</span>
@@ -410,41 +424,60 @@
                             <thead>
                                 <tr>
                                     <th>Type</th>
-                                    <th>Last Month</th>
-                                    <th>Current Month</th>
-                                    <th>Change</th>
+                                    <th id="connectionSummaryPeriod">Last 30 days</th>
+                                    <th>W/W Change</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Email</td>
-                                    <td>498</td>
                                     <td>542</td>
-                                    <td><span class="trend-up">8.8%</span></td>
+                                    <td>
+                                        <div class="trend-with-sparkline">
+                                            <span class="trend-up">4.2%</span>
+                                            <canvas class="sparkline-chart" width="80" height="30" data-start="520" data-end="542" data-trend="up"></canvas>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Phone</td>
-                                    <td>389</td>
                                     <td>423</td>
-                                    <td><span class="trend-up">8.7%</span></td>
+                                    <td>
+                                        <div class="trend-with-sparkline">
+                                            <span class="trend-down">-2.1%</span>
+                                            <canvas class="sparkline-chart" width="80" height="30" data-start="432" data-end="423" data-trend="down"></canvas>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Chat</td>
-                                    <td>287</td>
                                     <td>312</td>
-                                    <td><span class="trend-up">8.7%</span></td>
+                                    <td>
+                                        <div class="trend-with-sparkline">
+                                            <span class="trend-neutral">0.6%</span>
+                                            <canvas class="sparkline-chart" width="80" height="30" data-start="310" data-end="312" data-trend="neutral"></canvas>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Text</td>
-                                    <td>265</td>
                                     <td>289</td>
-                                    <td><span class="trend-up">9.1%</span></td>
+                                    <td>
+                                        <div class="trend-with-sparkline">
+                                            <span class="trend-up">5.8%</span>
+                                            <canvas class="sparkline-chart" width="80" height="30" data-start="273" data-end="289" data-trend="up"></canvas>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Website</td>
-                                    <td>279</td>
                                     <td>301</td>
-                                    <td><span class="trend-up">7.9%</span></td>
+                                    <td>
+                                        <div class="trend-with-sparkline">
+                                            <span class="trend-down">-1.6%</span>
+                                            <canvas class="sparkline-chart" width="80" height="30" data-start="306" data-end="301" data-trend="down"></canvas>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -453,84 +486,95 @@
                 </div>
                 
                 <!-- Third Row Panels -->
-                <div class="panels-grid three-column">
+                <div class="panels-grid">
                     <!-- Deal Rating Panel -->
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="panel-title">% of inventory rated Fair, Good, or Great deal</h3>
-                            <a href="#" class="learn-more-link">Learn more</a>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <h3 class="panel-title">Deal Rating</h3>
+                                <div class="availability high">Strong</div>
+                            </div>
+                            <a href="#" class="learn-more-link">Explore</a>
                         </div>
-                        <div class="panel-content">
-                            <div class="metric-display">
-                                <div class="metric-value">82%</div>
-                                <div class="metric-change negative">
-                                    <img src="img/trend icon/down.svg" alt="Down" class="trend-icon">
-                                    <span>-29% decrease</span>
-                                </div>
-                                <div class="metric-comparison">Market average: 78%</div>
-                            </div>
-                            <div class="chart-container small">
-                                <canvas id="dealRatingChart"></canvas>
-                            </div>
+                        <div class="overall-conversion">
+                            <span class="conversion-value" id="dealRatingValue">82%</span>
+                            <span class="conversion-description">% of inventory rated Fair, Good, or Great deal</span>
+                            <span class="conversion-label">↗ Up 4% from last week | Market average: 75%</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="dealRatingChart"></canvas>
                         </div>
                     </div>
-                    
-                    <!-- Average Inventory Panel -->
+
+                    <!-- Inventory Summary Panel -->
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="panel-title">Average inventory count</h3>
-                            <a href="#" class="learn-more-link">Learn more</a>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <h3 class="panel-title">Inventory Summary</h3>
+                                <div class="availability needs-attention">Needs attention</div>
+                            </div>
+                            <a href="#" class="learn-more-link">Explore</a>
                         </div>
-                        <div class="panel-content">
-                            <div class="metric-display">
-                                <div class="metric-value">247</div>
-                                <div class="metric-change negative">
-                                    <img src="img/trend icon/down.svg" alt="Down" class="trend-icon">
-                                    <span>-7% decrease</span>
-                                </div>
-                            </div>
-                            <div class="chart-container small">
-                                <canvas id="inventoryCountChart"></canvas>
-                            </div>
+                        <div class="overall-conversion">
+                            <span class="conversion-value" id="inventorySummaryValue">247</span>
+                            <span class="conversion-description">Total vehicles in inventory</span>
+                            <span class="conversion-label">↘ Down 7 from last week</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="inventorySummaryChart"></canvas>
                         </div>
                     </div>
-                    
+                </div>
+
+                <!-- Fourth Row Panel -->
+                <div class="panels-grid">
                     <!-- Vehicles Without Panel -->
                     <div class="panel">
                         <div class="panel-header">
-                            <h3 class="panel-title">Vehicle without</h3>
-                            <a href="#" class="learn-more-link">Learn more</a>
+                            <h3 class="panel-title">Merchandising Quality</h3>
                         </div>
                         <div class="panel-content">
-                            <div class="vehicles-without-list">
-                                <div class="without-item success">
-                                    <span class="without-label">Without photos</span>
-                                    <div class="without-value-wrapper">
-                                        <span class="without-value">0</span>
-                                        <svg class="checkmark" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="without-item success">
-                                    <span class="without-label">Without trim</span>
-                                    <div class="without-value-wrapper">
-                                        <span class="without-value">0</span>
-                                        <svg class="checkmark" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="without-item success">
-                                    <span class="without-label">Without price</span>
-                                    <div class="without-value-wrapper">
-                                        <span class="without-value">0</span>
-                                        <svg class="checkmark" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="features-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Count</th>
+                                        <th>W/W Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Without photos</td>
+                                        <td>0</td>
+                                        <td>
+                                            <div class="trend-with-sparkline">
+                                                <span class="trend-neutral">0%</span>
+                                                <canvas class="sparkline-chart" width="80" height="30" data-start="0" data-end="0" data-trend="neutral"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Without trim</td>
+                                        <td>0</td>
+                                        <td>
+                                            <div class="trend-with-sparkline">
+                                                <span class="trend-neutral">0%</span>
+                                                <canvas class="sparkline-chart" width="80" height="30" data-start="0" data-end="0" data-trend="neutral"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Without price</td>
+                                        <td>0</td>
+                                        <td>
+                                            <div class="trend-with-sparkline">
+                                                <span class="trend-neutral">0%</span>
+                                                <canvas class="sparkline-chart" width="80" height="30" data-start="0" data-end="0" data-trend="neutral"></canvas>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -541,7 +585,126 @@
 
     <!-- JavaScript Files -->
     <script src="js/performance.js"></script>
-    
+
+    <!-- Update Connection Summary Period Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeframeSelect = document.getElementById('timeframeSelect');
+            const connectionSummaryPeriod = document.getElementById('connectionSummaryPeriod');
+
+            // Generate data points based on start, end, and number of days
+            function generateDataPoints(start, end, numDays, trend) {
+                const values = [];
+                const diff = end - start;
+                const avgValue = (start + end) / 2;
+
+                for (let i = 0; i < numDays; i++) {
+                    const progress = i / (numDays - 1);
+
+                    // Base progression from start to end (subtle trend)
+                    let value = start + (diff * progress);
+
+                    // Add significant day-to-day variation to make it look realistic
+                    const dailyVariance = avgValue * 0.05 * (Math.random() - 0.5);
+                    value += dailyVariance;
+
+                    // Ensure values don't stray too far from the overall trend
+                    const minBound = Math.min(start, end) * 0.95;
+                    const maxBound = Math.max(start, end) * 1.05;
+                    value = Math.max(minBound, Math.min(maxBound, value));
+
+                    values.push(Math.round(value));
+                }
+
+                // Ensure last value matches the end value exactly
+                values[values.length - 1] = end;
+
+                return values;
+            }
+
+            // Render sparkline chart
+            function drawSparkline(canvas, values, trend) {
+                const ctx = canvas.getContext('2d');
+                const width = canvas.width;
+                const height = canvas.height;
+                const padding = 2;
+
+                // Clear canvas
+                ctx.clearRect(0, 0, width, height);
+
+                // Find min and max values
+                const min = Math.min(...values);
+                const max = Math.max(...values);
+                const range = max - min || 1;
+
+                // Calculate points
+                const points = values.map((value, index) => ({
+                    x: padding + (index / (values.length - 1)) * (width - padding * 2),
+                    y: height - padding - ((value - min) / range) * (height - padding * 2)
+                }));
+
+                // Draw line with color based on trend
+                ctx.beginPath();
+                if (trend === 'up') {
+                    ctx.strokeStyle = '#10B981'; // Green for positive trends
+                } else if (trend === 'down') {
+                    ctx.strokeStyle = '#EF4444'; // Red for negative trends
+                } else {
+                    ctx.strokeStyle = '#6B7280'; // Gray for neutral trends
+                }
+                ctx.lineWidth = 1;
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+
+                points.forEach((point, index) => {
+                    if (index === 0) {
+                        ctx.moveTo(point.x, point.y);
+                    } else {
+                        ctx.lineTo(point.x, point.y);
+                    }
+                });
+
+                ctx.stroke();
+            }
+
+            // Render all sparkline charts based on selected timeframe
+            function renderSparklines() {
+                const selectedValue = timeframeSelect.value;
+                const daysMap = {
+                    'last-7-days': 7,
+                    'last-30-days': 30,
+                    'last-60-days': 60
+                };
+                const numDays = daysMap[selectedValue] || 30;
+
+                const sparklineCharts = document.querySelectorAll('.sparkline-chart');
+                sparklineCharts.forEach(canvas => {
+                    const start = parseInt(canvas.getAttribute('data-start'));
+                    const end = parseInt(canvas.getAttribute('data-end'));
+                    const trend = canvas.getAttribute('data-trend');
+
+                    const values = generateDataPoints(start, end, numDays, trend);
+                    drawSparkline(canvas, values, trend);
+                });
+            }
+
+            // Update period text and re-render sparklines on dropdown change
+            timeframeSelect.addEventListener('change', function() {
+                const selectedValue = this.value;
+                const textMap = {
+                    'last-7-days': 'Last 7 days',
+                    'last-30-days': 'Last 30 days',
+                    'last-60-days': 'Last 60 days'
+                };
+                connectionSummaryPeriod.textContent = textMap[selectedValue] || 'Last 30 days';
+                renderSparklines();
+            });
+
+            // Initial render
+            renderSparklines();
+        });
+    </script>
+
     <!-- AI Summary Toggle Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

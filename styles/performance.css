@@ -193,10 +193,7 @@
 
 /* Features Table */
 .features-table {
-    width: 100%;
-    border-collapse: collapse;
     margin: 0;
-    table-layout: fixed;
 }
 
 /* Connection Summary Panel - Vertically center content */
@@ -210,12 +207,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.features-table th,
-.features-table td {
-    padding: 0;
-    text-align: left;
 }
 
 /* Column widths */
@@ -239,15 +230,6 @@
     width: 25%;
 }
 
-/* Header styles */
-.features-table th {
-    font-size: 12px;
-    font-weight: bold;
-    color: #0D1722;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
 /* Cell styles */
 .features-table td {
     padding: 12px 0;
@@ -258,6 +240,12 @@
 
 .features-table tr:last-child td {
     border-bottom: none;
+}
+
+.trend-with-sparkline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .trend-up {
@@ -304,10 +292,10 @@
 /* Chart Container */
 .chart-container {
     width: 100%;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     position: relative;
     flex: 1;
-    min-height: 200px;
+    min-height: 280px;
 }
 
 /* Canvas should fill container */
@@ -319,12 +307,6 @@
 /* Vehicle Table */
 .vehicle-table-container {
     margin-top: 20px;
-    padding: 0 20px;
-}
-
-.vehicle-table {
-    width: 100%;
-    border-collapse: collapse;
 }
 
 .vehicle-table thead {
@@ -598,4 +580,5 @@
 .see-all a {
     color: var(--link-primary);
 }
+
 

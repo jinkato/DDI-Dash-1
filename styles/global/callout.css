@@ -1,0 +1,18 @@
+/* =================================
+   Callout Styles
+   ================================= */
+
+/* Market Callout */
+.market-callout {
+    background-color: #EBF5FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.callout-icon {
+    flex-shrink: 0;
+}
