@@ -178,8 +178,8 @@ const EXPLORE_MOCK_DATA = {
     // Baseline values for 13 months with multipliers by vehicle type, deal rating, and brand
     buyerOverlapData: {
         // Baseline buyer overlap per vehicle over time (13 months)
-        // Shows moderate upward trend with spike in Oct-Dec 2024
-        baseline: [4.2, 4.3, 4.5, 4.4, 4.7, 4.6, 4.8, 5.0, 4.9, 5.2, 5.6, 5.9, 6.0],
+        // U-shaped pattern: starts high, dips in middle, gradual recovery with variation
+        baseline: [6.0, 6.2, 6.5, 5.5, 4.8, 4.5, 4.7, 4.6, 5.0, 5.3, 5.5, 5.8, 5.7],
 
         // Vehicle type affects buyer overlap
         // More popular vehicle types = more competitive shoppers
@@ -221,6 +221,25 @@ const EXPLORE_MOCK_DATA = {
             'Fair Deal': [0.80, 0.84, 0.88, 0.92, 0.96, 1.00, 1.20, 1.25, 1.30, 1.35, 1.40, 1.45, 1.50],
             'High Priced': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
             'Over Priced': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+        }
+    },
+
+    // Conversion Funnel Data - tracking conversion rates over time
+    // Shows how SRP → VDP → Leads conversion changes month over month
+    conversionFunnelData: {
+        // Your dealership conversion rates (%)
+        dealer: {
+            // SRP to VDP conversion rate (% of SRP viewers who visit VDP)
+            srpToVdp: [23.8, 24.1, 24.3, 23.5, 24.0, 24.2, 24.5, 24.8, 25.0, 25.2, 24.9, 25.5, 25.3],
+            // SRP to Leads conversion rate (% of SRP viewers who convert to leads)
+            srpToLeads: [1.55, 1.58, 1.60, 1.52, 1.56, 1.59, 1.62, 1.65, 1.68, 1.70, 1.67, 1.73, 1.71]
+        },
+        // Market average conversion rates (%)
+        market: {
+            // SRP to VDP conversion rate
+            srpToVdp: [19.5, 19.7, 19.8, 19.6, 19.8, 19.9, 20.0, 20.1, 20.2, 20.3, 20.1, 20.4, 20.2],
+            // SRP to Leads conversion rate
+            srpToLeads: [1.42, 1.43, 1.44, 1.41, 1.43, 1.44, 1.45, 1.46, 1.47, 1.48, 1.46, 1.49, 1.47]
         }
     }
 };

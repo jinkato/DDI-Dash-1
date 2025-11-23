@@ -279,44 +279,27 @@
                             </div>
                             <div class="panel-content">
                                 <div class="inventory-charts-container">
-                                    <div class="inventory-month-container">
-                                        <div class="month-label-row">
-                                            <span class="month-label">September 2025</span>
-                                            <span class="total-label">Total vehicles: 45</span>
-                                        </div>
-                                        <div class="inventory-bar">
-                                            <div class="inventory-bar-segments">
-                                                <div class="inventory-segment" style="width: 30%; background-color: var(--color-great-deal);" title="Great Deal: 14 vehicles"></div>
-                                                <div class="inventory-segment" style="width: 35%; background-color: var(--color-good-deal);" title="Good Deal: 16 vehicles"></div>
-                                                <div class="inventory-segment" style="width: 20%; background-color: var(--color-fair-deal);" title="Fair Deal: 9 vehicles"></div>
-                                                <div class="inventory-segment" style="width: 10%; background-color: var(--color-high-priced);" title="High Priced: 4 vehicles"></div>
-                                                <div class="inventory-segment" style="width: 5%; background-color: var(--color-over-priced);" title="Over Priced: 2 vehicles"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="inventory-month-container">
-                                        <div class="month-label-row">
-                                            <span class="month-label">October 2025</span>
-                                            <span class="total-label">Total vehicles: 48</span>
-                                        </div>
-                                        <div class="inventory-bar">
-                                            <div class="inventory-bar-segments">
-                                                <div class="inventory-segment" style="width: 28%; background-color: var(--color-great-deal);" title="Great Deal: 13 vehicles"></div>
-                                                <div class="inventory-segment" style="width: 38%; background-color: var(--color-good-deal);" title="Good Deal: 18 vehicles"></div>
-                                                <div class="inventory-segment" style="width: 22%; background-color: var(--color-fair-deal);" title="Fair Deal: 11 vehicles"></div>
-                                                <div class="inventory-segment" style="width: 8%; background-color: var(--color-high-priced);" title="High Priced: 4 vehicles"></div>
-                                                <div class="inventory-segment" style="width: 4%; background-color: var(--color-over-priced);" title="Over Priced: 2 vehicles"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <canvas id="inventory-trend-chart"></canvas>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Leads per Vehicle by Deal Rating Panel -->
+                        <!-- Total Leads Panel -->
                         <div class="panel">
                             <div class="panel-header">
-                                <h4 class="panel-title">Leads per Vehicle by Deal Rating</h4>
+                                <h4 class="panel-title">Total leads</h4>
+                            </div>
+                            <div class="panel-content">
+                                <div class="total-leads-charts-container">
+                                    <canvas id="total-leads-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Leads per Vehicle Panel -->
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h4 class="panel-title">Leads per Vehicle</h4>
                             </div>
                             <div class="panel-content">
                                 <div class="leads-per-vehicle-container">
@@ -325,21 +308,25 @@
                             </div>
                         </div>
 
-                        <!-- Market Trend Panel -->
+                        <!-- Conversion Funnel Panel -->
                         <div class="panel">
+                            <div class="panel-header">
+                                <h4 class="panel-title">Conversion Funnel</h4>
+                            </div>
                             <div class="panel-content">
-                                <div class="market-trend-container">
-                                    <h4>Market Trend</h4>
-                                    <canvas id="market-trend-chart"></canvas>
+                                <div class="conversion-funnel-container">
+                                    <canvas id="conversion-funnel-chart"></canvas>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Average buyer overlap per vehicle Panel -->
                         <div class="panel">
+                            <div class="panel-header">
+                                <h4 class="panel-title">Average buyer overlap per vehicle</h4>
+                            </div>
                             <div class="panel-content">
                                 <div class="buyer-overlap-container">
-                                    <h4>Average buyer overlap per vehicle</h4>
                                     <canvas id="buyer-overlap-chart"></canvas>
                                 </div>
                             </div>
@@ -350,7 +337,22 @@
                     <div style="display: flex; flex-direction: column; gap: 24px;">
                         <!-- Filter Panel -->
                         <div class="filter-panel">
-                            <h3>Filter</h3>
+                            <div class="filter-section">
+                                <label for="group-by" class="filter-label">Group by</label>
+                                <select id="group-by" class="dropdown-select">
+                                    <option value="none">None</option>
+                                    <option value="deal-rating" selected>Deal rating</option>
+                                    <option value="vehicle-type">Vehicle type</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-section">
+                                <label class="filter-label">Market Average</label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input" id="show-market-average" checked>
+                                    <span class="checkbox-label">Show Market Average</span>
+                                </label>
+                            </div>
 
                             <div class="filter-section">
                                 <label class="filter-label">Vehicle type</label>
@@ -409,8 +411,8 @@
                                 </div>
                             </div>
 
-                            <div class="dropdown-container">
-                                <label for="brand" class="dropdown-label">Brand</label>
+                            <div class="filter-section">
+                                <label for="brand" class="filter-label">Brand</label>
                                 <select id="brand" class="dropdown-select">
                                     <option>All</option>
                                     <option>Toyota</option>
@@ -431,6 +433,8 @@
     <!-- JavaScript Files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/filter-url-utils.js"></script>
+    <script src="js/explore-data.js"></script>
+    <script src="js/explore-filters.js"></script>
     <script src="js/explore.js"></script>
 
     <!-- Sidebar Navigation Script -->
