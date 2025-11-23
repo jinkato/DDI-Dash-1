@@ -231,15 +231,14 @@
             <div class="content" style="flex-direction: column; gap: 0;">
                 <!-- Filter Bar and Market Average -->
                 <div class="filter-wrapper">
-                    <div class="market-average">
-                        <div class="market-average-header">
-                            <span class="market-average-text">Market Average</span>
-                            <a href="#">Edit</a>
-                        </div>
-                        <span class="market-average-value">50ml, Franchise</span>
-                    </div>
-
                     <div class="filter-bar" style="margin-bottom: 0;">
+                        <div class="dropdown-container">
+                            <span class="dropdown-label text-sm">Market Average</span>
+                            <button class="market-average-button">
+                                <span>50ml, All</span>
+                                <a href="#">edit</a>
+                            </button>
+                        </div>
                         <div class="dropdown-container">
                             <span class="dropdown-label text-sm">Date range:</span>
                             <select class="dropdown-select" id="date-range">
