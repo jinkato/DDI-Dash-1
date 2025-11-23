@@ -115,7 +115,13 @@ function initializeCalloutLink() {
  * Render or update the chart with filtered data
  */
 function renderChart(data) {
-    const ctx = document.getElementById('totalLeadsChart').getContext('2d');
+    const canvas = document.getElementById('total-leads-chart');
+    if (!canvas) {
+        console.error('Canvas element with id "total-leads-chart" not found');
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
 
     // Destroy existing chart if it exists
     if (currentChart) {
@@ -124,105 +130,22 @@ function renderChart(data) {
 
     // Create new chart with filtered data
     currentChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: data.months,
             datasets: [{
-                label: 'Your Dealership',
-                data: data.leadsPerVehicle,
-                backgroundColor: '#3B82F6',
-                borderColor: '#3B82F6',
-                borderWidth: 2,
-                tension: 0.3,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-                pointBackgroundColor: '#3B82F6',
-                pointBorderColor: '#FFFFFF',
-                pointBorderWidth: 2,
-                fill: false
-            }, {
-                label: 'Market Average',
-                data: data.marketAvg,
-                backgroundColor: '#9CA3AF',
-                borderColor: '#9CA3AF',
-                borderWidth: 2,
-                borderDash: [5, 5],
-                tension: 0.3,
-                pointRadius: 0,
-                pointHoverRadius: 4,
-                pointBackgroundColor: '#9CA3AF',
-                pointBorderColor: '#FFFFFF',
-                pointBorderWidth: 2,
-                fill: false
+                label: 'Total Leads',
+                data: data.totalLeads,
+                backgroundColor: '#0763D3',
+                borderWidth: 0
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            interaction: {
-                mode: 'index',
-                intersect: false
-            },
-            animation: {
-                duration: 0
-            },
-            scales: {
-                x: {
-                    grid: {
-                        display: false,
-                        drawBorder: false
-                    },
-                    ticks: {
-                        color: '#6B7280',
-                        font: {
-                            size: 11
-                        },
-                        autoSkip: false,
-                        maxRotation: 45,
-                        minRotation: 45
-                    }
-                },
-                y: {
-                    min: 1.2,
-                    max: 4.0,
-                    grid: {
-                        color: '#E5E7EB',
-                        drawBorder: false
-                    },
-                    ticks: {
-                        font: {
-                            size: 12,
-                            weight: '500'
-                        },
-                        color: '#6B7280',
-                        padding: 8
-                    },
-                    title: {
-                        display: true,
-                        text: 'Leads per Vehicle',
-                        font: {
-                            size: 13,
-                            weight: '500'
-                        },
-                        color: '#6B7280',
-                        padding: 8
-                    }
-                }
-            },
             plugins: {
                 legend: {
-                    display: true,
-                    position: 'bottom',
-                    labels: {
-                        font: {
-                            size: 12,
-                            weight: '500'
-                        },
-                        color: '#6B7280',
-                        padding: 15,
-                        usePointStyle: true,
-                        pointStyle: 'rectRounded'
-                    }
+                    display: false
                 },
                 tooltip: {
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -234,33 +157,42 @@ function renderChart(data) {
                     },
                     bodyFont: {
                         size: 12
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
                     },
-                    callbacks: {
-                        label: function(context) {
-                            const value = context.parsed.y;
-                            const datasetLabel = context.dataset.label;
-                            const dataIndex = context.dataIndex;
-
-                            if (datasetLabel === 'Your Dealership') {
-                                // Get the market average for this specific month
-                                const marketData = context.chart.data.datasets[1].data;
-                                const marketAvg = parseFloat(marketData[dataIndex]);
-                                const diff = (value - marketAvg).toFixed(1);
-                                const status = parseFloat(diff) < 0 ? 'Below market' : parseFloat(diff) > 0 ? 'Above market' : 'At market';
-                                return [
-                                    datasetLabel + ': ' + value + ' leads/vehicle',
-                                    status + ' by ' + Math.abs(diff) + ' leads'
-                                ];
-                            } else {
-                                return datasetLabel + ': ' + value + ' leads/vehicle';
-                            }
+                    ticks: {
+                        color: '#6B7280',
+                        font: {
+                            size: 11
                         }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#E5E7EB',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 8
                     }
                 }
             }
         }
     });
 }
+
 
 /**
  * Render or update the table with filtered data

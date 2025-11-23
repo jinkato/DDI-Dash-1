@@ -178,11 +178,11 @@ const EXPLORE_MOCK_DATA = {
     // Baseline values for 13 months with multipliers by vehicle type, deal rating, and brand
     buyerOverlapData: {
         // Baseline buyer overlap per vehicle over time (13 months)
-        // U-shaped pattern for dealership: starts high, dips in middle, gradual recovery
-        baseline: [6.0, 6.2, 6.5, 5.5, 4.8, 4.5, 4.7, 4.6, 5.0, 5.3, 5.5, 5.8, 5.7],
+        // U-shaped pattern for dealership: starts high, dips in middle, gradual recovery with realistic noise
+        baseline: [6.3, 5.9, 6.4, 5.7, 4.9, 4.6, 4.9, 4.7, 5.3, 5.1, 5.7, 5.9, 5.6],
 
-        // Market average baseline - stable with minor monthly variation
-        marketAverageBaseline: [5.4, 5.5, 5.6, 5.5, 5.4, 5.5, 5.6, 5.7, 5.6, 5.5, 5.6, 5.7, 5.6],
+        // Market average baseline - stable around 5.5 with realistic minor monthly variation
+        marketAverageBaseline: [5.6, 5.4, 5.7, 5.5, 5.3, 5.6, 5.4, 5.8, 5.5, 5.4, 5.7, 5.6, 5.4],
 
         // Vehicle type affects buyer overlap
         // More popular vehicle types = more competitive shoppers
@@ -217,13 +217,14 @@ const EXPLORE_MOCK_DATA = {
         },
 
         // Time-based trend multipliers for specific deal ratings (13 months)
-        // Fair Deal and Good Deal show increasing competition over time with July jump
+        // Fair Deal and Good Deal show increasing competition over time with realistic variation
+        // Generated with base trend + random noise for natural patterns
         dealRatingTrendMultiplier: {
-            'Great Deal': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            'Good Deal': [0.85, 0.88, 0.92, 0.95, 0.98, 1.02, 1.15, 1.18, 1.22, 1.25, 1.28, 1.32, 1.35],
-            'Fair Deal': [0.80, 0.84, 0.88, 0.92, 0.96, 1.00, 1.20, 1.25, 1.30, 1.35, 1.40, 1.45, 1.50],
-            'High Priced': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            'Over Priced': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+            'Great Deal': [0.97, 1.03, 0.99, 1.06, 0.98, 1.01, 1.04, 1.02, 0.99, 1.04, 1.01, 1.03, 1.05],
+            'Good Deal': [0.84, 0.91, 0.87, 0.97, 0.94, 1.06, 1.13, 1.22, 1.17, 1.29, 1.24, 1.37, 1.31],
+            'Fair Deal': [0.79, 0.89, 0.83, 0.96, 0.91, 1.07, 1.19, 1.29, 1.24, 1.39, 1.33, 1.49, 1.44],
+            'High Priced': [1.01, 0.97, 1.06, 0.94, 1.03, 0.97, 1.06, 0.99, 1.01, 0.96, 1.04, 0.99, 1.03],
+            'Over Priced': [1.06, 0.94, 1.03, 0.97, 1.06, 0.94, 1.09, 0.96, 1.01, 0.99, 1.04, 0.96, 1.01]
         }
     },
 
@@ -245,39 +246,43 @@ const EXPLORE_MOCK_DATA = {
             srpToLeads: [1.42, 1.43, 1.44, 1.41, 1.43, 1.44, 1.45, 1.46, 1.47, 1.48, 1.46, 1.49, 1.47]
         },
         // Conversion rates by deal rating
+        // Patterns: Great Deal highest and growing, Over Priced lowest and volatile
+        // Values include realistic month-to-month variations with overall upward trends
         byDealRating: {
             'Great Deal': {
-                srpToLeads: [2.05, 2.08, 2.15, 2.12, 2.18, 2.22, 2.25, 2.28, 2.32, 2.35, 2.38, 2.42, 2.45]
+                srpToLeads: [2.06, 2.11, 2.17, 2.09, 2.24, 2.23, 2.31, 2.29, 2.34, 2.37, 2.43, 2.41, 2.49]
             },
             'Good Deal': {
-                srpToLeads: [1.75, 1.78, 1.82, 1.85, 1.88, 1.85, 1.92, 1.95, 1.98, 2.02, 2.05, 2.08, 2.12]
+                srpToLeads: [1.73, 1.84, 1.79, 1.89, 1.87, 1.94, 1.93, 1.97, 2.03, 1.99, 2.09, 2.07, 2.13]
             },
             'Fair Deal': {
-                srpToLeads: [1.48, 1.52, 1.55, 1.52, 1.58, 1.62, 1.65, 1.68, 1.65, 1.72, 1.75, 1.78, 1.82]
+                srpToLeads: [1.26, 1.37, 1.31, 1.41, 1.36, 1.47, 1.44, 1.52, 1.49, 1.57, 1.54, 1.63, 1.59]
             },
             'High Priced': {
-                srpToLeads: [1.25, 1.28, 1.32, 1.28, 1.35, 1.38, 1.35, 1.42, 1.45, 1.48, 1.45, 1.52, 1.55]
+                srpToLeads: [0.54, 0.63, 0.59, 0.67, 0.64, 0.73, 0.69, 0.77, 0.74, 0.83, 0.79, 0.86, 0.84]
             },
             'Over Priced': {
-                srpToLeads: [0.95, 0.98, 1.02, 1.05, 1.08, 1.05, 1.12, 1.15, 1.18, 1.15, 1.22, 1.25, 1.28]
+                srpToLeads: [0.24, 0.33, 0.29, 0.39, 0.36, 0.46, 0.43, 0.49, 0.47, 0.56, 0.53, 0.59, 0.57]
             }
         },
         // Conversion rates by vehicle type
+        // SUV/CO and Sedans are top performers with steady growth
+        // Patterns include realistic seasonal variations and noise
         byVehicleType: {
             'Compact': {
-                srpToLeads: [1.35, 1.38, 1.42, 1.45, 1.48, 1.45, 1.52, 1.55, 1.58, 1.62, 1.65, 1.68, 1.72]
+                srpToLeads: [1.34, 1.43, 1.39, 1.49, 1.47, 1.56, 1.53, 1.59, 1.57, 1.66, 1.64, 1.73, 1.69]
             },
             'Sedans': {
-                srpToLeads: [1.82, 1.85, 1.88, 1.92, 1.95, 1.98, 2.02, 2.05, 2.08, 2.12, 2.15, 2.18, 2.22]
+                srpToLeads: [1.81, 1.89, 1.86, 1.96, 1.94, 2.03, 1.99, 2.09, 2.07, 2.16, 2.13, 2.23, 2.19]
             },
             'SUV/CO': {
-                srpToLeads: [1.95, 1.98, 2.02, 2.05, 2.08, 2.12, 2.15, 2.18, 2.22, 2.25, 2.28, 2.32, 2.35]
+                srpToLeads: [1.94, 2.03, 1.99, 2.09, 2.07, 2.16, 2.13, 2.23, 2.19, 2.29, 2.27, 2.36, 2.33]
             },
             'Truck': {
-                srpToLeads: [1.65, 1.68, 1.72, 1.75, 1.78, 1.82, 1.85, 1.88, 1.92, 1.95, 1.98, 2.02, 2.05]
+                srpToLeads: [1.64, 1.73, 1.69, 1.79, 1.77, 1.86, 1.83, 1.93, 1.89, 1.99, 1.97, 2.06, 2.03]
             },
             'Luxury': {
-                srpToLeads: [1.42, 1.45, 1.48, 1.52, 1.48, 1.55, 1.52, 1.58, 1.62, 1.65, 1.68, 1.72, 1.75]
+                srpToLeads: [1.41, 1.49, 1.46, 1.56, 1.53, 1.59, 1.57, 1.66, 1.63, 1.73, 1.69, 1.79, 1.76]
             }
         }
     }
