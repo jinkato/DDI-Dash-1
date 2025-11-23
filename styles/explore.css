@@ -20,7 +20,8 @@
 .total-leads-charts-container canvas,
 .leads-per-vehicle-container canvas,
 .conversion-funnel-container canvas,
-.buyer-overlap-container canvas {
+.buyer-overlap-container canvas,
+.search-demand-container canvas {
     max-width: 100%;
     height: 300px !important;
     max-height: 300px;
