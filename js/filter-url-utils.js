@@ -7,6 +7,7 @@ const DEFAULT_FILTERS = {
     dateGroup: 'Monthly',
     vehicleTypes: ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'],
     dealRatings: ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'],
+    leadTypes: ['Standard email', 'Phone', 'Digital deal', 'Chat', 'Text'],
     brand: 'All',
     radius: '50 miles',
     franchiseType: 'All'
@@ -45,6 +46,22 @@ const DEAL_RATING_REVERSE = {
     'OP': 'Over Priced'
 };
 
+const LEAD_TYPE_ABBREV = {
+    'Standard email': 'SE',
+    'Phone': 'P',
+    'Digital deal': 'DD',
+    'Chat': 'CH',
+    'Text': 'TX'
+};
+
+const LEAD_TYPE_REVERSE = {
+    'SE': 'Standard email',
+    'P': 'Phone',
+    'DD': 'Digital deal',
+    'CH': 'Chat',
+    'TX': 'Text'
+};
+
 /**
  * Encode filter state to URL parameters
  * @param {Object} filters - Filter state object
@@ -78,6 +95,15 @@ function encodeFiltersToURL(filters) {
         // Only add if different from default
         if (JSON.stringify(filters.dealRatings.sort()) !== JSON.stringify(DEFAULT_FILTERS.dealRatings.sort())) {
             params.set('dd', abbrevRatings.join(','));
+        }
+    }
+
+    // Lead Types (abbreviated and comma-separated)
+    if (filters.leadTypes && filters.leadTypes.length > 0) {
+        const abbrevTypes = filters.leadTypes.map(type => LEAD_TYPE_ABBREV[type] || type);
+        // Only add if different from default
+        if (JSON.stringify(filters.leadTypes.sort()) !== JSON.stringify(DEFAULT_FILTERS.leadTypes.sort())) {
+            params.set('lt', abbrevTypes.join(','));
         }
     }
 
@@ -130,6 +156,12 @@ function decodeFiltersFromURL() {
     if (params.has('dd')) {
         const abbrevRatings = params.get('dd').split(',');
         filters.dealRatings = abbrevRatings.map(abbrev => DEAL_RATING_REVERSE[abbrev] || abbrev);
+    }
+
+    // Lead Types
+    if (params.has('lt')) {
+        const abbrevTypes = params.get('lt').split(',');
+        filters.leadTypes = abbrevTypes.map(abbrev => LEAD_TYPE_REVERSE[abbrev] || abbrev);
     }
 
     // Brand

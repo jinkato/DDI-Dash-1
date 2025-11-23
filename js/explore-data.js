@@ -174,6 +174,30 @@ const EXPLORE_MOCK_DATA = {
         'Luxury': 0.90
     },
 
+    // Lead type distribution (share of total leads and quality multipliers)
+    leadTypeData: {
+        'Standard email': {
+            leadsShare: 0.40,              // 40% of total leads
+            qualityMultiplier: 1.0         // Baseline quality
+        },
+        'Phone': {
+            leadsShare: 0.25,              // 25% of total leads
+            qualityMultiplier: 1.1         // Higher quality - direct contact
+        },
+        'Digital deal': {
+            leadsShare: 0.15,              // 15% of total leads
+            qualityMultiplier: 1.25        // Highest quality - high intent
+        },
+        'Chat': {
+            leadsShare: 0.12,              // 12% of total leads
+            qualityMultiplier: 0.9         // Lower quality - casual inquiry
+        },
+        'Text': {
+            leadsShare: 0.08,              // 8% of total leads
+            qualityMultiplier: 0.95        // Slightly lower quality
+        }
+    },
+
     // NEW: Buyer Overlap Data (average number of competitive shoppers per vehicle)
     // Baseline values for 13 months with multipliers by vehicle type, deal rating, and brand
     buyerOverlapData: {

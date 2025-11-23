@@ -19,40 +19,30 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeTotalLeadsPage() {
-    // Get initial data from filters
-    const initialData = getInitialData();
-
-    // Initialize charts and table with initial data
-    renderTotalLeadsChart(initialData);
-    renderLeadsPerVehicleChart(initialData);
-    renderTable(initialData);
-
     // Initialize tab switching
     initializeTabSwitching();
 
-    // Initialize filter listeners
-    initializeFilters(function(filteredData) {
-        // This callback is called whenever filters change
-        renderTotalLeadsChart(filteredData);
-        renderLeadsPerVehicleChart(filteredData);
-        renderTable(filteredData);
-        updateMarketAverageDisplay();
-        updateMarketDealerCount();
-
-        // Update Explore button URL with new filter state
-        if (typeof window.updateExploreButtonURL === 'function') {
-            window.updateExploreButtonURL();
-        }
-    });
-
-    // Initialize market average display
-    updateMarketAverageDisplay();
-
-    // Initialize market dealer count
-    updateMarketDealerCount();
-
     // Initialize callout link
     initializeCalloutLink();
+
+    // Initialize filters with shared function from explore-filters.js
+    // Pass config indicating this page has lead type filters
+    initializeFilters(
+        { hasLeadTypeFilter: true },
+        function(filteredData) {
+            // This callback is called on initial load and whenever filters change
+            renderTotalLeadsChart(filteredData);
+            renderLeadsPerVehicleChart(filteredData);
+            renderTable(filteredData);
+            updateMarketAverageDisplay();
+            updateMarketDealerCount();
+
+            // Update Explore button URL with new filter state
+            if (typeof window.updateExploreButtonURL === 'function') {
+                window.updateExploreButtonURL();
+            }
+        }
+    );
 }
 
 /**
@@ -166,24 +156,158 @@ function renderTotalLeadsChart(data) {
         totalLeadsChart.destroy();
     }
 
+    // Check groupBy filter
+    const groupBy = window.currentFilters.groupBy || 'none';
+    const months = data.months;
+    const inventory = data.inventory;
+    const lpvByDealRating = data.lpvByDealRating;
+    let datasets = [];
+
+    if (groupBy === 'none') {
+        // No grouping - show total leads
+        datasets = [{
+            label: 'Total Leads',
+            data: data.totalLeads,
+            backgroundColor: '#0763D3',
+            borderWidth: 0
+        }];
+    } else if (groupBy === 'deal-rating') {
+        // Group by deal rating - show stacked bars
+        const dealRatingColors = {
+            'Over Priced': '#BD1A2E',
+            'High Priced': '#FF7F57',
+            'Fair Deal': '#FFC651',
+            'Good Deal': '#09AD0E',
+            'Great Deal': '#078A0B'
+        };
+
+        // Calculate total share of selected ratings to normalize
+        let totalShare = 0;
+        window.currentFilters.dealRatings.forEach(rating => {
+            totalShare += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+        });
+
+        // Build datasets in reverse order for proper stacking (worst deals at bottom)
+        const ratingsOrder = ['Over Priced', 'High Priced', 'Fair Deal', 'Good Deal', 'Great Deal'];
+        ratingsOrder.forEach(rating => {
+            if (window.currentFilters.dealRatings.includes(rating)) {
+                const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+                const lpv = lpvByDealRating[rating];
+
+                // Calculate total leads for this rating for each month
+                const ratingLeads = inventory.map(inv => {
+                    const normalizedShare = ratingData.inventoryShare / totalShare;
+                    const ratingInventory = Math.round(inv * normalizedShare);
+                    return Math.round(ratingInventory * lpv);
+                });
+
+                datasets.push({
+                    label: rating,
+                    data: ratingLeads,
+                    backgroundColor: dealRatingColors[rating],
+                    borderWidth: 0
+                });
+            }
+        });
+    } else if (groupBy === 'vehicle-type') {
+        // Group by vehicle type - show stacked bars
+        const vehicleTypeColors = {
+            'Luxury': '#C7CEEA',
+            'Truck': '#95E1D3',
+            'SUV/CO': '#556FB5',
+            'Sedans': '#4ECDC4',
+            'Compact': '#FF6B9D'
+        };
+
+        // Get average LPV
+        const avgLPV = Object.values(lpvByDealRating).reduce((a, b) => a + b, 0) / Object.values(lpvByDealRating).length;
+
+        // Calculate total share of selected types
+        let totalShare = 0;
+        window.currentFilters.vehicleTypes.forEach(type => {
+            totalShare += EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
+        });
+
+        // Build datasets in reverse order for proper stacking
+        const typesOrder = ['Luxury', 'Truck', 'SUV/CO', 'Sedans', 'Compact'];
+        typesOrder.forEach(type => {
+            if (window.currentFilters.vehicleTypes.includes(type)) {
+                const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+
+                // Calculate total leads for this type for each month
+                const monthCount = data.months.length;
+                const startIndex = 13 - monthCount;
+                const typeLeads = inventory.map((inv, idx) => {
+                    const normalizedShare = typeData.inventoryShare / totalShare;
+                    const typeInventory = Math.round(inv * normalizedShare);
+                    const typeLPV = avgLPV * typeData.leadsPerformance[startIndex + idx];
+                    return Math.round(typeInventory * typeLPV);
+                });
+
+                datasets.push({
+                    label: type,
+                    data: typeLeads,
+                    backgroundColor: vehicleTypeColors[type],
+                    borderWidth: 0
+                });
+            }
+        });
+    } else if (groupBy === 'lead-type') {
+        // Group by lead type - show stacked bars
+        const leadTypeColors = {
+            'Text': '#BD1A2E',
+            'Chat': '#FF7F57',
+            'Digital deal': '#FFC651',
+            'Phone': '#09AD0E',
+            'Standard email': '#0763D3'
+        };
+
+        // Calculate total leads for each lead type based on their share
+        const typesOrder = ['Text', 'Chat', 'Digital deal', 'Phone', 'Standard email'];
+        typesOrder.forEach(type => {
+            if (window.currentFilters.leadTypes.includes(type)) {
+                const typeData = EXPLORE_MOCK_DATA.leadTypeData[type];
+
+                // Calculate leads for this type - proportion of total leads
+                const typeLeads = data.totalLeads.map(total => Math.round(total * typeData.leadsShare));
+
+                datasets.push({
+                    label: type,
+                    data: typeLeads,
+                    backgroundColor: leadTypeColors[type],
+                    borderWidth: 0
+                });
+            }
+        });
+    }
+
     // Create new chart with filtered data
     totalLeadsChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: data.months,
-            datasets: [{
-                label: 'Total Leads',
-                data: data.totalLeads,
-                backgroundColor: '#0763D3',
-                borderWidth: 0
-            }]
+            datasets: datasets
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            animation: {
+                duration: 0
+            },
             plugins: {
                 legend: {
-                    display: false
+                    display: groupBy !== 'none',
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 15,
+                        usePointStyle: true,
+                        pointStyle: 'rectRounded'
+                    }
                 },
                 tooltip: {
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -200,6 +324,7 @@ function renderTotalLeadsChart(data) {
             },
             scales: {
                 x: {
+                    stacked: groupBy !== 'none',
                     grid: {
                         display: false,
                         drawBorder: false
@@ -212,6 +337,7 @@ function renderTotalLeadsChart(data) {
                     }
                 },
                 y: {
+                    stacked: groupBy !== 'none',
                     beginAtZero: true,
                     grid: {
                         color: '#E5E7EB',
@@ -248,25 +374,31 @@ function renderLeadsPerVehicleChart(data) {
         leadsPerVehicleChart.destroy();
     }
 
-    // Create new chart with filtered data
-    leadsPerVehicleChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: data.months,
-            datasets: [{
-                label: 'Your Dealership',
-                data: data.leadsPerVehicle,
-                backgroundColor: '#3B82F6',
-                borderColor: '#3B82F6',
-                borderWidth: 2,
-                tension: 0.3,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-                pointBackgroundColor: '#3B82F6',
-                pointBorderColor: '#FFFFFF',
-                pointBorderWidth: 2,
-                fill: false
-            }, {
+    // Check groupBy filter
+    const groupBy = window.currentFilters.groupBy || 'none';
+    const showMarketAverage = window.currentFilters.showMarketAverage;
+    let datasets = [];
+
+    // Build datasets based on groupBy setting
+    if (groupBy === 'none') {
+        // No grouping - show Your Dealership and optionally Market Average
+        datasets.push({
+            label: 'Your Dealership',
+            data: data.leadsPerVehicle,
+            backgroundColor: '#3B82F6',
+            borderColor: '#3B82F6',
+            borderWidth: 2,
+            tension: 0.3,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#3B82F6',
+            pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 2,
+            fill: false
+        });
+
+        if (showMarketAverage) {
+            datasets.push({
                 label: 'Market Average',
                 data: data.marketAvg,
                 backgroundColor: '#9CA3AF',
@@ -280,11 +412,107 @@ function renderLeadsPerVehicleChart(data) {
                 pointBorderColor: '#FFFFFF',
                 pointBorderWidth: 2,
                 fill: false
-            }]
+            });
+        }
+    } else if (groupBy === 'deal-rating') {
+        // Group by deal rating - show one line per selected deal rating
+        const dealRatingColors = {
+            'Great Deal': '#078A0B',
+            'Good Deal': '#09AD0E',
+            'Fair Deal': '#FFC651',
+            'High Priced': '#FF7F57',
+            'Over Priced': '#BD1A2E'
+        };
+
+        window.currentFilters.dealRatings.forEach(rating => {
+            if (data.leadsPerVehicleByDealRating && data.leadsPerVehicleByDealRating[rating]) {
+                datasets.push({
+                    label: rating,
+                    data: data.leadsPerVehicleByDealRating[rating],
+                    backgroundColor: dealRatingColors[rating],
+                    borderColor: dealRatingColors[rating],
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: dealRatingColors[rating],
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    fill: false
+                });
+            }
+        });
+    } else if (groupBy === 'vehicle-type') {
+        // Group by vehicle type - show one line per selected vehicle type
+        const vehicleTypeColors = {
+            'Compact': '#FF6B9D',
+            'Sedans': '#4ECDC4',
+            'SUV/CO': '#556FB5',
+            'Truck': '#95E1D3',
+            'Luxury': '#C7CEEA'
+        };
+
+        window.currentFilters.vehicleTypes.forEach(type => {
+            if (data.leadsPerVehicleByVehicleType && data.leadsPerVehicleByVehicleType[type]) {
+                datasets.push({
+                    label: type,
+                    data: data.leadsPerVehicleByVehicleType[type],
+                    backgroundColor: vehicleTypeColors[type],
+                    borderColor: vehicleTypeColors[type],
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: vehicleTypeColors[type],
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    fill: false
+                });
+            }
+        });
+    } else if (groupBy === 'lead-type') {
+        // Group by lead type - show one line per selected lead type
+        const leadTypeColors = {
+            'Standard email': '#0763D3',
+            'Phone': '#09AD0E',
+            'Digital deal': '#FFC651',
+            'Chat': '#FF7F57',
+            'Text': '#BD1A2E'
+        };
+
+        window.currentFilters.leadTypes.forEach(type => {
+            if (data.leadsPerVehicleByLeadType && data.leadsPerVehicleByLeadType[type]) {
+                datasets.push({
+                    label: type,
+                    data: data.leadsPerVehicleByLeadType[type],
+                    backgroundColor: leadTypeColors[type],
+                    borderColor: leadTypeColors[type],
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: leadTypeColors[type],
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    fill: false
+                });
+            }
+        });
+    }
+
+    // Create new chart with filtered data
+    leadsPerVehicleChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.months,
+            datasets: datasets
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            animation: {
+                duration: 0
+            },
             interaction: {
                 mode: 'index',
                 intersect: false

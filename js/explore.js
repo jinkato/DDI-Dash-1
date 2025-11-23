@@ -10,28 +10,32 @@ let buyerOverlapChartInstance = null;
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize filters from URL parameters (updates window.currentFilters)
-    initializeFiltersFromURL();
-
-    // Get initial filtered data from explore-filters.js
-    if (typeof getFilteredData === 'function') {
-        // Get initial filtered data
-        const filteredData = getFilteredData();
-
-        // Initialize all charts with filtered data
-        updateInventoryTrendChart(filteredData);
-        updateTotalLeadsChart(filteredData);
-        updateLeadsPerVehicleChart(filteredData);
-        updateConversionFunnelChart(filteredData);
-        updateBuyerOverlapChart(filteredData);
-        updateSearchDemandChart(filteredData);
-    }
-
-    // Set up filter event listeners
-    initializeFilterEventListeners();
-
     // Initialize tab switching for Leads panel
     initializeLeadsTabSwitching();
+
+    // Initialize filters with shared function from explore-filters.js
+    // Pass config indicating this page does not have lead type filters
+    initializeFilters(
+        { hasLeadTypeFilter: false },
+        function(filteredData) {
+            // This callback is called on initial load and whenever filters change
+            updateInventoryTrendChart(filteredData);
+            updateTotalLeadsChart(filteredData);
+            updateLeadsPerVehicleChart(filteredData);
+            updateConversionFunnelChart(filteredData);
+            updateBuyerOverlapChart(filteredData);
+            updateSearchDemandChart(filteredData);
+            updateMarketAverageDisplay();
+
+            // Update lead.html link with current filters
+            if (typeof buildLeadURL === 'function') {
+                const leadLink = document.querySelector('a[href*="lead.html"]');
+                if (leadLink) {
+                    leadLink.href = buildLeadURL(window.currentFilters);
+                }
+            }
+        }
+    );
 });
 
 /**

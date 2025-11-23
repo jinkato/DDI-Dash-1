@@ -11,6 +11,7 @@ window.currentFilters = {
     franchiseType: 'All',
     vehicleTypes: ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'],
     dealRatings: ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'],
+    leadTypes: ['Standard email', 'Phone', 'Digital deal', 'Chat', 'Text'],
     brand: 'All',
     groupBy: 'none',
     showMarketAverage: true
@@ -63,6 +64,12 @@ function initializeExploreFiltersFromURL() {
         const dealRatingCheckboxes = document.querySelectorAll('.deal-rating-checkbox');
         dealRatingCheckboxes.forEach(checkbox => {
             checkbox.checked = window.currentFilters.dealRatings.includes(checkbox.value);
+        });
+
+        // Apply lead type filters to checkboxes
+        const leadTypeCheckboxes = document.querySelectorAll('.lead-type-checkbox');
+        leadTypeCheckboxes.forEach(checkbox => {
+            checkbox.checked = window.currentFilters.leadTypes.includes(checkbox.value);
         });
 
         console.log('Initialized explore filters from URL:', window.currentFilters);
@@ -129,6 +136,10 @@ function getFilteredData() {
         totalLeads = totalLeads.map(leads => Math.round(leads * brandInfo.inventoryMultiplier * brandInfo.leadsMultiplier));
     }
 
+    // Apply lead type filter to dealership data (only affects leads, not inventory)
+    const leadTypeInfo = getLeadTypeInfo(currentFilters.leadTypes);
+    totalLeads = totalLeads.map(leads => Math.round(leads * leadTypeInfo.leadsShare * leadTypeInfo.qualityMultiplier));
+
     // MARKET AVERAGE DATA
     const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
     const franchiseKey = currentFilters.franchiseType;
@@ -145,6 +156,9 @@ function getFilteredData() {
     if (brandInfo.leadsMultiplier !== 1.0) {
         marketAvg = marketAvg.map(avg => parseFloat((avg * brandInfo.leadsMultiplier).toFixed(1)));
     }
+
+    // Apply lead type filter to market average
+    marketAvg = marketAvg.map(avg => parseFloat((avg * leadTypeInfo.leadsShare * leadTypeInfo.qualityMultiplier).toFixed(1)));
 
     // Calculate leads per vehicle
     const leadsPerVehicle = inventory.map((inv, i) =>
@@ -179,6 +193,11 @@ function getFilteredData() {
     const conversionFunnelByDealRating = getConversionFunnelByDealRating();
     const conversionFunnelByVehicleType = getConversionFunnelByVehicleType();
 
+    // Get LPV time series data grouped by deal rating, vehicle type, and lead type
+    const leadsPerVehicleByDealRating = getLPVTimeSeriesByDealRating();
+    const leadsPerVehicleByVehicleType = getLPVTimeSeriesByVehicleType();
+    const leadsPerVehicleByLeadType = getLPVTimeSeriesByLeadType();
+
     return {
         months: months,
         inventory: inventory,
@@ -192,6 +211,9 @@ function getFilteredData() {
         buyerOverlapByVehicleType: buyerOverlapByVehicleType,
         inventoryByDealRating: inventoryByDealRating,
         lpvByDealRating: lpvByDealRating,
+        leadsPerVehicleByDealRating: leadsPerVehicleByDealRating,
+        leadsPerVehicleByVehicleType: leadsPerVehicleByVehicleType,
+        leadsPerVehicleByLeadType: leadsPerVehicleByLeadType,
         conversionFunnel: conversionFunnel,
         conversionFunnelByDealRating: conversionFunnelByDealRating,
         conversionFunnelByVehicleType: conversionFunnelByVehicleType
@@ -265,6 +287,146 @@ function getLPVByDealRating() {
     });
 
     return lpvByRating;
+}
+
+/**
+ * Get LPV time series data grouped by deal rating
+ * Returns an object with LPV arrays for each deal rating over the selected time period
+ */
+function getLPVTimeSeriesByDealRating() {
+    const monthCount = getMonthCount(currentFilters.dateRange);
+    const startIndex = 13 - monthCount;
+    const months = EXPLORE_MOCK_DATA.months.slice(startIndex);
+
+    // Get base LPV from market average
+    const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
+    const franchiseKey = currentFilters.franchiseType;
+    const marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    const baseMarketAvg = marketBaseData.marketAvg.slice(startIndex);
+
+    // Apply vehicle type and brand filters
+    const vehicleInfo = getVehicleTypesInfo(currentFilters.vehicleTypes);
+    const avgVehiclePerformance = vehicleInfo.performanceMultipliers.slice(startIndex);
+    const brandInfo = getBrandMultiplier(currentFilters.brand);
+    const leadTypeInfo = getLeadTypeInfo(currentFilters.leadTypes);
+
+    const result = {};
+    const dealRatings = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
+
+    dealRatings.forEach(rating => {
+        const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+
+        // Calculate LPV for this rating over time
+        const lpvOverTime = months.map((month, idx) => {
+            const monthIndex = startIndex + idx;
+            const ratingPerformance = Array.isArray(ratingData.leadsPerformance)
+                ? ratingData.leadsPerformance[monthIndex]
+                : ratingData.leadsPerformance;
+
+            return parseFloat((baseMarketAvg[idx] * avgVehiclePerformance[idx] * ratingPerformance * brandInfo.leadsMultiplier * leadTypeInfo.qualityMultiplier).toFixed(1));
+        });
+
+        result[rating] = lpvOverTime;
+    });
+
+    return result;
+}
+
+/**
+ * Get LPV time series data grouped by vehicle type
+ * Returns an object with LPV arrays for each vehicle type over the selected time period
+ */
+function getLPVTimeSeriesByVehicleType() {
+    const monthCount = getMonthCount(currentFilters.dateRange);
+    const startIndex = 13 - monthCount;
+    const months = EXPLORE_MOCK_DATA.months.slice(startIndex);
+
+    // Get base LPV from market average
+    const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
+    const franchiseKey = currentFilters.franchiseType;
+    const marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    const baseMarketAvg = marketBaseData.marketAvg.slice(startIndex);
+
+    // Apply deal rating and brand filters
+    const dealRatingInfo = getDealRatingInfo(currentFilters.dealRatings);
+    let avgDealRatingPerformance = Array(13).fill(0);
+    let totalShare = 0;
+    currentFilters.dealRatings.forEach(rating => {
+        const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+        totalShare += ratingData.inventoryShare;
+        if (Array.isArray(ratingData.leadsPerformance)) {
+            ratingData.leadsPerformance.forEach((perf, idx) => {
+                avgDealRatingPerformance[idx] += perf * ratingData.inventoryShare;
+            });
+        }
+    });
+    avgDealRatingPerformance = avgDealRatingPerformance.map(val => val / totalShare).slice(startIndex);
+
+    const brandInfo = getBrandMultiplier(currentFilters.brand);
+    const leadTypeInfo = getLeadTypeInfo(currentFilters.leadTypes);
+
+    const result = {};
+    const vehicleTypes = ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'];
+
+    vehicleTypes.forEach(type => {
+        const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+
+        // Calculate LPV for this vehicle type over time
+        const lpvOverTime = months.map((month, idx) => {
+            const monthIndex = startIndex + idx;
+            const typePerformance = typeData.leadsPerformance[monthIndex];
+
+            return parseFloat((baseMarketAvg[idx] * typePerformance * avgDealRatingPerformance[idx] * brandInfo.leadsMultiplier * leadTypeInfo.qualityMultiplier).toFixed(1));
+        });
+
+        result[type] = lpvOverTime;
+    });
+
+    return result;
+}
+
+/**
+ * Get LPV time series data grouped by lead type
+ * Returns an object with LPV arrays for each lead type over the selected time period
+ */
+function getLPVTimeSeriesByLeadType() {
+    const monthCount = getMonthCount(currentFilters.dateRange);
+    const startIndex = 13 - monthCount;
+    const months = EXPLORE_MOCK_DATA.months.slice(startIndex);
+
+    // Get base LPV from market average
+    const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
+    const franchiseKey = currentFilters.franchiseType;
+    const marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    const baseMarketAvg = marketBaseData.marketAvg.slice(startIndex);
+
+    // Apply vehicle type, deal rating, and brand filters
+    const vehicleInfo = getVehicleTypesInfo(currentFilters.vehicleTypes);
+    const avgVehiclePerformance = vehicleInfo.performanceMultipliers.slice(startIndex);
+
+    const dealRatingInfo = getDealRatingInfo(currentFilters.dealRatings);
+    const avgDealRatingPerformance = dealRatingInfo.leadsPerformanceMultipliers.slice(startIndex);
+
+    const brandInfo = getBrandMultiplier(currentFilters.brand);
+
+    const result = {};
+    const leadTypes = ['Standard email', 'Phone', 'Digital deal', 'Chat', 'Text'];
+
+    leadTypes.forEach(type => {
+        const typeData = EXPLORE_MOCK_DATA.leadTypeData[type];
+
+        // Calculate LPV for this lead type over time
+        // Lead types affect total leads through their share and quality, which affects LPV
+        const lpvOverTime = months.map((month, idx) => {
+            const monthIndex = startIndex + idx;
+
+            return parseFloat((baseMarketAvg[idx] * avgVehiclePerformance[idx] * avgDealRatingPerformance[idx] * brandInfo.leadsMultiplier * typeData.qualityMultiplier).toFixed(1));
+        });
+
+        result[type] = lpvOverTime;
+    });
+
+    return result;
 }
 
 /**
@@ -571,6 +733,39 @@ function getBrandMultiplier(brand) {
 }
 
 /**
+ * Get lead type information (share and quality multiplier)
+ */
+function getLeadTypeInfo(leadTypes) {
+    // If no lead types selected or all selected, return neutral values
+    if (!leadTypes || leadTypes.length === 0 || leadTypes.length === 5) {
+        return {
+            leadsShare: 1.0,
+            qualityMultiplier: 1.0
+        };
+    }
+
+    // Calculate total share of selected lead types
+    let totalShare = 0;
+    let weightedQuality = 0;
+
+    leadTypes.forEach(type => {
+        const typeData = EXPLORE_MOCK_DATA.leadTypeData[type];
+        if (typeData) {
+            totalShare += typeData.leadsShare;
+            weightedQuality += typeData.leadsShare * typeData.qualityMultiplier;
+        }
+    });
+
+    // Calculate weighted average quality multiplier
+    const avgQuality = totalShare > 0 ? weightedQuality / totalShare : 1.0;
+
+    return {
+        leadsShare: totalShare,
+        qualityMultiplier: avgQuality
+    };
+}
+
+/**
  * Get conversion funnel time series data with filters applied
  */
 function getConversionFunnelTimeSeries(startIndex) {
@@ -642,4 +837,113 @@ function getConversionFunnelByVehicleType() {
     });
 
     return result;
+}
+
+/**
+ * Shared filter initialization function for all pages
+ * @param {Object} config - Configuration object specifying which filters exist on this page
+ * @param {boolean} config.hasLeadTypeFilter - Whether this page has lead type filter checkboxes
+ * @param {Function} callback - Function to call when filters change (receives filtered data)
+ */
+function initializeFilters(config, callback) {
+    // Initialize from URL first
+    initializeExploreFiltersFromURL();
+
+    // Get initial data and call callback
+    if (typeof getFilteredData === 'function') {
+        const initialData = getFilteredData();
+        callback(initialData);
+    }
+
+    // Set up event listeners for all filters
+    // Date Range dropdown
+    const dateRangeSelect = document.getElementById('date-range');
+    if (dateRangeSelect) {
+        dateRangeSelect.addEventListener('change', function() {
+            window.currentFilters.dateRange = this.value;
+            const data = getFilteredData();
+            callback(data);
+        });
+    }
+
+    // Date Group dropdown
+    const dateGroupSelect = document.getElementById('date-group');
+    if (dateGroupSelect) {
+        dateGroupSelect.addEventListener('change', function() {
+            window.currentFilters.dateGroup = this.value;
+            const data = getFilteredData();
+            callback(data);
+        });
+    }
+
+    // Vehicle Type checkboxes
+    const vehicleTypeCheckboxes = document.querySelectorAll('.vehicle-type-checkbox');
+    vehicleTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const selectedTypes = Array.from(vehicleTypeCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            window.currentFilters.vehicleTypes = selectedTypes;
+            const data = getFilteredData();
+            callback(data);
+        });
+    });
+
+    // Deal Rating checkboxes
+    const dealRatingCheckboxes = document.querySelectorAll('.deal-rating-checkbox');
+    dealRatingCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const selectedRatings = Array.from(dealRatingCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            window.currentFilters.dealRatings = selectedRatings;
+            const data = getFilteredData();
+            callback(data);
+        });
+    });
+
+    // Lead Type checkboxes (only if config says this page has them)
+    if (config.hasLeadTypeFilter) {
+        const leadTypeCheckboxes = document.querySelectorAll('.lead-type-checkbox');
+        leadTypeCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const selectedTypes = Array.from(leadTypeCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+                window.currentFilters.leadTypes = selectedTypes;
+                const data = getFilteredData();
+                callback(data);
+            });
+        });
+    }
+
+    // Brand dropdown
+    const brandSelect = document.getElementById('brand');
+    if (brandSelect) {
+        brandSelect.addEventListener('change', function() {
+            window.currentFilters.brand = this.value;
+            const data = getFilteredData();
+            callback(data);
+        });
+    }
+
+    // Group by dropdown
+    const groupBySelect = document.getElementById('group-by');
+    if (groupBySelect) {
+        groupBySelect.addEventListener('change', function() {
+            window.currentFilters.groupBy = this.value;
+            const data = getFilteredData();
+            callback(data);
+        });
+    }
+
+    // Show Market Average checkbox
+    const showMarketAverageCheckbox = document.getElementById('show-market-average');
+    if (showMarketAverageCheckbox) {
+        showMarketAverageCheckbox.addEventListener('change', function() {
+            window.currentFilters.showMarketAverage = this.checked;
+            const data = getFilteredData();
+            callback(data);
+        });
+    }
 }
