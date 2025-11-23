@@ -278,8 +278,12 @@
                                     </div>
                                 </div>
 
-                                <div class="total-leads-charts-container">
+                                <div class="total-leads-charts-container" id="total-leads-container">
                                     <canvas id="total-leads-chart" width="1700" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 850px;"></canvas>
+                                </div>
+
+                                <div class="total-leads-charts-container" id="leads-per-vehicle-container" style="display: none;">
+                                    <canvas id="leads-per-vehicle-chart" width="1700" height="600" style="display: block; box-sizing: border-box; height: 300px; width: 850px;"></canvas>
                                 </div>
 
                                 <table class="vehicle-table">
@@ -500,24 +504,6 @@
                     e.preventDefault();
                     const parentItem = this.closest('.nav-item-parent');
                     parentItem.classList.toggle('expanded');
-                });
-            });
-
-            // Handle tab clicks
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all tabs
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-
-                    // Add active class to clicked tab
-                    this.classList.add('active');
-
-                    // Get the tab name
-                    const tabName = this.getAttribute('data-tab');
-                    console.log('Switched to tab:', tabName);
-
-                    // Here you can add logic to show/hide different content based on the tab
                 });
             });
 

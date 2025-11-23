@@ -1,8 +1,10 @@
 // Total Leads Page JavaScript
 // This file handles chart and table rendering with filtered data
 
-// Store current chart instance
-let currentChart = null;
+// Store chart instances
+let totalLeadsChart = null;
+let leadsPerVehicleChart = null;
+let currentTab = 'total-leads';
 
 // Expose closeDetailPanel function globally for onclick handler
 window.closeDetailPanel = function() {
@@ -20,14 +22,19 @@ function initializeTotalLeadsPage() {
     // Get initial data from filters
     const initialData = getInitialData();
 
-    // Initialize chart and table with initial data
-    renderChart(initialData);
+    // Initialize charts and table with initial data
+    renderTotalLeadsChart(initialData);
+    renderLeadsPerVehicleChart(initialData);
     renderTable(initialData);
+
+    // Initialize tab switching
+    initializeTabSwitching();
 
     // Initialize filter listeners
     initializeFilters(function(filteredData) {
         // This callback is called whenever filters change
-        renderChart(filteredData);
+        renderTotalLeadsChart(filteredData);
+        renderLeadsPerVehicleChart(filteredData);
         renderTable(filteredData);
         updateMarketAverageDisplay();
         updateMarketDealerCount();
@@ -46,6 +53,37 @@ function initializeTotalLeadsPage() {
 
     // Initialize callout link
     initializeCalloutLink();
+}
+
+/**
+ * Initialize tab switching functionality
+ */
+function initializeTabSwitching() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const totalLeadsContainer = document.getElementById('total-leads-container');
+    const lpvContainer = document.getElementById('leads-per-vehicle-container');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+
+            // Update active tab button
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+
+            // Update current tab
+            currentTab = tabName;
+
+            // Show/hide appropriate chart container
+            if (tabName === 'total-leads') {
+                totalLeadsContainer.style.display = 'block';
+                lpvContainer.style.display = 'none';
+            } else if (tabName === 'leads-per-vehicle') {
+                totalLeadsContainer.style.display = 'none';
+                lpvContainer.style.display = 'block';
+            }
+        });
+    });
 }
 
 /**
@@ -112,9 +150,9 @@ function initializeCalloutLink() {
 }
 
 /**
- * Render or update the chart with filtered data
+ * Render or update the Total Leads bar chart
  */
-function renderChart(data) {
+function renderTotalLeadsChart(data) {
     const canvas = document.getElementById('total-leads-chart');
     if (!canvas) {
         console.error('Canvas element with id "total-leads-chart" not found');
@@ -124,12 +162,12 @@ function renderChart(data) {
     const ctx = canvas.getContext('2d');
 
     // Destroy existing chart if it exists
-    if (currentChart) {
-        currentChart.destroy();
+    if (totalLeadsChart) {
+        totalLeadsChart.destroy();
     }
 
     // Create new chart with filtered data
-    currentChart = new Chart(ctx, {
+    totalLeadsChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: data.months,
@@ -193,6 +231,154 @@ function renderChart(data) {
     });
 }
 
+/**
+ * Render or update the Leads per Vehicle line chart
+ */
+function renderLeadsPerVehicleChart(data) {
+    const canvas = document.getElementById('leads-per-vehicle-chart');
+    if (!canvas) {
+        console.error('Canvas element with id "leads-per-vehicle-chart" not found');
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
+
+    // Destroy existing chart if it exists
+    if (leadsPerVehicleChart) {
+        leadsPerVehicleChart.destroy();
+    }
+
+    // Create new chart with filtered data
+    leadsPerVehicleChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.months,
+            datasets: [{
+                label: 'Your Dealership',
+                data: data.leadsPerVehicle,
+                backgroundColor: '#3B82F6',
+                borderColor: '#3B82F6',
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#3B82F6',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: false
+            }, {
+                label: 'Market Average',
+                data: data.marketAvg,
+                backgroundColor: '#9CA3AF',
+                borderColor: '#9CA3AF',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                tension: 0.3,
+                pointRadius: 0,
+                pointHoverRadius: 4,
+                pointBackgroundColor: '#9CA3AF',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 15,
+                        usePointStyle: true,
+                        pointStyle: 'rectRounded'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    cornerRadius: 6,
+                    titleFont: {
+                        size: 13,
+                        weight: '600'
+                    },
+                    bodyFont: {
+                        size: 12
+                    },
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.parsed.y;
+                            const datasetLabel = context.dataset.label;
+                            const dataIndex = context.dataIndex;
+
+                            // Get corresponding inventory and total leads from the data
+                            const inventory = data.inventory[dataIndex];
+                            const totalLeads = data.totalLeads[dataIndex];
+
+                            return [
+                                `${datasetLabel}: ${value.toFixed(2)}`,
+                                `Total Leads: ${totalLeads}`,
+                                `Inventory: ${inventory}`
+                            ];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#6B7280',
+                        font: {
+                            size: 11
+                        },
+                        autoSkip: false,
+                        maxRotation: 45,
+                        minRotation: 45
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    grid: {
+                        color: '#E5E7EB',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 12,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 8
+                    },
+                    title: {
+                        display: true,
+                        text: 'Leads per Vehicle',
+                        font: {
+                            size: 13,
+                            weight: '500'
+                        },
+                        color: '#6B7280',
+                        padding: 8
+                    }
+                }
+            }
+        }
+    });
+}
 
 /**
  * Render or update the table with filtered data
