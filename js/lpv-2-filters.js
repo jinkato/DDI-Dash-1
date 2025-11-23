@@ -14,6 +14,21 @@ let currentFilters = {
 };
 
 /**
+ * Initialize filters from URL parameters if available
+ */
+function initializeFiltersFromURL() {
+    if (typeof decodeFiltersFromURL === 'function') {
+        const urlFilters = decodeFiltersFromURL();
+        // Merge URL filters with current filters
+        currentFilters = {
+            ...currentFilters,
+            ...urlFilters
+        };
+        console.log('Initialized filters from URL:', currentFilters);
+    }
+}
+
+/**
  * Get the number of months to display based on date range filter
  */
 function getMonthCount(dateRange) {
@@ -326,6 +341,42 @@ function updateFilter(filterName, value) {
  * Initialize filter event listeners
  */
 function initializeFilters(onFilterChange) {
+    // Initialize filters from URL parameters first
+    initializeFiltersFromURL();
+
+    // Apply URL filters to UI elements
+    const dateRangeSelect = document.getElementById('date-range');
+    if (dateRangeSelect && currentFilters.dateRange) {
+        dateRangeSelect.value = currentFilters.dateRange;
+    }
+
+    const radiusSelect = document.getElementById('radius');
+    if (radiusSelect && currentFilters.radius) {
+        radiusSelect.value = currentFilters.radius;
+    }
+
+    const franchiseSelect = document.getElementById('franchise');
+    if (franchiseSelect && currentFilters.franchiseType) {
+        franchiseSelect.value = currentFilters.franchiseType;
+    }
+
+    const brandSelect = document.getElementById('brand');
+    if (brandSelect && currentFilters.brand) {
+        brandSelect.value = currentFilters.brand;
+    }
+
+    // Apply vehicle type filters to checkboxes
+    const vehicleCheckboxes = document.querySelectorAll('.vehicle-type-checkbox');
+    vehicleCheckboxes.forEach(checkbox => {
+        checkbox.checked = currentFilters.vehicleTypes.includes(checkbox.value);
+    });
+
+    // Apply deal rating filters to checkboxes
+    const dealRatingCheckboxes = document.querySelectorAll('.deal-rating-checkbox');
+    dealRatingCheckboxes.forEach(checkbox => {
+        checkbox.checked = currentFilters.dealRatings.includes(checkbox.value);
+    });
+
     // Date range filter
     document.getElementById('date-range').addEventListener('change', function(e) {
         const data = updateFilter('dateRange', e.target.value);
@@ -369,7 +420,6 @@ function initializeFilters(onFilterChange) {
     });
 
     // Vehicle type checkboxes
-    const vehicleCheckboxes = document.querySelectorAll('.vehicle-type-checkbox');
     vehicleCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             // Get all checked vehicle types
@@ -384,7 +434,6 @@ function initializeFilters(onFilterChange) {
     });
 
     // Deal rating checkboxes
-    const dealRatingCheckboxes = document.querySelectorAll('.deal-rating-checkbox');
     dealRatingCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             // Get all checked deal ratings

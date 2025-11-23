@@ -177,3 +177,14 @@ function buildExploreURL(filters) {
     const queryString = encodeFiltersToURL(filterState);
     return 'explore.html' + (queryString ? '?' + queryString : '');
 }
+
+/**
+ * Build lead.html URL with current filter state
+ * @param {Object} filters - Optional filter state (uses current if not provided)
+ * @returns {string} Full URL to lead.html with filters
+ */
+function buildLeadURL(filters) {
+    const filterState = filters || getCurrentFilters();
+    const queryString = encodeFiltersToURL(filterState);
+    return 'lead.html' + (queryString ? '?' + queryString : '');
+}

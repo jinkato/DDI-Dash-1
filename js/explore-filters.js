@@ -19,6 +19,64 @@ window.currentFilters = {
 const currentFilters = window.currentFilters;
 
 /**
+ * Initialize filters from URL parameters if available
+ */
+function initializeExploreFiltersFromURL() {
+    if (typeof decodeFiltersFromURL === 'function') {
+        const urlFilters = decodeFiltersFromURL();
+        // Merge URL filters with current filters
+        Object.assign(window.currentFilters, urlFilters);
+
+        // Apply filters to UI elements
+        const dateRangeSelect = document.getElementById('date-range');
+        if (dateRangeSelect && window.currentFilters.dateRange) {
+            dateRangeSelect.value = window.currentFilters.dateRange;
+        }
+
+        const dateGroupSelect = document.getElementById('date-group');
+        if (dateGroupSelect && window.currentFilters.dateGroup) {
+            dateGroupSelect.value = window.currentFilters.dateGroup;
+        }
+
+        const brandSelect = document.getElementById('brand');
+        if (brandSelect && window.currentFilters.brand) {
+            brandSelect.value = window.currentFilters.brand;
+        }
+
+        const groupBySelect = document.getElementById('group-by');
+        if (groupBySelect && window.currentFilters.groupBy) {
+            groupBySelect.value = window.currentFilters.groupBy;
+        }
+
+        const showMarketAverageCheckbox = document.getElementById('show-market-average');
+        if (showMarketAverageCheckbox) {
+            showMarketAverageCheckbox.checked = window.currentFilters.showMarketAverage;
+        }
+
+        // Apply vehicle type filters to checkboxes
+        const vehicleCheckboxes = document.querySelectorAll('.vehicle-type-checkbox');
+        vehicleCheckboxes.forEach(checkbox => {
+            checkbox.checked = window.currentFilters.vehicleTypes.includes(checkbox.value);
+        });
+
+        // Apply deal rating filters to checkboxes
+        const dealRatingCheckboxes = document.querySelectorAll('.deal-rating-checkbox');
+        dealRatingCheckboxes.forEach(checkbox => {
+            checkbox.checked = window.currentFilters.dealRatings.includes(checkbox.value);
+        });
+
+        console.log('Initialized explore filters from URL:', window.currentFilters);
+    }
+}
+
+// Initialize from URL when script loads
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeExploreFiltersFromURL);
+} else {
+    initializeExploreFiltersFromURL();
+}
+
+/**
  * Get the number of months to display based on date range filter
  */
 function getMonthCount(dateRange) {
@@ -114,6 +172,13 @@ function getFilteredData() {
     // Get LPV by deal rating (for LPV chart)
     const lpvByDealRating = getLPVByDealRating();
 
+    // Get conversion funnel data with filters applied
+    const conversionFunnel = getConversionFunnelTimeSeries(startIndex);
+
+    // Get conversion funnel data grouped by deal rating and vehicle type
+    const conversionFunnelByDealRating = getConversionFunnelByDealRating();
+    const conversionFunnelByVehicleType = getConversionFunnelByVehicleType();
+
     return {
         months: months,
         inventory: inventory,
@@ -126,7 +191,10 @@ function getFilteredData() {
         buyerOverlapByDealRating: buyerOverlapByDealRating,
         buyerOverlapByVehicleType: buyerOverlapByVehicleType,
         inventoryByDealRating: inventoryByDealRating,
-        lpvByDealRating: lpvByDealRating
+        lpvByDealRating: lpvByDealRating,
+        conversionFunnel: conversionFunnel,
+        conversionFunnelByDealRating: conversionFunnelByDealRating,
+        conversionFunnelByVehicleType: conversionFunnelByVehicleType
     };
 }
 
@@ -500,4 +568,78 @@ function getBrandMultiplier(brand) {
         inventoryMultiplier: brandInventoryShare[brand],
         leadsMultiplier: brandLeadsPerformance[brand]
     };
+}
+
+/**
+ * Get conversion funnel time series data with filters applied
+ */
+function getConversionFunnelTimeSeries(startIndex) {
+    const baseline = EXPLORE_MOCK_DATA.conversionFunnelData.dealer.srpToLeads.slice(startIndex);
+
+    // Apply vehicle type filter - calculate weighted average
+    const vehicleInfo = getVehicleTypesInfo(currentFilters.vehicleTypes);
+    let vehicleMultiplier = 0;
+    if (vehicleInfo.inventoryMultiplier > 0) {
+        currentFilters.vehicleTypes.forEach(type => {
+            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+            // Use conversion rate ratio (actual / baseline)
+            const typeConversion = EXPLORE_MOCK_DATA.conversionFunnelData.byVehicleType[type].srpToLeads[0];
+            const baselineConversion = EXPLORE_MOCK_DATA.conversionFunnelData.dealer.srpToLeads[0];
+            const multiplier = typeConversion / baselineConversion;
+            vehicleMultiplier += typeData.inventoryShare * multiplier;
+        });
+        vehicleMultiplier = vehicleMultiplier / vehicleInfo.inventoryMultiplier;
+    } else {
+        vehicleMultiplier = 1.0;
+    }
+
+    // Apply deal rating filter - calculate weighted average
+    const dealRatingInfo = getDealRatingInfo(currentFilters.dealRatings);
+    let dealRatingMultiplier = 0;
+    if (dealRatingInfo.inventoryShare > 0) {
+        currentFilters.dealRatings.forEach(rating => {
+            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            // Use conversion rate ratio (actual / baseline)
+            const ratingConversion = EXPLORE_MOCK_DATA.conversionFunnelData.byDealRating[rating].srpToLeads[0];
+            const baselineConversion = EXPLORE_MOCK_DATA.conversionFunnelData.dealer.srpToLeads[0];
+            const multiplier = ratingConversion / baselineConversion;
+            dealRatingMultiplier += ratingData.inventoryShare * multiplier;
+        });
+        dealRatingMultiplier = dealRatingMultiplier / dealRatingInfo.inventoryShare;
+    } else {
+        dealRatingMultiplier = 1.0;
+    }
+
+    // Apply all multipliers to baseline
+    return baseline.map(value => parseFloat((value * vehicleMultiplier * dealRatingMultiplier).toFixed(2)));
+}
+
+/**
+ * Get conversion funnel data grouped by deal rating
+ */
+function getConversionFunnelByDealRating() {
+    const monthCount = getMonthCount(currentFilters.dateRange);
+    const startIndex = 13 - monthCount;
+    const result = {};
+
+    Object.keys(EXPLORE_MOCK_DATA.conversionFunnelData.byDealRating).forEach(rating => {
+        result[rating] = EXPLORE_MOCK_DATA.conversionFunnelData.byDealRating[rating].srpToLeads.slice(startIndex);
+    });
+
+    return result;
+}
+
+/**
+ * Get conversion funnel data grouped by vehicle type
+ */
+function getConversionFunnelByVehicleType() {
+    const monthCount = getMonthCount(currentFilters.dateRange);
+    const startIndex = 13 - monthCount;
+    const result = {};
+
+    Object.keys(EXPLORE_MOCK_DATA.conversionFunnelData.byVehicleType).forEach(type => {
+        result[type] = EXPLORE_MOCK_DATA.conversionFunnelData.byVehicleType[type].srpToLeads.slice(startIndex);
+    });
+
+    return result;
 }

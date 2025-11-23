@@ -136,29 +136,29 @@ const MOCK_DATA = {
             leadsPerformance: 1.0  // Still single value since "All" doesn't vary
         },
         'Great Deal': {
-            inventoryShare: 0.30,      // 30% of inventory
-            // Great Deals show strong upward trend (already high, getting better)
-            leadsPerformance: [1.25, 1.28, 1.35, 1.32, 1.42, 1.38, 1.45, 1.52, 1.48, 1.58, 1.53, 1.65, 1.62]
+            inventoryShare: 0.40,      // 40% of inventory (increased to dominate)
+            // Great Deals show very strong upward trend and high performance
+            leadsPerformance: [1.50, 1.55, 1.65, 1.60, 1.75, 1.70, 1.80, 1.90, 1.85, 1.95, 1.90, 2.05, 2.00]
         },
         'Good Deal': {
             inventoryShare: 0.35,      // 35% of inventory (most vehicles here)
-            // Good Deals show moderate upward trend
-            leadsPerformance: [1.05, 1.07, 1.12, 1.10, 1.18, 1.15, 1.20, 1.25, 1.22, 1.30, 1.26, 1.35, 1.32]
+            // Good Deals show strong upward trend
+            leadsPerformance: [1.20, 1.25, 1.35, 1.30, 1.45, 1.40, 1.48, 1.55, 1.50, 1.60, 1.55, 1.68, 1.65]
         },
         'Fair Deal': {
-            inventoryShare: 0.25,      // 25% of inventory
-            // Fair Deals stay relatively flat with random variation
-            leadsPerformance: [0.85, 0.83, 0.87, 0.84, 0.86, 0.82, 0.85, 0.88, 0.84, 0.86, 0.83, 0.85, 0.84]
+            inventoryShare: 0.18,      // 18% of inventory (reduced)
+            // Fair Deals stay relatively low and flat
+            leadsPerformance: [0.60, 0.58, 0.62, 0.59, 0.63, 0.60, 0.62, 0.65, 0.62, 0.64, 0.61, 0.63, 0.62]
         },
         'High Priced': {
-            inventoryShare: 0.08,      // Only 8% of inventory
-            // High Priced stays low and flat
-            leadsPerformance: [0.50, 0.48, 0.52, 0.49, 0.51, 0.47, 0.50, 0.53, 0.49, 0.51, 0.48, 0.50, 0.49]
+            inventoryShare: 0.05,      // Only 5% of inventory (reduced)
+            // High Priced stays very low and flat
+            leadsPerformance: [0.35, 0.33, 0.37, 0.34, 0.36, 0.32, 0.35, 0.38, 0.34, 0.36, 0.33, 0.35, 0.34]
         },
         'Over Priced': {
             inventoryShare: 0.02,      // Only 2% of inventory (very few overpriced)
-            // Over Priced stays very low and flat
-            leadsPerformance: [0.25, 0.23, 0.27, 0.24, 0.26, 0.22, 0.25, 0.28, 0.24, 0.26, 0.23, 0.25, 0.24]
+            // Over Priced stays extremely low and flat
+            leadsPerformance: [0.15, 0.13, 0.17, 0.14, 0.16, 0.12, 0.15, 0.18, 0.14, 0.16, 0.13, 0.15, 0.14]
         }
     },
 

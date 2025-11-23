@@ -678,40 +678,103 @@ function updateBuyerOverlapChart(data) {
     }
 
     const months = data.months;
+    const groupBy = window.currentFilters.groupBy;
+    let datasets = [];
 
-    // Always show average buyer overlap per vehicle (Your Dealership)
-    const datasets = [{
-        label: 'Your Dealership',
-        data: data.buyerOverlap,
-        backgroundColor: '#3B82F6',
-        borderColor: '#3B82F6',
-        borderWidth: 2,
-        tension: 0.3,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        pointBackgroundColor: '#3B82F6',
-        pointBorderColor: '#FFFFFF',
-        pointBorderWidth: 2,
-        fill: false
-    }];
+    // Check if we should group by deal rating or vehicle type
+    if (groupBy === 'deal-rating' && data.buyerOverlapByDealRating) {
+        // Show lines for each deal rating (filtered by selected deal ratings)
+        const dealRatingColors = {
+            'Great Deal': '#078A0B',
+            'Good Deal': '#09AD0E',
+            'Fair Deal': '#FFC651',
+            'High Priced': '#FF7F57',
+            'Over Priced': '#BD1A2E'
+        };
 
-    // Add market average line if checkbox is checked
-    if (window.currentFilters.showMarketAverage) {
+        Object.keys(data.buyerOverlapByDealRating).forEach(rating => {
+            // Only show deal ratings that are selected in the filter
+            if (window.currentFilters.dealRatings.includes(rating)) {
+                datasets.push({
+                    label: rating,
+                    data: data.buyerOverlapByDealRating[rating],
+                    backgroundColor: dealRatingColors[rating],
+                    borderColor: dealRatingColors[rating],
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: dealRatingColors[rating],
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    fill: false
+                });
+            }
+        });
+    } else if (groupBy === 'vehicle-type' && data.buyerOverlapByVehicleType) {
+        // Show lines for each vehicle type (filtered by selected vehicle types)
+        const vehicleTypeColors = {
+            'Compact': '#3B82F6',
+            'Sedans': '#06B6D4',
+            'SUV/CO': '#8B5CF6',
+            'Truck': '#EC4899',
+            'Luxury': '#6366F1'
+        };
+
+        Object.keys(data.buyerOverlapByVehicleType).forEach(type => {
+            // Only show vehicle types that are selected in the filter
+            if (window.currentFilters.vehicleTypes.includes(type)) {
+                datasets.push({
+                    label: type,
+                    data: data.buyerOverlapByVehicleType[type],
+                    backgroundColor: vehicleTypeColors[type],
+                    borderColor: vehicleTypeColors[type],
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: vehicleTypeColors[type],
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    fill: false
+                });
+            }
+        });
+    } else {
+        // No grouping - show single line for Your Dealership
         datasets.push({
-            label: 'Market Average',
-            data: data.buyerOverlapBaseline,
-            backgroundColor: '#9CA3AF',
-            borderColor: '#9CA3AF',
+            label: 'Your Dealership',
+            data: data.buyerOverlap,
+            backgroundColor: '#3B82F6',
+            borderColor: '#3B82F6',
             borderWidth: 2,
-            borderDash: [5, 5],
             tension: 0.3,
-            pointRadius: 3,
-            pointHoverRadius: 5,
-            pointBackgroundColor: '#9CA3AF',
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#3B82F6',
             pointBorderColor: '#FFFFFF',
             pointBorderWidth: 2,
             fill: false
         });
+
+        // Add market average line if checkbox is checked
+        if (window.currentFilters.showMarketAverage) {
+            datasets.push({
+                label: 'Market Average',
+                data: data.buyerOverlapBaseline,
+                backgroundColor: '#9CA3AF',
+                borderColor: '#9CA3AF',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                tension: 0.3,
+                pointRadius: 3,
+                pointHoverRadius: 5,
+                pointBackgroundColor: '#9CA3AF',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: false
+            });
+        }
     }
 
     buyerOverlapChartInstance = new Chart(ctx, {
@@ -1001,43 +1064,105 @@ function updateConversionFunnelChart(data) {
 
     const months = data.months;
     const startIndex = 13 - months.length;
+    const groupBy = window.currentFilters.groupBy;
+    let datasets = [];
 
-    // Get conversion data from EXPLORE_MOCK_DATA
-    const conversionData = EXPLORE_MOCK_DATA.conversionFunnelData;
-    const dealerSrpToLeads = conversionData.dealer.srpToLeads.slice(startIndex);
-    const marketSrpToLeads = conversionData.market.srpToLeads.slice(startIndex);
+    // Check if we should group by deal rating or vehicle type
+    if (groupBy === 'deal-rating' && data.conversionFunnelByDealRating) {
+        // Show lines for each deal rating (filtered by selected deal ratings)
+        const dealRatingColors = {
+            'Great Deal': '#078A0B',
+            'Good Deal': '#09AD0E',
+            'Fair Deal': '#FFC651',
+            'High Priced': '#FF7F57',
+            'Over Priced': '#BD1A2E'
+        };
 
-    const datasets = [
-        {
-            label: 'Your Dealership',
-            data: dealerSrpToLeads,
-            backgroundColor: '#3B82F6',
-            borderColor: '#3B82F6',
-            borderWidth: 2,
-            tension: 0.3,
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            pointBackgroundColor: '#3B82F6',
-            pointBorderColor: '#FFFFFF',
-            pointBorderWidth: 2,
-            fill: false
-        },
-        {
-            label: 'Market Average',
-            data: marketSrpToLeads,
-            backgroundColor: '#9CA3AF',
-            borderColor: '#9CA3AF',
-            borderWidth: 2,
-            borderDash: [5, 5],
-            tension: 0.3,
-            pointRadius: 3,
-            pointHoverRadius: 5,
-            pointBackgroundColor: '#9CA3AF',
-            pointBorderColor: '#FFFFFF',
-            pointBorderWidth: 2,
-            fill: false
-        }
-    ];
+        Object.keys(data.conversionFunnelByDealRating).forEach(rating => {
+            // Only show deal ratings that are selected in the filter
+            if (window.currentFilters.dealRatings.includes(rating)) {
+                datasets.push({
+                    label: rating,
+                    data: data.conversionFunnelByDealRating[rating],
+                    backgroundColor: dealRatingColors[rating],
+                    borderColor: dealRatingColors[rating],
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: dealRatingColors[rating],
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    fill: false
+                });
+            }
+        });
+    } else if (groupBy === 'vehicle-type' && data.conversionFunnelByVehicleType) {
+        // Show lines for each vehicle type (filtered by selected vehicle types)
+        const vehicleTypeColors = {
+            'Compact': '#3B82F6',
+            'Sedans': '#06B6D4',
+            'SUV/CO': '#8B5CF6',
+            'Truck': '#EC4899',
+            'Luxury': '#6366F1'
+        };
+
+        Object.keys(data.conversionFunnelByVehicleType).forEach(type => {
+            // Only show vehicle types that are selected in the filter
+            if (window.currentFilters.vehicleTypes.includes(type)) {
+                datasets.push({
+                    label: type,
+                    data: data.conversionFunnelByVehicleType[type],
+                    backgroundColor: vehicleTypeColors[type],
+                    borderColor: vehicleTypeColors[type],
+                    borderWidth: 2,
+                    tension: 0.3,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: vehicleTypeColors[type],
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    fill: false
+                });
+            }
+        });
+    } else {
+        // No grouping - show Your Dealership (filtered) and Market Average
+        const conversionData = EXPLORE_MOCK_DATA.conversionFunnelData;
+        const marketSrpToLeads = conversionData.market.srpToLeads.slice(startIndex);
+
+        datasets = [
+            {
+                label: 'Your Dealership',
+                data: data.conversionFunnel,
+                backgroundColor: '#3B82F6',
+                borderColor: '#3B82F6',
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#3B82F6',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: false
+            },
+            {
+                label: 'Market Average',
+                data: marketSrpToLeads,
+                backgroundColor: '#9CA3AF',
+                borderColor: '#9CA3AF',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                tension: 0.3,
+                pointRadius: 3,
+                pointHoverRadius: 5,
+                pointBackgroundColor: '#9CA3AF',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: false
+            }
+        ];
+    }
 
     conversionFunnelChartInstance = new Chart(ctx, {
         type: 'line',
@@ -1073,7 +1198,6 @@ function updateConversionFunnelChart(data) {
                 },
                 y: {
                     beginAtZero: true,
-                    max: 2.0,
                     grid: {
                         color: '#E5E7EB',
                         drawBorder: false
@@ -1155,6 +1279,14 @@ function onFiltersChanged() {
         updateLeadsPerVehicleChart(filteredData);
         updateConversionFunnelChart(filteredData);
         updateBuyerOverlapChart(filteredData);
+    }
+
+    // Update lead.html link with current filters
+    if (typeof buildLeadURL === 'function') {
+        const leadsLink = document.getElementById('leadsLearnMoreLink');
+        if (leadsLink) {
+            leadsLink.href = buildLeadURL();
+        }
     }
 
     console.log('Filters changed:', window.currentFilters);

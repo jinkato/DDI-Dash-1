@@ -10,3 +10,10 @@
 - When building UI components, always reference `styles/global/` first
 - Reuse existing classes and patterns from the global stylesheet
 
+# Testing Guidelines
+
+## Browser Testing
+- **DO NOT automatically open the browser** after making updates or changes
+- The user will test changes manually when ready
+- Avoid using `open` commands unless explicitly requested by the user
+

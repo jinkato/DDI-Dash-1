@@ -171,3 +171,29 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+/* Market Average Button */
+.market-average-button {
+    width: 100%;
+    min-width: 150px;
+    height: 32px;
+    padding: 0 8px;
+    background-color: #ffffff;
+    border: var(--border-default);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s ease;
+    font-size: 14px;
+}
+
+.market-average-button:hover {
+    border-color: #79828D;
+}
+
+.market-average-button:focus {
+    outline: none;
+    border-color: #79828D;
+}

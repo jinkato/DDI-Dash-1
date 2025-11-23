@@ -26,7 +26,11 @@
     <link rel="stylesheet" href="styles/global/sidebar.css">
     <link rel="stylesheet" href="styles/global/tooltip.css">
     <link rel="stylesheet" href="styles/global/tabs.css">
+    <link rel="stylesheet" href="styles/global/side-panel.css">
     <link rel="stylesheet" href="styles/lpv-2.css">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 </head>
 <body>
@@ -420,8 +424,67 @@
         </main>
     </div>
 
+    <!-- Market Average Edit Side Panel -->
+    <div class="side-panel-overlay" id="marketAverageOverlay"></div>
+    <div class="side-panel" id="marketAveragePanel">
+        <div class="side-panel-header">
+            <h2 class="side-panel-title">Edit Market Average</h2>
+            <button class="side-panel-close" id="closePanelBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="side-panel-content">
+            <div class="metric-card" style="margin-bottom: 16px; text-align: center;">
+                <div class="metric-card-title">Dealers in market</div>
+                <div id="marketDealerCount" class="metric-card-value">1,530</div>
+            </div>
+
+            <div id="radiusMap" style="width: 100%; height: 300px; margin-bottom: 24px; border-radius: 8px; overflow: hidden;"></div>
+
+            <div class="side-panel-form-group">
+                <label for="radius">Radius</label>
+                <select id="radius" class="filter-select">
+                    <option>5 miles</option>
+                    <option>10 miles</option>
+                    <option>25 miles</option>
+                    <option selected>50 miles</option>
+                    <option>All distances</option>
+                </select>
+                <p class="help-text">Select the market radius for comparison</p>
+            </div>
+
+            <div class="side-panel-form-group">
+                <label for="franchise">Franchise Type</label>
+                <select id="franchise" class="filter-select">
+                    <option selected>All</option>
+                    <option>Franchise</option>
+                    <option>Independent</option>
+                </select>
+                <p class="help-text">Filter by dealership type</p>
+            </div>
+
+            <div class="side-panel-form-group">
+                <label class="filter-label">Inventory size</label>
+                <div class="range-inputs">
+                    <input type="number" id="inv-min" class="range-input" placeholder="Min">
+                    <span class="range-separator">-</span>
+                    <input type="number" id="inv-max" class="range-input" placeholder="Max">
+                </div>
+                <a href="#" class="reset-link">Reset</a>
+                <p class="help-text">Filter months by inventory size range</p>
+            </div>
+        </div>
+        <div class="side-panel-footer">
+            <button class="btn-secondary" id="cancelPanelBtn">Cancel</button>
+            <button class="btn-primary" id="applyPanelBtn">Apply</button>
+        </div>
+    </div>
+
     <!-- JavaScript Files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/filter-url-utils.js"></script>
     <script src="js/lpv-2-data.js"></script>
     <script src="js/lpv-2-filters.js"></script>
@@ -456,6 +519,145 @@
 
                     // Here you can add logic to show/hide different content based on the tab
                 });
+            });
+
+            // Market Average Side Panel
+            const marketAveragePanel = document.getElementById('marketAveragePanel');
+            const marketAverageOverlay = document.getElementById('marketAverageOverlay');
+            const closePanelBtn = document.getElementById('closePanelBtn');
+            const cancelPanelBtn = document.getElementById('cancelPanelBtn');
+            const applyPanelBtn = document.getElementById('applyPanelBtn');
+            const radiusSelect = document.getElementById('radius');
+
+            // Map variables
+            let radiusMap = null;
+            let radiusCircle = null;
+            const dealershipLocation = [42.3601, -71.0589]; // Example: Boston, MA
+
+            // Find the Edit link in the market average button
+            const editLink = document.querySelector('.market-average-button a');
+
+            if (editLink) {
+                editLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openMarketAveragePanel();
+                });
+            }
+
+            function openMarketAveragePanel() {
+                marketAveragePanel.classList.add('active');
+                marketAverageOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                // Initialize map after panel is visible
+                setTimeout(initializeRadiusMap, 100);
+
+                // Update dealer count (function is in lpv-2.js)
+                if (typeof updateMarketDealerCount === 'function') {
+                    updateMarketDealerCount();
+                }
+            }
+
+            function initializeRadiusMap() {
+                if (!radiusMap) {
+                    // Initialize the map
+                    radiusMap = L.map('radiusMap', {
+                        center: dealershipLocation,
+                        zoom: 10,
+                        zoomControl: true,
+                        scrollWheelZoom: false
+                    });
+
+                    // Add tile layer
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(radiusMap);
+
+                    // Add dealership marker
+                    L.marker(dealershipLocation).addTo(radiusMap)
+                        .bindPopup('Your Dealership');
+
+                    // Add initial radius circle
+                    updateRadiusCircle();
+                }
+
+                // Invalidate size to ensure map renders correctly
+                radiusMap.invalidateSize();
+            }
+
+            function updateRadiusCircle() {
+                if (!radiusMap) return;
+
+                const selectedValue = radiusSelect.value;
+
+                // Parse radius value from dropdown (e.g., "5 miles" -> 5)
+                let radiusMiles;
+                if (selectedValue === 'All distances') {
+                    radiusMiles = 100; // Default to 100 miles for "All distances"
+                } else {
+                    radiusMiles = parseInt(selectedValue);
+                }
+
+                const radiusMeters = radiusMiles * 1609.34; // Convert miles to meters
+
+                // Remove existing circle
+                if (radiusCircle) {
+                    radiusMap.removeLayer(radiusCircle);
+                }
+
+                // Add new circle
+                radiusCircle = L.circle(dealershipLocation, {
+                    color: '#0763D3',
+                    fillColor: '#0763D3',
+                    fillOpacity: 0.1,
+                    radius: radiusMeters,
+                    weight: 2
+                }).addTo(radiusMap);
+
+                // Fit map to circle bounds
+                radiusMap.fitBounds(radiusCircle.getBounds(), {
+                    padding: [20, 20]
+                });
+            }
+
+            // Update circle when radius changes
+            if (radiusSelect) {
+                radiusSelect.addEventListener('change', updateRadiusCircle);
+            }
+
+            function closeMarketAveragePanel() {
+                marketAveragePanel.classList.remove('active');
+                marketAverageOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // Close panel on close button click
+            if (closePanelBtn) {
+                closePanelBtn.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Close panel on cancel button click
+            if (cancelPanelBtn) {
+                cancelPanelBtn.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Close panel on overlay click
+            if (marketAverageOverlay) {
+                marketAverageOverlay.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Apply button - update market average and close panel
+            if (applyPanelBtn) {
+                applyPanelBtn.addEventListener('click', function() {
+                    closeMarketAveragePanel();
+                });
+            }
+
+            // Close panel on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && marketAveragePanel.classList.contains('active')) {
+                    closeMarketAveragePanel();
+                }
             });
         });
     </script>

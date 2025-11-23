@@ -214,14 +214,6 @@
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
             <div class="header">
-                <div class="back-navigation">
-                    <a href="lpv-2.html" class="link-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                        Leads per Vehicle
-                    </a>
-                </div>
                 <div class="header-actions">
                     <h1 class="header-title">Explore</h1>
                 </div>
@@ -261,37 +253,17 @@
                     </div>
                 </div>
 
-                <!-- Tabs Navigation -->
-                <div class="tabs-container">
-                    <div class="tab-navigation">
-                        <button class="tab-button active" data-tab="overview">Overview</button>
-                        <button class="tab-button" data-tab="shopper">Shopper</button>
-                        <button class="tab-button" data-tab="competitors">Competitors</button>
-                    </div>
-                </div>
-
                 <div style="display: flex; gap: 24px;">
                     <div style="display: flex; flex-direction: column; gap: 24px; flex: 1;">
-                        <!-- Inventory Panel -->
-                        <div class="panel">
-                            <div class="panel-header">
-                                <h4 class="panel-title">Inventory</h4>
-                            </div>
-                            <div class="panel-content">
-                                <div class="inventory-charts-container">
-                                    <canvas id="inventory-trend-chart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Leads Panel (Combined: Total Leads + Leads per Vehicle) -->
                         <div class="panel">
                             <div class="panel-header">
                                 <h4 class="panel-title">Leads</h4>
+                                <a href="lead.html" id="leadsLearnMoreLink">Learn more</a>
                             </div>
 
                             <!-- Leads Tabs Navigation -->
-                            <div class="tab-navigation">
+                            <div class="tab-navigation" style="margin-top: 8px;">
                                 <button class="tab-button active" data-tab="total-leads">Total Leads</button>
                                 <button class="tab-button" data-tab="leads-per-vehicle">Leads per Vehicle</button>
                             </div>
@@ -311,6 +283,18 @@
                                     <div class="leads-per-vehicle-container">
                                         <canvas id="leads-per-vehicle-chart"></canvas>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inventory Panel -->
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h4 class="panel-title">Inventory</h4>
+                            </div>
+                            <div class="panel-content">
+                                <div class="inventory-charts-container">
+                                    <canvas id="inventory-trend-chart"></canvas>
                                 </div>
                             </div>
                         </div>
