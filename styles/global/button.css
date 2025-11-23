@@ -186,29 +186,6 @@ button.loading::after {
 }
 
 
-/* Tab Buttons */
-.tab-button {
-    background: transparent;
-    border: none;
-    padding: 12px 24px;
-    color: #666;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.tab-button:hover {
-    color: #0763D3;
-    background: rgba(7, 99, 211, 0.05);
-}
-
-.tab-button.active {
-    color: #0763D3;
-    border-bottom-color: #0763D3;
-}
-
-
 /* Back Button */
 .back-btn {
     /* background: white;

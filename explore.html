@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="styles/global/checkbox.css">
     <link rel="stylesheet" href="styles/global/sidebar.css">
     <link rel="stylesheet" href="styles/global/tooltip.css">
+    <link rel="stylesheet" href="styles/global/tabs.css">
     <link rel="stylesheet" href="styles/explore.css">
 
 </head>
@@ -222,7 +223,7 @@
                     </a>
                 </div>
                 <div class="header-actions">
-                    <h1 class="header-title">Oct 2025</h1>
+                    <h1 class="header-title">Explore</h1>
                 </div>
             </div>
 
@@ -263,7 +264,7 @@
 
                 <!-- Tabs Navigation -->
                 <div class="tabs-container">
-                    <div class="tabs-nav">
+                    <div class="tab-navigation">
                         <button class="tab-button active" data-tab="overview">Overview</button>
                         <button class="tab-button" data-tab="shopper">Shopper</button>
                         <button class="tab-button" data-tab="competitors">Competitors</button>
@@ -284,26 +285,33 @@
                             </div>
                         </div>
 
-                        <!-- Total Leads Panel -->
+                        <!-- Leads Panel (Combined: Total Leads + Leads per Vehicle) -->
                         <div class="panel">
                             <div class="panel-header">
-                                <h4 class="panel-title">Total leads</h4>
+                                <h4 class="panel-title">Leads</h4>
                             </div>
-                            <div class="panel-content">
-                                <div class="total-leads-charts-container">
-                                    <canvas id="total-leads-chart"></canvas>
+
+                            <!-- Leads Tabs Navigation -->
+                            <div class="tab-navigation">
+                                <button class="tab-button active" data-tab="total-leads">Total Leads</button>
+                                <button class="tab-button" data-tab="leads-per-vehicle">Leads per Vehicle</button>
+                            </div>
+
+                            <!-- Total Leads Tab Content -->
+                            <div class="tab-content active" id="total-leads-tab">
+                                <div class="panel-content">
+                                    <div class="total-leads-charts-container">
+                                        <canvas id="total-leads-chart"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Leads per Vehicle Panel -->
-                        <div class="panel">
-                            <div class="panel-header">
-                                <h4 class="panel-title">Leads per Vehicle</h4>
-                            </div>
-                            <div class="panel-content">
-                                <div class="leads-per-vehicle-container">
-                                    <canvas id="leads-per-vehicle-chart"></canvas>
+                            <!-- Leads per Vehicle Tab Content -->
+                            <div class="tab-content" id="leads-per-vehicle-tab">
+                                <div class="panel-content">
+                                    <div class="leads-per-vehicle-container">
+                                        <canvas id="leads-per-vehicle-chart"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -320,10 +328,10 @@
                             </div>
                         </div>
 
-                        <!-- Average buyer overlap per vehicle Panel -->
+                        <!-- Buyer overlap Panel -->
                         <div class="panel">
                             <div class="panel-header">
-                                <h4 class="panel-title">Average buyer overlap per vehicle</h4>
+                                <h4 class="panel-title">Buyer overlap</h4>
                             </div>
                             <div class="panel-content">
                                 <div class="buyer-overlap-container">
@@ -340,8 +348,8 @@
                             <div class="filter-section">
                                 <label for="group-by" class="filter-label">Group by</label>
                                 <select id="group-by" class="dropdown-select">
-                                    <option value="none">None</option>
-                                    <option value="deal-rating" selected>Deal rating</option>
+                                    <option value="none" selected>No group</option>
+                                    <option value="deal-rating">Deal rating</option>
                                     <option value="vehicle-type">Vehicle type</option>
                                 </select>
                             </div>

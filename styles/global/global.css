@@ -14,6 +14,13 @@
     --border-fair-deal: 1px solid #FFC651;
     --border-high-priced: 1px solid #FF7F57;
     --border-over-priced: 1px solid #BD1A2E;
+
+    /* Vehicle Type Colors */
+    --color-compact: #3B82F6;
+    --color-sedans: #06B6D4;
+    --color-suv-co: #8B5CF6;
+    --color-truck: #EC4899;
+    --color-luxury: #6366F1;
 }
 
 /* Apply default border to common elements */
@@ -174,4 +181,27 @@ textarea,
 .content {
     max-width: 1400px;
     margin: 0 auto;
+}
+
+/* Empty State Component */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+}
+
+.empty-state svg {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    opacity: 0.3;
+}
+
+.empty-state h3 {
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: #6b7280;
 }

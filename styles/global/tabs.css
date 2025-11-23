@@ -1,5 +1,10 @@
 /* Tab Navigation Styles */
 
+/* Tabs Container - wrapper for tab navigation */
+.tabs-container {
+    margin-bottom: 12px;
+}
+
 .tab-navigation {
     display: flex;
     align-items: center;
@@ -55,35 +60,4 @@
     to {
         opacity: 1;
     }
-}
-
-/* Compare Button */
-.compare-section {
-    display: flex;
-    justify-content: flex-end;
-    margin: 0 24px 16px 24px;
-}
-
-
-/* Empty State */
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: #6b7280;
-}
-
-.empty-state svg {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 16px;
-    opacity: 0.3;
-}
-
-.empty-state h3 {
-    color: #374151;
-    margin-bottom: 8px;
-}
-
-.empty-state p {
-    color: #6b7280;
 }
