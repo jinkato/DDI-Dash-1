@@ -25,7 +25,7 @@ function initializeTotalLeadsPage() {
     // Initialize callout link
     initializeCalloutLink();
 
-    // Initialize filters with shared function from explore-filters.js
+    // Initialize filters with shared function from trends-filters.js
     // Pass config indicating this page has lead type filters
     initializeFilters(
         { hasLeadTypeFilter: true },
@@ -37,9 +37,9 @@ function initializeTotalLeadsPage() {
             updateMarketAverageDisplay();
             updateMarketDealerCount();
 
-            // Update Explore button URL with new filter state
-            if (typeof window.updateExploreButtonURL === 'function') {
-                window.updateExploreButtonURL();
+            // Update Trends button URL with new filter state
+            if (typeof window.updateTrendsButtonURL === 'function') {
+                window.updateTrendsButtonURL();
             }
         }
     );
@@ -184,14 +184,14 @@ function renderTotalLeadsChart(data) {
         // Calculate total share of selected ratings to normalize
         let totalShare = 0;
         window.currentFilters.dealRatings.forEach(rating => {
-            totalShare += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.dealRatingData[rating].inventoryShare;
         });
 
         // Build datasets in reverse order for proper stacking (worst deals at bottom)
         const ratingsOrder = ['Over Priced', 'High Priced', 'Fair Deal', 'Good Deal', 'Great Deal'];
         ratingsOrder.forEach(rating => {
             if (window.currentFilters.dealRatings.includes(rating)) {
-                const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+                const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
 
                 // Split the existing totalLeads proportionally - don't recalculate from inventory
                 const ratingLeads = data.totalLeads.map(totalLeads => {
@@ -220,14 +220,14 @@ function renderTotalLeadsChart(data) {
         // Calculate total share of selected types
         let totalShare = 0;
         window.currentFilters.vehicleTypes.forEach(type => {
-            totalShare += EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.vehicleTypeData[type].inventoryShare;
         });
 
         // Build datasets in reverse order for proper stacking
         const typesOrder = ['Luxury', 'Truck', 'SUV/CO', 'Sedans', 'Compact'];
         typesOrder.forEach(type => {
             if (window.currentFilters.vehicleTypes.includes(type)) {
-                const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+                const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
 
                 // Split the existing totalLeads proportionally - don't recalculate from inventory
                 const typeLeads = data.totalLeads.map(totalLeads => {
@@ -257,7 +257,7 @@ function renderTotalLeadsChart(data) {
         const typesOrder = ['Text', 'Chat', 'Digital deal', 'Phone', 'Standard email'];
         typesOrder.forEach(type => {
             if (window.currentFilters.leadTypes.includes(type)) {
-                const typeData = EXPLORE_MOCK_DATA.leadTypeData[type];
+                const typeData = TRENDS_MOCK_DATA.leadTypeData[type];
 
                 // Calculate leads for this type - proportion of total leads
                 const typeLeads = data.totalLeads.map(total => Math.round(total * typeData.leadsShare));
