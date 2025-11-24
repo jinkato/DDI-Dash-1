@@ -1,4 +1,4 @@
-/* Explore Page Styles */
+/* Trends Page Styles */
 
 /* Top-level tab navigation (Overview, Shopper, Competitors) */
 .tabs-container .tab-navigation {
@@ -21,7 +21,8 @@
 .leads-per-vehicle-container canvas,
 .conversion-funnel-container canvas,
 .buyer-overlap-container canvas,
-.search-demand-container canvas {
+.search-demand-container canvas,
+.conversion-chart-container canvas {
     max-width: 100%;
     height: 300px !important;
     max-height: 300px;

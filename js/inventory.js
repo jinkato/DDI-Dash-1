@@ -58,12 +58,12 @@ function updateInventoryChart(data) {
         // Calculate total share of selected types to normalize
         let totalShare = 0;
         selectedVehicleTypes.forEach(type => {
-            totalShare += EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.vehicleTypeData[type].inventoryShare;
         });
 
         datasets = selectedVehicleTypes.map((type) => {
             const typeIndex = allVehicleTypes.indexOf(type);
-            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+            const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
             // Normalize share so selected types add up to 100%
             const normalizedShare = typeData.inventoryShare / totalShare;
             const typeInventory = inventory.map(inv => Math.round(inv * normalizedShare));
@@ -84,12 +84,12 @@ function updateInventoryChart(data) {
         // Calculate total share of selected ratings to normalize
         let totalShare = 0;
         selectedDealRatings.forEach(rating => {
-            totalShare += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.dealRatingData[rating].inventoryShare;
         });
 
         datasets = selectedDealRatings.map((rating) => {
             const ratingIndex = allDealRatings.indexOf(rating);
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
             // Normalize share so selected ratings add up to 100%
             const normalizedShare = ratingData.inventoryShare / totalShare;
             const ratingInventory = inventory.map(inv => Math.round(inv * normalizedShare));
@@ -219,16 +219,16 @@ function updateInventoryTable(data) {
     let totalShareGoodDeals = 0;
 
     goodDealRatings.forEach(rating => {
-        if (selectedDealRatings.includes(rating) && EXPLORE_MOCK_DATA.dealRatingData[rating]) {
-            totalShareGoodDeals += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+        if (selectedDealRatings.includes(rating) && TRENDS_MOCK_DATA.dealRatingData[rating]) {
+            totalShareGoodDeals += TRENDS_MOCK_DATA.dealRatingData[rating].inventoryShare;
         }
     });
 
     // Calculate total share of all selected ratings for normalization
     let totalShareAll = 0;
     selectedDealRatings.forEach(rating => {
-        if (EXPLORE_MOCK_DATA.dealRatingData[rating]) {
-            totalShareAll += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+        if (TRENDS_MOCK_DATA.dealRatingData[rating]) {
+            totalShareAll += TRENDS_MOCK_DATA.dealRatingData[rating].inventoryShare;
         }
     });
 

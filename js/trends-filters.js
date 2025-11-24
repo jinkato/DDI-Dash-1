@@ -1,9 +1,9 @@
-// Filter Logic for Explore Page
-// This file contains all filtering functions and state management for explore.html
-// Adapted from lpv-2-filters.js with explore-specific data formatting
+// Filter Logic for Trends Page
+// This file contains all filtering functions and state management for trends.html
+// Adapted from lpv-2-filters.js with trends-specific data formatting
 
 // Current filter state (will be set from URL parameters)
-// Expose globally so explore.js can access it
+// Expose globally so trends.js can access it
 window.currentFilters = {
     dateRange: 'Last 13 months',
     dateGroup: 'Monthly',
@@ -22,7 +22,7 @@ const currentFilters = window.currentFilters;
 /**
  * Initialize filters from URL parameters if available
  */
-function initializeExploreFiltersFromURL() {
+function initializeTrendsFiltersFromURL() {
     if (typeof decodeFiltersFromURL === 'function') {
         const urlFilters = decodeFiltersFromURL();
         // Merge URL filters with current filters
@@ -72,15 +72,15 @@ function initializeExploreFiltersFromURL() {
             checkbox.checked = window.currentFilters.leadTypes.includes(checkbox.value);
         });
 
-        console.log('Initialized explore filters from URL:', window.currentFilters);
+        console.log('Initialized trends filters from URL:', window.currentFilters);
     }
 }
 
 // Initialize from URL when script loads
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeExploreFiltersFromURL);
+    document.addEventListener('DOMContentLoaded', initializeTrendsFiltersFromURL);
 } else {
-    initializeExploreFiltersFromURL();
+    initializeTrendsFiltersFromURL();
 }
 
 /**
@@ -100,16 +100,16 @@ function getMonthCount(dateRange) {
 
 /**
  * Get filtered data based on current filter state
- * Returns data formatted for all explore charts
+ * Returns data formatted for all trends charts
  */
 function getFilteredData() {
     // Get number of months to display
     const monthCount = getMonthCount(currentFilters.dateRange);
     const startIndex = 13 - monthCount;
-    const months = EXPLORE_MOCK_DATA.months.slice(startIndex);
+    const months = TRENDS_MOCK_DATA.months.slice(startIndex);
 
     // YOUR DEALERSHIP DATA - Always use "All" radius and "All" franchise
-    let dealershipBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise['All']['All'];
+    let dealershipBaseData = TRENDS_MOCK_DATA.dataByRadiusAndFranchise['All']['All'];
     let inventory = dealershipBaseData.inventory.slice(startIndex);
     let totalLeads = dealershipBaseData.totalLeads.slice(startIndex);
 
@@ -143,7 +143,7 @@ function getFilteredData() {
     // MARKET AVERAGE DATA
     const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
     const franchiseKey = currentFilters.franchiseType;
-    let marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    let marketBaseData = TRENDS_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
     let marketAvg = marketBaseData.marketAvg.slice(startIndex);
 
     // Apply filters to market average
@@ -172,7 +172,7 @@ function getFilteredData() {
     const buyerOverlap = getBuyerOverlapTimeSeries(startIndex);
 
     // Get baseline buyer overlap (unfiltered, for market average comparison)
-    const buyerOverlapBaseline = EXPLORE_MOCK_DATA.buyerOverlapData.marketAverageBaseline.slice(startIndex);
+    const buyerOverlapBaseline = TRENDS_MOCK_DATA.buyerOverlapData.marketAverageBaseline.slice(startIndex);
 
     // Get buyer overlap breakdown by deal rating (for buyer overlap stacked chart)
     const buyerOverlapByDealRating = getBuyerOverlapByDealRating();
@@ -237,7 +237,7 @@ function getInventoryByDealRating(inventory) {
     const breakdown = last3Months.map((totalInv, monthIdx) => {
         const result = {};
         dealRatings.forEach(rating => {
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
             result[rating] = Math.round(totalInv * ratingData.inventoryShare);
         });
         return result;
@@ -246,7 +246,7 @@ function getInventoryByDealRating(inventory) {
     // Add market average breakdown
     const marketBreakdown = {};
     dealRatings.forEach(rating => {
-        const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+        const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
         marketBreakdown[rating] = Math.round(marketSampleSize * ratingData.inventoryShare);
     });
     breakdown.push(marketBreakdown);
@@ -264,7 +264,7 @@ function getLPVByDealRating() {
     // Get base LPV from market average (using current radius/franchise filters)
     const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
     const franchiseKey = currentFilters.franchiseType;
-    const marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    const marketBaseData = TRENDS_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
     const baseLPV = marketBaseData.marketAvg[12]; // Use latest month
 
     // Apply vehicle type filter
@@ -277,7 +277,7 @@ function getLPVByDealRating() {
     const lpvByRating = {};
 
     dealRatings.forEach(rating => {
-        const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+        const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
         // Get latest month performance (index 12)
         const ratingPerformance = Array.isArray(ratingData.leadsPerformance)
             ? ratingData.leadsPerformance[12]
@@ -296,12 +296,12 @@ function getLPVByDealRating() {
 function getLPVTimeSeriesByDealRating() {
     const monthCount = getMonthCount(currentFilters.dateRange);
     const startIndex = 13 - monthCount;
-    const months = EXPLORE_MOCK_DATA.months.slice(startIndex);
+    const months = TRENDS_MOCK_DATA.months.slice(startIndex);
 
     // Get base LPV from market average
     const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
     const franchiseKey = currentFilters.franchiseType;
-    const marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    const marketBaseData = TRENDS_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
     const baseMarketAvg = marketBaseData.marketAvg.slice(startIndex);
 
     // Apply vehicle type and brand filters
@@ -314,7 +314,7 @@ function getLPVTimeSeriesByDealRating() {
     const dealRatings = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
 
     dealRatings.forEach(rating => {
-        const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+        const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
 
         // Calculate LPV for this rating over time
         const lpvOverTime = months.map((month, idx) => {
@@ -339,12 +339,12 @@ function getLPVTimeSeriesByDealRating() {
 function getLPVTimeSeriesByVehicleType() {
     const monthCount = getMonthCount(currentFilters.dateRange);
     const startIndex = 13 - monthCount;
-    const months = EXPLORE_MOCK_DATA.months.slice(startIndex);
+    const months = TRENDS_MOCK_DATA.months.slice(startIndex);
 
     // Get base LPV from market average
     const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
     const franchiseKey = currentFilters.franchiseType;
-    const marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    const marketBaseData = TRENDS_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
     const baseMarketAvg = marketBaseData.marketAvg.slice(startIndex);
 
     // Apply deal rating and brand filters
@@ -352,7 +352,7 @@ function getLPVTimeSeriesByVehicleType() {
     let avgDealRatingPerformance = Array(13).fill(0);
     let totalShare = 0;
     currentFilters.dealRatings.forEach(rating => {
-        const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+        const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
         totalShare += ratingData.inventoryShare;
         if (Array.isArray(ratingData.leadsPerformance)) {
             ratingData.leadsPerformance.forEach((perf, idx) => {
@@ -369,7 +369,7 @@ function getLPVTimeSeriesByVehicleType() {
     const vehicleTypes = ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'];
 
     vehicleTypes.forEach(type => {
-        const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+        const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
 
         // Calculate LPV for this vehicle type over time
         const lpvOverTime = months.map((month, idx) => {
@@ -392,12 +392,12 @@ function getLPVTimeSeriesByVehicleType() {
 function getLPVTimeSeriesByLeadType() {
     const monthCount = getMonthCount(currentFilters.dateRange);
     const startIndex = 13 - monthCount;
-    const months = EXPLORE_MOCK_DATA.months.slice(startIndex);
+    const months = TRENDS_MOCK_DATA.months.slice(startIndex);
 
     // Get base LPV from market average
     const radiusKey = currentFilters.radius === 'All distances' ? 'All' : currentFilters.radius;
     const franchiseKey = currentFilters.franchiseType;
-    const marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    const marketBaseData = TRENDS_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
     const baseMarketAvg = marketBaseData.marketAvg.slice(startIndex);
 
     // Apply vehicle type, deal rating, and brand filters
@@ -413,7 +413,7 @@ function getLPVTimeSeriesByLeadType() {
     const leadTypes = ['Standard email', 'Phone', 'Digital deal', 'Chat', 'Text'];
 
     leadTypes.forEach(type => {
-        const typeData = EXPLORE_MOCK_DATA.leadTypeData[type];
+        const typeData = TRENDS_MOCK_DATA.leadTypeData[type];
 
         // Calculate LPV for this lead type over time
         // Lead types affect total leads through their share and quality, which affects LPV
@@ -433,15 +433,15 @@ function getLPVTimeSeriesByLeadType() {
  * Get buyer overlap time series data with filters applied
  */
 function getBuyerOverlapTimeSeries(startIndex) {
-    const baseline = EXPLORE_MOCK_DATA.buyerOverlapData.baseline.slice(startIndex);
+    const baseline = TRENDS_MOCK_DATA.buyerOverlapData.baseline.slice(startIndex);
 
     // Apply vehicle type filter
     const vehicleInfo = getVehicleTypesInfo(currentFilters.vehicleTypes);
     let vehicleMultiplier = 0;
     if (vehicleInfo.inventoryMultiplier > 0) {
         currentFilters.vehicleTypes.forEach(type => {
-            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
-            const multiplier = EXPLORE_MOCK_DATA.buyerOverlapData.vehicleTypeMultiplier[type] || 1.0;
+            const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
+            const multiplier = TRENDS_MOCK_DATA.buyerOverlapData.vehicleTypeMultiplier[type] || 1.0;
             vehicleMultiplier += typeData.inventoryShare * multiplier;
         });
         vehicleMultiplier = vehicleMultiplier / vehicleInfo.inventoryMultiplier;
@@ -454,8 +454,8 @@ function getBuyerOverlapTimeSeries(startIndex) {
     let dealRatingMultiplier = 0;
     if (dealRatingInfo.inventoryShare > 0) {
         currentFilters.dealRatings.forEach(rating => {
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
-            const multiplier = EXPLORE_MOCK_DATA.buyerOverlapData.dealRatingMultiplier[rating] || 1.0;
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
+            const multiplier = TRENDS_MOCK_DATA.buyerOverlapData.dealRatingMultiplier[rating] || 1.0;
             dealRatingMultiplier += ratingData.inventoryShare * multiplier;
         });
         dealRatingMultiplier = dealRatingMultiplier / dealRatingInfo.inventoryShare;
@@ -464,7 +464,7 @@ function getBuyerOverlapTimeSeries(startIndex) {
     }
 
     // Apply brand filter
-    const brandMultiplier = EXPLORE_MOCK_DATA.buyerOverlapData.brandMultiplier[currentFilters.brand] || 1.0;
+    const brandMultiplier = TRENDS_MOCK_DATA.buyerOverlapData.brandMultiplier[currentFilters.brand] || 1.0;
 
     // Apply all multipliers to baseline
     return baseline.map(value => parseFloat((value * vehicleMultiplier * dealRatingMultiplier * brandMultiplier).toFixed(1)));
@@ -475,7 +475,7 @@ function getBuyerOverlapTimeSeries(startIndex) {
  * Returns an object with buyer overlap for each deal rating
  */
 function getBuyerOverlapByDealRating() {
-    const baseline = EXPLORE_MOCK_DATA.buyerOverlapData.baseline;
+    const baseline = TRENDS_MOCK_DATA.buyerOverlapData.baseline;
     const monthCount = getMonthCount(currentFilters.dateRange);
     const startIndex = 13 - monthCount;
     const baselineSlice = baseline.slice(startIndex);
@@ -486,8 +486,8 @@ function getBuyerOverlapByDealRating() {
     let totalShare = 0;
 
     selectedVehicleTypes.forEach(type => {
-        const share = EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
-        const multiplier = EXPLORE_MOCK_DATA.buyerOverlapData.vehicleTypeMultiplier[type] || 1.0;
+        const share = TRENDS_MOCK_DATA.vehicleTypeData[type].inventoryShare;
+        const multiplier = TRENDS_MOCK_DATA.buyerOverlapData.vehicleTypeMultiplier[type] || 1.0;
         vehicleMultiplier += share * multiplier;
         totalShare += share;
     });
@@ -499,15 +499,15 @@ function getBuyerOverlapByDealRating() {
     }
 
     // Get brand multiplier
-    const brandMultiplier = EXPLORE_MOCK_DATA.buyerOverlapData.brandMultiplier[currentFilters.brand] || 1.0;
+    const brandMultiplier = TRENDS_MOCK_DATA.buyerOverlapData.brandMultiplier[currentFilters.brand] || 1.0;
 
     // Calculate buyer overlap for each deal rating individually
     const result = {};
     const allDealRatings = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
 
     allDealRatings.forEach(rating => {
-        const dealRatingMultiplier = EXPLORE_MOCK_DATA.buyerOverlapData.dealRatingMultiplier[rating] || 1.0;
-        const trendMultipliers = EXPLORE_MOCK_DATA.buyerOverlapData.dealRatingTrendMultiplier[rating] || [];
+        const dealRatingMultiplier = TRENDS_MOCK_DATA.buyerOverlapData.dealRatingMultiplier[rating] || 1.0;
+        const trendMultipliers = TRENDS_MOCK_DATA.buyerOverlapData.dealRatingTrendMultiplier[rating] || [];
         const trendMultiplierSlice = trendMultipliers.slice(startIndex);
 
         result[rating] = baselineSlice.map((value, index) => {
@@ -524,7 +524,7 @@ function getBuyerOverlapByDealRating() {
  * Returns an object with buyer overlap for each vehicle type
  */
 function getBuyerOverlapByVehicleType() {
-    const baseline = EXPLORE_MOCK_DATA.buyerOverlapData.baseline;
+    const baseline = TRENDS_MOCK_DATA.buyerOverlapData.baseline;
     const monthCount = getMonthCount(currentFilters.dateRange);
     const startIndex = 13 - monthCount;
     const baselineSlice = baseline.slice(startIndex);
@@ -535,8 +535,8 @@ function getBuyerOverlapByVehicleType() {
     let totalShare = 0;
 
     selectedDealRatings.forEach(rating => {
-        const share = EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
-        const multiplier = EXPLORE_MOCK_DATA.buyerOverlapData.dealRatingMultiplier[rating] || 1.0;
+        const share = TRENDS_MOCK_DATA.dealRatingData[rating].inventoryShare;
+        const multiplier = TRENDS_MOCK_DATA.buyerOverlapData.dealRatingMultiplier[rating] || 1.0;
         dealRatingMultiplier += share * multiplier;
         totalShare += share;
     });
@@ -548,14 +548,14 @@ function getBuyerOverlapByVehicleType() {
     }
 
     // Get brand multiplier
-    const brandMultiplier = EXPLORE_MOCK_DATA.buyerOverlapData.brandMultiplier[currentFilters.brand] || 1.0;
+    const brandMultiplier = TRENDS_MOCK_DATA.buyerOverlapData.brandMultiplier[currentFilters.brand] || 1.0;
 
     // Calculate buyer overlap for each vehicle type individually
     const result = {};
     const allVehicleTypes = ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'];
 
     allVehicleTypes.forEach(type => {
-        const vehicleTypeMultiplier = EXPLORE_MOCK_DATA.buyerOverlapData.vehicleTypeMultiplier[type] || 1.0;
+        const vehicleTypeMultiplier = TRENDS_MOCK_DATA.buyerOverlapData.vehicleTypeMultiplier[type] || 1.0;
 
         result[type] = baselineSlice.map((value) => {
             return parseFloat((value * vehicleTypeMultiplier * dealRatingMultiplier * brandMultiplier).toFixed(1));
@@ -622,7 +622,7 @@ function getVehicleTypesInfo(vehicleTypes) {
     const performanceMultipliers = Array(13).fill(0);
 
     vehicleTypes.forEach(type => {
-        const vehicleData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+        const vehicleData = TRENDS_MOCK_DATA.vehicleTypeData[type];
         if (vehicleData) {
             totalInventoryShare += vehicleData.inventoryShare;
             for (let i = 0; i < 13; i++) {
@@ -670,7 +670,7 @@ function getDealRatingInfo(dealRatings) {
     const leadsPerformanceMultipliers = Array(13).fill(0);
 
     dealRatings.forEach(rating => {
-        const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+        const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
         if (ratingData) {
             totalInventoryShare += ratingData.inventoryShare;
 
@@ -749,7 +749,7 @@ function getLeadTypeInfo(leadTypes) {
     let weightedQuality = 0;
 
     leadTypes.forEach(type => {
-        const typeData = EXPLORE_MOCK_DATA.leadTypeData[type];
+        const typeData = TRENDS_MOCK_DATA.leadTypeData[type];
         if (typeData) {
             totalShare += typeData.leadsShare;
             weightedQuality += typeData.leadsShare * typeData.qualityMultiplier;
@@ -769,17 +769,17 @@ function getLeadTypeInfo(leadTypes) {
  * Get conversion funnel time series data with filters applied
  */
 function getConversionFunnelTimeSeries(startIndex) {
-    const baseline = EXPLORE_MOCK_DATA.conversionFunnelData.dealer.srpToLeads.slice(startIndex);
+    const baseline = TRENDS_MOCK_DATA.conversionFunnelData.dealer.srpToLeads.slice(startIndex);
 
     // Apply vehicle type filter - calculate weighted average
     const vehicleInfo = getVehicleTypesInfo(currentFilters.vehicleTypes);
     let vehicleMultiplier = 0;
     if (vehicleInfo.inventoryMultiplier > 0) {
         currentFilters.vehicleTypes.forEach(type => {
-            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+            const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
             // Use conversion rate ratio (actual / baseline)
-            const typeConversion = EXPLORE_MOCK_DATA.conversionFunnelData.byVehicleType[type].srpToLeads[0];
-            const baselineConversion = EXPLORE_MOCK_DATA.conversionFunnelData.dealer.srpToLeads[0];
+            const typeConversion = TRENDS_MOCK_DATA.conversionFunnelData.byVehicleType[type].srpToLeads[0];
+            const baselineConversion = TRENDS_MOCK_DATA.conversionFunnelData.dealer.srpToLeads[0];
             const multiplier = typeConversion / baselineConversion;
             vehicleMultiplier += typeData.inventoryShare * multiplier;
         });
@@ -793,10 +793,10 @@ function getConversionFunnelTimeSeries(startIndex) {
     let dealRatingMultiplier = 0;
     if (dealRatingInfo.inventoryShare > 0) {
         currentFilters.dealRatings.forEach(rating => {
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
             // Use conversion rate ratio (actual / baseline)
-            const ratingConversion = EXPLORE_MOCK_DATA.conversionFunnelData.byDealRating[rating].srpToLeads[0];
-            const baselineConversion = EXPLORE_MOCK_DATA.conversionFunnelData.dealer.srpToLeads[0];
+            const ratingConversion = TRENDS_MOCK_DATA.conversionFunnelData.byDealRating[rating].srpToLeads[0];
+            const baselineConversion = TRENDS_MOCK_DATA.conversionFunnelData.dealer.srpToLeads[0];
             const multiplier = ratingConversion / baselineConversion;
             dealRatingMultiplier += ratingData.inventoryShare * multiplier;
         });
@@ -817,8 +817,8 @@ function getConversionFunnelByDealRating() {
     const startIndex = 13 - monthCount;
     const result = {};
 
-    Object.keys(EXPLORE_MOCK_DATA.conversionFunnelData.byDealRating).forEach(rating => {
-        result[rating] = EXPLORE_MOCK_DATA.conversionFunnelData.byDealRating[rating].srpToLeads.slice(startIndex);
+    Object.keys(TRENDS_MOCK_DATA.conversionFunnelData.byDealRating).forEach(rating => {
+        result[rating] = TRENDS_MOCK_DATA.conversionFunnelData.byDealRating[rating].srpToLeads.slice(startIndex);
     });
 
     return result;
@@ -832,8 +832,8 @@ function getConversionFunnelByVehicleType() {
     const startIndex = 13 - monthCount;
     const result = {};
 
-    Object.keys(EXPLORE_MOCK_DATA.conversionFunnelData.byVehicleType).forEach(type => {
-        result[type] = EXPLORE_MOCK_DATA.conversionFunnelData.byVehicleType[type].srpToLeads.slice(startIndex);
+    Object.keys(TRENDS_MOCK_DATA.conversionFunnelData.byVehicleType).forEach(type => {
+        result[type] = TRENDS_MOCK_DATA.conversionFunnelData.byVehicleType[type].srpToLeads.slice(startIndex);
     });
 
     return result;
@@ -847,7 +847,7 @@ function getConversionFunnelByVehicleType() {
  */
 function initializeFilters(config, callback) {
     // Initialize from URL first
-    initializeExploreFiltersFromURL();
+    initializeTrendsFiltersFromURL();
 
     // Get initial data and call callback
     if (typeof getFilteredData === 'function') {

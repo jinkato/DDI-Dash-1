@@ -211,14 +211,14 @@ function getCurrentFilters() {
 }
 
 /**
- * Build explore.html URL with current filter state
+ * Build trends.html URL with current filter state
  * @param {Object} filters - Optional filter state (uses current if not provided)
- * @returns {string} Full URL to explore.html with filters
+ * @returns {string} Full URL to trends.html with filters
  */
-function buildExploreURL(filters) {
+function buildTrendsURL(filters) {
     const filterState = filters || getCurrentFilters();
     const queryString = encodeFiltersToURL(filterState);
-    return 'explore.html' + (queryString ? '?' + queryString : '');
+    return 'trends.html' + (queryString ? '?' + queryString : '');
 }
 
 /**
@@ -229,7 +229,7 @@ function buildExploreURL(filters) {
 function buildLeadURL(filters) {
     const filterState = filters || getCurrentFilters();
     const queryString = encodeFiltersToURL(filterState);
-    return 'lead.html' + (queryString ? '?' + queryString : '');
+    return 'trends/lead.html' + (queryString ? '?' + queryString : '');
 }
 
 /**
@@ -240,7 +240,7 @@ function buildLeadURL(filters) {
 function buildInventoryURL(filters) {
     const filterState = filters || getCurrentFilters();
     const queryString = encodeFiltersToURL(filterState);
-    return 'inventory.html' + (queryString ? '?' + queryString : '');
+    return 'trends/inventory.html' + (queryString ? '?' + queryString : '');
 }
 
 /**

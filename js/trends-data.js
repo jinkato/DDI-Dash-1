@@ -1,8 +1,8 @@
-// Mock Data for Explore Page
+// Mock Data for Trends Page
 // This file contains all mock data variations for different filter combinations
 // Extended from lpv-2-data.js with additional buyer overlap data
 
-const EXPLORE_MOCK_DATA = {
+const TRENDS_MOCK_DATA = {
     // Base data structure for 13 months
     months: [
         'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025', 'Mar 2025',

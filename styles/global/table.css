@@ -72,6 +72,7 @@ th {
 .vehicle-table td {
     padding: 12px 0;
     color: #111827;
+    font-weight: 400;
 }
 
 .vehicle-table tbody tr:hover {
@@ -94,6 +95,7 @@ th {
 
 .vehicle-details {
     color: #111827;
+    font-weight: 600;
 }
 
 /* Features Table Styles */

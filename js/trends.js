@@ -1,4 +1,4 @@
-// Explore Page JavaScript
+// Trends Page JavaScript
 // This file handles chart initialization and interactivity with full filtering support
 
 // Store chart instances for updates
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize tab switching for Leads panel
     initializeLeadsTabSwitching();
 
-    // Initialize filters with shared function from explore-filters.js
+    // Initialize filters with shared function from trends-filters.js
     // Pass config indicating this page does not have lead type filters
     initializeFilters(
         { hasLeadTypeFilter: false },
@@ -90,12 +90,12 @@ function updateInventoryTrendChart(data) {
         // Calculate total share of selected types to normalize
         let totalShare = 0;
         selectedVehicleTypes.forEach(type => {
-            totalShare += EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.vehicleTypeData[type].inventoryShare;
         });
 
         datasets = selectedVehicleTypes.map((type) => {
             const typeIndex = allVehicleTypes.indexOf(type);
-            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+            const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
             // Normalize share so selected types add up to 100%
             const normalizedShare = typeData.inventoryShare / totalShare;
             const typeInventory = inventory.map(inv => Math.round(inv * normalizedShare));
@@ -116,12 +116,12 @@ function updateInventoryTrendChart(data) {
         // Calculate total share of selected ratings to normalize
         let totalShare = 0;
         selectedDealRatings.forEach(rating => {
-            totalShare += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.dealRatingData[rating].inventoryShare;
         });
 
         datasets = selectedDealRatings.map((rating) => {
             const ratingIndex = allDealRatings.indexOf(rating);
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
             // Normalize share so selected ratings add up to 100%
             const normalizedShare = ratingData.inventoryShare / totalShare;
             const ratingInventory = inventory.map(inv => Math.round(inv * normalizedShare));
@@ -270,12 +270,12 @@ function updateTotalLeadsChart(data) {
         // Calculate total share of selected types to normalize
         let totalShare = 0;
         selectedVehicleTypes.forEach(type => {
-            totalShare += EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.vehicleTypeData[type].inventoryShare;
         });
 
         datasets = selectedVehicleTypes.map((type) => {
             const typeIndex = allVehicleTypes.indexOf(type);
-            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+            const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
 
             // Calculate total leads for this type for each month
             const typeLeads = inventory.map((inv, idx) => {
@@ -302,12 +302,12 @@ function updateTotalLeadsChart(data) {
         // Calculate total share of selected ratings to normalize
         let totalShare = 0;
         selectedDealRatings.forEach(rating => {
-            totalShare += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.dealRatingData[rating].inventoryShare;
         });
 
         datasets = selectedDealRatings.map((rating) => {
             const ratingIndex = allDealRatings.indexOf(rating);
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
             const lpv = lpvByDealRating[rating];
 
             // Calculate total leads for this rating for each month
@@ -441,7 +441,7 @@ function updateLeadsPerVehicleChart(data) {
     // Get base LPV from market average
     const radiusKey = window.currentFilters.radius === 'All distances' ? 'All' : window.currentFilters.radius;
     const franchiseKey = window.currentFilters.franchiseType;
-    const marketBaseData = EXPLORE_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
+    const marketBaseData = TRENDS_MOCK_DATA.dataByRadiusAndFranchise[radiusKey][franchiseKey];
     const baseMarketAvg = marketBaseData.marketAvg.slice(startIndex);
 
     // Apply brand filter
@@ -476,7 +476,7 @@ function updateLeadsPerVehicleChart(data) {
         let avgDealRatingPerformance = Array(13).fill(0);
         let totalShare = 0;
         dealRatings.forEach(rating => {
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
             totalShare += ratingData.inventoryShare;
             if (Array.isArray(ratingData.leadsPerformance)) {
                 ratingData.leadsPerformance.forEach((perf, idx) => {
@@ -488,7 +488,7 @@ function updateLeadsPerVehicleChart(data) {
 
         datasets = selectedVehicleTypes.map((type) => {
             const typeIndex = allVehicleTypes.indexOf(type);
-            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+            const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
 
             // Calculate LPV for this vehicle type over time
             const lpvOverTime = months.map((month, idx) => {
@@ -524,7 +524,7 @@ function updateLeadsPerVehicleChart(data) {
 
         datasets = selectedDealRatings.map((rating) => {
             const ratingIndex = allDealRatings.indexOf(rating);
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
 
             // Calculate LPV for this rating over time
             const lpvOverTime = months.map((month, idx) => {
@@ -934,12 +934,12 @@ function updateSearchDemandChart(data) {
         // Calculate total share of selected types to normalize
         let totalShare = 0;
         selectedVehicleTypes.forEach(type => {
-            totalShare += EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.vehicleTypeData[type].inventoryShare;
         });
 
         datasets = selectedVehicleTypes.map((type) => {
             const typeIndex = allVehicleTypes.indexOf(type);
-            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+            const typeData = TRENDS_MOCK_DATA.vehicleTypeData[type];
             const normalizedShare = typeData.inventoryShare / totalShare;
             const typeSearchDemand = baseSearchDemand.map(demand => Math.round(demand * normalizedShare));
             const color = getComputedStyle(document.documentElement).getPropertyValue(allColorVars[typeIndex]).trim();
@@ -968,12 +968,12 @@ function updateSearchDemandChart(data) {
         // Calculate total share of selected ratings to normalize
         let totalShare = 0;
         selectedDealRatings.forEach(rating => {
-            totalShare += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+            totalShare += TRENDS_MOCK_DATA.dealRatingData[rating].inventoryShare;
         });
 
         datasets = selectedDealRatings.map((rating) => {
             const ratingIndex = allDealRatings.indexOf(rating);
-            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const ratingData = TRENDS_MOCK_DATA.dealRatingData[rating];
             const normalizedShare = ratingData.inventoryShare / totalShare;
             const ratingSearchDemand = baseSearchDemand.map(demand => Math.round(demand * normalizedShare));
             const color = getComputedStyle(document.documentElement).getPropertyValue(allColorVars[ratingIndex]).trim();
@@ -1123,7 +1123,7 @@ function initializeFiltersFromURL() {
         const urlFilters = decodeFiltersFromURL();
         Object.assign(window.currentFilters, urlFilters);
     }
-    // If no URL filters, window.currentFilters already has defaults from explore-filters.js
+    // If no URL filters, window.currentFilters already has defaults from trends-filters.js
 
     // Apply filters to UI elements
     applyFiltersToUI();
@@ -1378,7 +1378,7 @@ function updateConversionFunnelChart(data) {
         });
     } else {
         // No grouping - show Your Dealership (filtered) and Market Average
-        const conversionData = EXPLORE_MOCK_DATA.conversionFunnelData;
+        const conversionData = TRENDS_MOCK_DATA.conversionFunnelData;
         const marketSrpToLeads = conversionData.market.srpToLeads.slice(startIndex);
 
         datasets = [
@@ -1519,7 +1519,7 @@ function onFiltersChanged() {
     // Update market average display
     updateMarketAverageDisplay();
 
-    // Get fresh filtered data (uses window.currentFilters from explore-filters.js)
+    // Get fresh filtered data (uses window.currentFilters from trends-filters.js)
     if (typeof getFilteredData === 'function') {
         const filteredData = getFilteredData();
 
