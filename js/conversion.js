@@ -834,12 +834,12 @@ function getFilteredVehicles() {
 }
 
 /**
- * Update the "My selected inventory" title with vehicle count
+ * Update the "My selected inventory" subtitle with vehicle count
  */
 function updateInventoryTitle(vehicleCount) {
-    const title = document.getElementById('my-inventory-title');
-    if (title) {
-        title.textContent = `My selected inventory: ${vehicleCount}`;
+    const subtitle = document.getElementById('my-inventory-subtitle');
+    if (subtitle) {
+        subtitle.textContent = `Total: ${vehicleCount} ${vehicleCount === 1 ? 'vehicle' : 'vehicles'}`;
     }
 }
 

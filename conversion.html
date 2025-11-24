@@ -238,13 +238,19 @@
                             <div class="panel-content">
                                 <div style="display: flex; gap: 24px; margin-bottom: 24px;">
                                     <div style="flex: 1;">
-                                        <h3 id="my-inventory-title" style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 12px;">My selected inventory: 20</h3>
+                                        <div style="margin-bottom: 12px;">
+                                            <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0;">My selected inventory</h3>
+                                            <div id="my-inventory-subtitle" style="font-size: 12px; color: #5E6976;">Total: 20 vehicles</div>
+                                        </div>
                                         <div class="conversion-chart-container">
                                             <canvas id="conversion-chart"></canvas>
                                         </div>
                                     </div>
                                     <div id="market-average-chart-wrapper" style="flex: 1; display: none;">
-                                        <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 12px;">Market average: Based on 1,209</h3>
+                                        <div style="margin-bottom: 12px;">
+                                            <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0;">Market average</h3>
+                                            <div style="font-size: 12px; color: #5E6976;">Based on 1,209 similar vehicles</div>
+                                        </div>
                                         <div class="conversion-chart-container">
                                             <canvas id="market-average-chart"></canvas>
                                         </div>
