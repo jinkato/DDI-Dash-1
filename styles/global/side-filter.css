@@ -9,6 +9,8 @@
     border-radius: 16px;
     border: 1px solid #D8DBDE;
     padding: 24px;
+    position: sticky;
+    top: 24px;
     align-self: flex-start;
 }
 
@@ -133,5 +135,6 @@
     .filter-panel {
         width: 100%;
         order: -1;
+        position: static;
     }
 }

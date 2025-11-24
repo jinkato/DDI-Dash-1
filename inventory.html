@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1300, initial-scale=1.0">
-    <title>Explore - CarGurus Dealer Analysis</title>
+    <title>Inventory - CarGurus Dealer Analysis</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,12 @@
     <link rel="stylesheet" href="styles/global/sidebar.css">
     <link rel="stylesheet" href="styles/global/tooltip.css">
     <link rel="stylesheet" href="styles/global/tabs.css">
+    <link rel="stylesheet" href="styles/global/side-panel.css">
+    <link rel="stylesheet" href="styles/lpv-2.css">
     <link rel="stylesheet" href="styles/explore.css">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 </head>
 <body>
@@ -214,23 +219,24 @@
                 <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
             <div class="header">
+                <div class="back-navigation">
+                    <a href="explore.html" class="link-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        back
+                    </a>
+                </div>
                 <div class="header-actions">
-                    <h1 class="header-title">Explore</h1>
+                    <h1 class="header-title">Inventory</h1>
                 </div>
             </div>
 
             <!-- Main content area -->
             <div class="content" style="flex-direction: column; gap: 0;">
-                <!-- Filter Bar and Market Average -->
+                <!-- Filter Bar -->
                 <div class="filter-wrapper">
                     <div class="filter-bar" style="margin-bottom: 0;">
-                        <div class="dropdown-container">
-                            <span class="dropdown-label text-sm">Market Average</span>
-                            <button class="market-average-button">
-                                <span>50ml, All</span>
-                                <a href="#">edit</a>
-                            </button>
-                        </div>
                         <div class="dropdown-container">
                             <span class="dropdown-label text-sm">Date range:</span>
                             <select class="dropdown-select" id="date-range">
@@ -255,85 +261,26 @@
 
                 <div style="display: flex; gap: 24px;">
                     <div style="display: flex; flex-direction: column; gap: 24px; flex: 1;">
-                        <!-- Leads Panel (Combined: Total Leads + Leads per Vehicle) -->
+                        <!-- Inventory Chart Panel -->
                         <div class="panel">
-                            <div class="panel-header">
-                                <h4 class="panel-title">Leads</h4>
-                                <a href="lead.html" id="leadsLearnMoreLink">Learn more</a>
-                            </div>
-
-                            <!-- Leads Tabs Navigation -->
-                            <div class="tab-navigation" style="margin-top: 8px;">
-                                <button class="tab-button active" data-tab="total-leads">Total Leads</button>
-                                <button class="tab-button" data-tab="leads-per-vehicle">Leads per Vehicle</button>
-                            </div>
-
-                            <!-- Total Leads Tab Content -->
-                            <div class="tab-content active" id="total-leads-tab">
-                                <div class="panel-content">
-                                    <div class="total-leads-charts-container">
-                                        <canvas id="total-leads-chart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Leads per Vehicle Tab Content -->
-                            <div class="tab-content" id="leads-per-vehicle-tab">
-                                <div class="panel-content">
-                                    <div class="leads-per-vehicle-container">
-                                        <canvas id="leads-per-vehicle-chart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Inventory Panel -->
-                        <div class="panel">
-                            <div class="panel-header">
-                                <h4 class="panel-title">Inventory</h4>
-                                <a href="inventory.html" id="inventory-learn-more">Learn more</a>
-                            </div>
                             <div class="panel-content">
                                 <div class="inventory-charts-container">
-                                    <canvas id="inventory-trend-chart"></canvas>
+                                    <canvas id="inventory-chart"></canvas>
                                 </div>
-                            </div>
-                        </div>
 
-                        <!-- Search demand Panel -->
-                        <div class="panel">
-                            <div class="panel-header">
-                                <h4 class="panel-title">Search demand</h4>
-                                <a href="search-demand.html" id="search-demand-learn-more">Learn more</a>
-                            </div>
-                            <div class="panel-content">
-                                <div class="search-demand-container">
-                                    <canvas id="search-demand-chart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Conversion Funnel Panel -->
-                        <div class="panel">
-                            <div class="panel-header">
-                                <h4 class="panel-title">Conversion Funnel</h4>
-                            </div>
-                            <div class="panel-content">
-                                <div class="conversion-funnel-container">
-                                    <canvas id="conversion-funnel-chart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Buyer overlap Panel -->
-                        <div class="panel">
-                            <div class="panel-header">
-                                <h4 class="panel-title">Buyer overlap</h4>
-                            </div>
-                            <div class="panel-content">
-                                <div class="buyer-overlap-container">
-                                    <canvas id="buyer-overlap-chart"></canvas>
-                                </div>
+                                <table class="vehicle-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Month</th>
+                                            <th>% in Great Good Fair deal</th>
+                                            <th>Inventory</th>
+                                            <th>MoM change</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="inventory-table-body">
+                                        <!-- Rows will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -349,14 +296,6 @@
                                     <option value="deal-rating">Deal rating</option>
                                     <option value="vehicle-type">Vehicle type</option>
                                 </select>
-                            </div>
-
-                            <div class="filter-section">
-                                <label class="filter-label">Market Average</label>
-                                <label class="checkbox-container">
-                                    <input type="checkbox" class="checkbox-input" id="show-market-average" checked>
-                                    <span class="checkbox-label">Show Market Average</span>
-                                </label>
                             </div>
 
                             <div class="filter-section">
@@ -435,12 +374,63 @@
         </main>
     </div>
 
-    <!-- JavaScript Files -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/filter-url-utils.js"></script>
-    <script src="js/explore-data.js"></script>
-    <script src="js/explore-filters.js"></script>
-    <script src="js/explore.js"></script>
+    <!-- Market Average Edit Side Panel -->
+    <div class="side-panel-overlay" id="marketAverageOverlay"></div>
+    <div class="side-panel" id="marketAveragePanel">
+        <div class="side-panel-header">
+            <h2 class="side-panel-title">Edit Market Average</h2>
+            <button class="side-panel-close" id="closePanelBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="side-panel-content">
+            <div class="metric-card" style="margin-bottom: 16px; text-align: center;">
+                <div class="metric-card-title">Dealers in market</div>
+                <div id="marketDealerCount" class="metric-card-value">1,530</div>
+            </div>
+
+            <div id="radiusMap" style="width: 100%; height: 300px; margin-bottom: 24px; border-radius: 8px; overflow: hidden;"></div>
+
+            <div class="side-panel-form-group">
+                <label for="radius">Radius</label>
+                <select id="radius" class="filter-select">
+                    <option>5 miles</option>
+                    <option>10 miles</option>
+                    <option>25 miles</option>
+                    <option selected>50 miles</option>
+                    <option>All distances</option>
+                </select>
+                <p class="help-text">Select the market radius for comparison</p>
+            </div>
+
+            <div class="side-panel-form-group">
+                <label for="franchise">Franchise Type</label>
+                <select id="franchise" class="filter-select">
+                    <option selected>All</option>
+                    <option>Franchise</option>
+                    <option>Independent</option>
+                </select>
+                <p class="help-text">Filter by dealership type</p>
+            </div>
+
+            <div class="side-panel-form-group">
+                <label class="filter-label">Inventory size</label>
+                <div class="range-inputs">
+                    <input type="number" id="inv-min" class="range-input" placeholder="Min">
+                    <span class="range-separator">-</span>
+                    <input type="number" id="inv-max" class="range-input" placeholder="Max">
+                </div>
+                <a href="#" class="reset-link">Reset</a>
+                <p class="help-text">Filter months by inventory size range</p>
+            </div>
+        </div>
+        <div class="side-panel-footer">
+            <button class="btn-secondary" id="cancelPanelBtn">Cancel</button>
+            <button class="btn-primary" id="applyPanelBtn">Apply</button>
+        </div>
+    </div>
 
     <!-- Sidebar Navigation Script -->
     <script>
@@ -455,25 +445,156 @@
                 });
             });
 
-            // Handle tab clicks
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all tabs
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
+            // Market Average Side Panel
+            const marketAveragePanel = document.getElementById('marketAveragePanel');
+            const marketAverageOverlay = document.getElementById('marketAverageOverlay');
+            const closePanelBtn = document.getElementById('closePanelBtn');
+            const cancelPanelBtn = document.getElementById('cancelPanelBtn');
+            const applyPanelBtn = document.getElementById('applyPanelBtn');
+            const radiusSelect = document.getElementById('radius');
 
-                    // Add active class to clicked tab
-                    this.classList.add('active');
+            // Map variables
+            let radiusMap = null;
+            let radiusCircle = null;
+            const dealershipLocation = [42.3601, -71.0589]; // Example: Boston, MA
 
-                    // Get the tab name
-                    const tabName = this.getAttribute('data-tab');
-                    console.log('Switched to tab:', tabName);
+            // Find the Edit link in the market average button
+            const editLink = document.querySelector('.market-average-button a');
 
-                    // Here you can add logic to show/hide different content based on the tab
+            if (editLink) {
+                editLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openMarketAveragePanel();
                 });
+            }
+
+            function openMarketAveragePanel() {
+                marketAveragePanel.classList.add('active');
+                marketAverageOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                // Initialize map after panel is visible
+                setTimeout(initializeRadiusMap, 100);
+
+                // Update dealer count (function is in lpv-2.js)
+                if (typeof updateMarketDealerCount === 'function') {
+                    updateMarketDealerCount();
+                }
+            }
+
+            function initializeRadiusMap() {
+                if (!radiusMap) {
+                    // Initialize the map
+                    radiusMap = L.map('radiusMap', {
+                        center: dealershipLocation,
+                        zoom: 10,
+                        zoomControl: true,
+                        scrollWheelZoom: false
+                    });
+
+                    // Add tile layer
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(radiusMap);
+
+                    // Add dealership marker
+                    L.marker(dealershipLocation).addTo(radiusMap)
+                        .bindPopup('Your Dealership');
+
+                    // Add initial radius circle
+                    updateRadiusCircle();
+                }
+
+                // Invalidate size to ensure map renders correctly
+                radiusMap.invalidateSize();
+            }
+
+            function updateRadiusCircle() {
+                if (!radiusMap) return;
+
+                const selectedValue = radiusSelect.value;
+
+                // Parse radius value from dropdown (e.g., "5 miles" -> 5)
+                let radiusMiles;
+                if (selectedValue === 'All distances') {
+                    radiusMiles = 100; // Default to 100 miles for "All distances"
+                } else {
+                    radiusMiles = parseInt(selectedValue);
+                }
+
+                const radiusMeters = radiusMiles * 1609.34; // Convert miles to meters
+
+                // Remove existing circle
+                if (radiusCircle) {
+                    radiusMap.removeLayer(radiusCircle);
+                }
+
+                // Add new circle
+                radiusCircle = L.circle(dealershipLocation, {
+                    color: '#0763D3',
+                    fillColor: '#0763D3',
+                    fillOpacity: 0.1,
+                    radius: radiusMeters,
+                    weight: 2
+                }).addTo(radiusMap);
+
+                // Fit map to circle bounds
+                radiusMap.fitBounds(radiusCircle.getBounds(), {
+                    padding: [20, 20]
+                });
+            }
+
+            // Update circle when radius changes
+            if (radiusSelect) {
+                radiusSelect.addEventListener('change', updateRadiusCircle);
+            }
+
+            function closeMarketAveragePanel() {
+                marketAveragePanel.classList.remove('active');
+                marketAverageOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // Close panel on close button click
+            if (closePanelBtn) {
+                closePanelBtn.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Close panel on cancel button click
+            if (cancelPanelBtn) {
+                cancelPanelBtn.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Close panel on overlay click
+            if (marketAverageOverlay) {
+                marketAverageOverlay.addEventListener('click', closeMarketAveragePanel);
+            }
+
+            // Apply button - update market average and close panel
+            if (applyPanelBtn) {
+                applyPanelBtn.addEventListener('click', function() {
+                    closeMarketAveragePanel();
+                });
+            }
+
+            // Close panel on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && marketAveragePanel.classList.contains('active')) {
+                    closeMarketAveragePanel();
+                }
             });
         });
     </script>
+
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="js/filter-url-utils.js"></script>
+    <script src="js/explore-data.js"></script>
+    <script src="js/explore-filters.js"></script>
+    <script src="js/inventory.js"></script>
 
 </body>
 </html>

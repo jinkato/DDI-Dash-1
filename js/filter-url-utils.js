@@ -9,6 +9,7 @@ const DEFAULT_FILTERS = {
     dealRatings: ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'],
     leadTypes: ['Standard email', 'Phone', 'Digital deal', 'Chat', 'Text'],
     brand: 'All',
+    groupBy: 'none',
     radius: '50 miles',
     franchiseType: 'All'
 };
@@ -112,6 +113,11 @@ function encodeFiltersToURL(filters) {
         params.set('br', filters.brand);
     }
 
+    // Group By
+    if (filters.groupBy && filters.groupBy !== DEFAULT_FILTERS.groupBy) {
+        params.set('gb', filters.groupBy);
+    }
+
     // Radius (extract number only)
     if (filters.radius) {
         const radiusNum = filters.radius.replace(/[^\d]/g, '');
@@ -169,6 +175,11 @@ function decodeFiltersFromURL() {
         filters.brand = params.get('br');
     }
 
+    // Group By
+    if (params.has('gb')) {
+        filters.groupBy = params.get('gb');
+    }
+
     // Radius
     if (params.has('r')) {
         const radiusNum = params.get('r');
@@ -219,4 +230,26 @@ function buildLeadURL(filters) {
     const filterState = filters || getCurrentFilters();
     const queryString = encodeFiltersToURL(filterState);
     return 'lead.html' + (queryString ? '?' + queryString : '');
+}
+
+/**
+ * Build inventory.html URL with current filter state
+ * @param {Object} filters - Optional filter state (uses current if not provided)
+ * @returns {string} Full URL to inventory.html with filters
+ */
+function buildInventoryURL(filters) {
+    const filterState = filters || getCurrentFilters();
+    const queryString = encodeFiltersToURL(filterState);
+    return 'inventory.html' + (queryString ? '?' + queryString : '');
+}
+
+/**
+ * Build search-demand.html URL with current filter state
+ * @param {Object} filters - Optional filter state (uses current if not provided)
+ * @returns {string} Full URL to search-demand.html with filters
+ */
+function buildSearchDemandURL(filters) {
+    const filterState = filters || getCurrentFilters();
+    const queryString = encodeFiltersToURL(filterState);
+    return 'search-demand.html' + (queryString ? '?' + queryString : '');
 }

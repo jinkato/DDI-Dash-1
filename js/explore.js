@@ -34,6 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     leadLink.href = buildLeadURL(window.currentFilters);
                 }
             }
+
+            // Update inventory.html link with current filters
+            if (typeof buildInventoryURL === 'function') {
+                const inventoryLink = document.getElementById('inventory-learn-more');
+                if (inventoryLink) {
+                    inventoryLink.href = buildInventoryURL(window.currentFilters);
+                }
+            }
+
+            // Update search-demand.html link with current filters
+            if (typeof buildSearchDemandURL === 'function') {
+                const searchDemandLink = document.getElementById('search-demand-learn-more');
+                if (searchDemandLink) {
+                    searchDemandLink.href = buildSearchDemandURL(window.currentFilters);
+                }
+            }
         }
     );
 });
@@ -883,31 +899,107 @@ function updateSearchDemandChart(data) {
     }
 
     const months = data.months;
+    const inventory = data.inventory;
+    const groupBy = window.currentFilters.groupBy || 'none';
 
-    // Create simple search demand data (for now, use inventory data as placeholder)
-    const searchDemandData = data.inventory.map((inv, idx) => {
-        // Generate search demand based on inventory with some variation
+    // Base search demand calculation
+    const baseSearchDemand = inventory.map((inv, idx) => {
         return Math.round(inv * 15 + (Math.random() * 500 - 250));
     });
+
+    let datasets;
+
+    if (groupBy === 'none') {
+        // No grouping - show total search demand
+        datasets = [{
+            label: 'Search Demand',
+            data: baseSearchDemand,
+            backgroundColor: 'rgba(7, 99, 211, 0.08)',
+            borderColor: '#0763D3',
+            borderWidth: 2,
+            tension: 0.3,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#0763D3',
+            pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 2,
+            fill: true
+        }];
+    } else if (groupBy === 'vehicle-type') {
+        // Group by vehicle type
+        const selectedVehicleTypes = window.currentFilters.vehicleTypes || ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'];
+        const allVehicleTypes = ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'];
+        const allColorVars = ['--color-compact', '--color-sedans', '--color-suv-co', '--color-truck', '--color-luxury'];
+
+        // Calculate total share of selected types to normalize
+        let totalShare = 0;
+        selectedVehicleTypes.forEach(type => {
+            totalShare += EXPLORE_MOCK_DATA.vehicleTypeData[type].inventoryShare;
+        });
+
+        datasets = selectedVehicleTypes.map((type) => {
+            const typeIndex = allVehicleTypes.indexOf(type);
+            const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
+            const normalizedShare = typeData.inventoryShare / totalShare;
+            const typeSearchDemand = baseSearchDemand.map(demand => Math.round(demand * normalizedShare));
+            const color = getComputedStyle(document.documentElement).getPropertyValue(allColorVars[typeIndex]).trim();
+
+            return {
+                label: type,
+                data: typeSearchDemand,
+                backgroundColor: color + '14',
+                borderColor: color,
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointBackgroundColor: color,
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: true
+            };
+        });
+    } else {
+        // Group by deal rating (default)
+        const selectedDealRatings = window.currentFilters.dealRatings || ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
+        const allDealRatings = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
+        const allColorVars = ['--color-great-deal', '--color-good-deal', '--color-fair-deal', '--color-high-priced', '--color-over-priced'];
+
+        // Calculate total share of selected ratings to normalize
+        let totalShare = 0;
+        selectedDealRatings.forEach(rating => {
+            totalShare += EXPLORE_MOCK_DATA.dealRatingData[rating].inventoryShare;
+        });
+
+        datasets = selectedDealRatings.map((rating) => {
+            const ratingIndex = allDealRatings.indexOf(rating);
+            const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
+            const normalizedShare = ratingData.inventoryShare / totalShare;
+            const ratingSearchDemand = baseSearchDemand.map(demand => Math.round(demand * normalizedShare));
+            const color = getComputedStyle(document.documentElement).getPropertyValue(allColorVars[ratingIndex]).trim();
+
+            return {
+                label: rating,
+                data: ratingSearchDemand,
+                backgroundColor: color + '14',
+                borderColor: color,
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointBackgroundColor: color,
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                fill: true
+            };
+        });
+    }
 
     searchDemandChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
             labels: months,
-            datasets: [{
-                label: 'Search Demand',
-                data: searchDemandData,
-                backgroundColor: '#10B981',
-                borderColor: '#10B981',
-                borderWidth: 2,
-                tension: 0.3,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-                pointBackgroundColor: '#10B981',
-                pointBorderColor: '#FFFFFF',
-                pointBorderWidth: 2,
-                fill: false
-            }]
+            datasets: datasets
         },
         options: {
             responsive: true,
@@ -918,7 +1010,14 @@ function updateSearchDemandChart(data) {
             },
             plugins: {
                 legend: {
-                    display: false
+                    display: groupBy !== 'none',
+                    position: 'bottom',
+                    labels: {
+                        font: { size: 11 },
+                        color: '#6B7280',
+                        padding: 10,
+                        usePointStyle: true
+                    }
                 },
                 tooltip: {
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -930,6 +1029,41 @@ function updateSearchDemandChart(data) {
                     },
                     bodyFont: {
                         size: 12
+                    },
+                    itemSort: function(a, b) {
+                        // Sort tooltip items so Great Deal appears first
+                        const dealRatingOrder = ['Great Deal', 'Good Deal', 'Fair Deal', 'High Priced', 'Over Priced'];
+                        const vehicleTypeOrder = ['Compact', 'Sedans', 'SUV/CO', 'Truck', 'Luxury'];
+
+                        const aIndexDeal = dealRatingOrder.indexOf(a.dataset.label);
+                        const bIndexDeal = dealRatingOrder.indexOf(b.dataset.label);
+                        const aIndexType = vehicleTypeOrder.indexOf(a.dataset.label);
+                        const bIndexType = vehicleTypeOrder.indexOf(b.dataset.label);
+
+                        // If both are deal ratings
+                        if (aIndexDeal !== -1 && bIndexDeal !== -1) {
+                            return aIndexDeal - bIndexDeal;
+                        }
+                        // If both are vehicle types
+                        if (aIndexType !== -1 && bIndexType !== -1) {
+                            return aIndexType - bIndexType;
+                        }
+                        return 0;
+                    },
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y.toLocaleString() + ' searches';
+                        },
+                        footer: function(tooltipItems) {
+                            if (tooltipItems.length > 1) {
+                                let total = 0;
+                                tooltipItems.forEach(item => {
+                                    total += item.parsed.y;
+                                });
+                                return 'Total: ' + total.toLocaleString() + ' searches';
+                            }
+                            return '';
+                        }
                     }
                 }
             },
