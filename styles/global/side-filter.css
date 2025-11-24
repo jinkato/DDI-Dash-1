@@ -145,6 +145,36 @@
     color: #6B7280;
 }
 
+/* Accordion Styles */
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.accordion-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.accordion-icon.expanded {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.accordion-content.expanded {
+    max-height: 200px;
+    margin-top: 8px;
+}
+
 
 /* Responsive */
 @media (max-width: 1400px) {

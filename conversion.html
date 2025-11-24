@@ -273,12 +273,6 @@
                     <div style="display: flex; flex-direction: column; gap: 24px;">
                         <!-- Filter Panel -->
                         <div class="filter-panel">
-                            <!-- Tabs Navigation -->
-                            <div class="tab-navigation" style="margin-bottom: 16px; margin-left: 0; margin-right: 0;">
-                                <button class="tab-button active" data-tab="my-inventory">My inventory</button>
-                                <button class="tab-button" data-tab="market">Market</button>
-                            </div>
-
                             <div class="filter-section">
                                 <label class="filter-label">Market Average</label>
                                 <label class="checkbox-container">
@@ -386,49 +380,70 @@
                             </div>
 
                             <div class="filter-section">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div class="accordion-header" id="days-on-lot-accordion">
                                     <label class="filter-label" style="margin-bottom: 0;">Days on lot</label>
-                                    <a href="#" id="reset-days-on-lot" class="link-small">Reset</a>
+                                    <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
                                 </div>
-                                <div class="range-inputs">
-                                    <div style="position: relative; display: flex; align-items: center;">
-                                        <input type="number" id="days-min-input" class="range-input" min="0" value="0" placeholder="Min" style="padding-right: 40px;">
-                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">Days</span>
+                                <div class="accordion-content" id="days-on-lot-content">
+                                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+                                        <a href="#" id="reset-days-on-lot" class="link-small">Reset</a>
                                     </div>
-                                    <span class="range-separator">-</span>
-                                    <div style="position: relative; display: flex; align-items: center;">
-                                        <input type="number" id="days-max-input" class="range-input" min="0" value="365" placeholder="Max" style="padding-right: 40px;">
-                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">Days</span>
+                                    <div class="range-inputs">
+                                        <div style="position: relative; display: flex; align-items: center;">
+                                            <input type="number" id="days-min-input" class="range-input" min="0" value="0" placeholder="Min" style="padding-right: 40px;">
+                                            <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">Days</span>
+                                        </div>
+                                        <span class="range-separator">-</span>
+                                        <div style="position: relative; display: flex; align-items: center;">
+                                            <input type="number" id="days-max-input" class="range-input" min="0" value="365" placeholder="Max" style="padding-right: 40px;">
+                                            <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">Days</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="filter-section">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div class="accordion-header" id="total-leads-accordion">
                                     <label class="filter-label" style="margin-bottom: 0;">Total leads</label>
-                                    <a href="#" id="reset-total-leads" class="link-small">Reset</a>
+                                    <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
                                 </div>
-                                <div class="range-inputs">
-                                    <input type="number" id="leads-min-input" class="range-input" min="0" value="0" placeholder="Min">
-                                    <span class="range-separator">-</span>
-                                    <input type="number" id="leads-max-input" class="range-input" min="0" value="100" placeholder="Max">
+                                <div class="accordion-content" id="total-leads-content">
+                                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+                                        <a href="#" id="reset-total-leads" class="link-small">Reset</a>
+                                    </div>
+                                    <div class="range-inputs">
+                                        <input type="number" id="leads-min-input" class="range-input" min="0" value="0" placeholder="Min">
+                                        <span class="range-separator">-</span>
+                                        <input type="number" id="leads-max-input" class="range-input" min="0" value="100" placeholder="Max">
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="filter-section">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div class="accordion-header" id="mileage-accordion">
                                     <label class="filter-label" style="margin-bottom: 0;">Mileage</label>
-                                    <a href="#" id="reset-mileage" class="link-small">Reset</a>
+                                    <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
                                 </div>
-                                <div class="range-inputs">
-                                    <div style="position: relative; display: flex; align-items: center;">
-                                        <input type="number" id="mileage-min-input" class="range-input" min="0" value="0" placeholder="Min" style="padding-right: 32px;">
-                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">mi</span>
+                                <div class="accordion-content" id="mileage-content">
+                                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+                                        <a href="#" id="reset-mileage" class="link-small">Reset</a>
                                     </div>
-                                    <span class="range-separator">-</span>
-                                    <div style="position: relative; display: flex; align-items: center;">
-                                        <input type="number" id="mileage-max-input" class="range-input" min="0" value="200000" placeholder="Max" style="padding-right: 32px;">
-                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">mi</span>
+                                    <div class="range-inputs">
+                                        <div style="position: relative; display: flex; align-items: center;">
+                                            <input type="number" id="mileage-min-input" class="range-input" min="0" value="0" placeholder="Min" style="padding-right: 32px;">
+                                            <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">mi</span>
+                                        </div>
+                                        <span class="range-separator">-</span>
+                                        <div style="position: relative; display: flex; align-items: center;">
+                                            <input type="number" id="mileage-max-input" class="range-input" min="0" value="200000" placeholder="Max" style="padding-right: 32px;">
+                                            <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">mi</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

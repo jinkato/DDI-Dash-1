@@ -497,6 +497,29 @@ function initializeConversionRateFilter() {
 }
 
 /**
+ * Initialize accordion for Days on lot filter
+ */
+function initializeDaysOnLotAccordion() {
+    const accordionHeader = document.getElementById('days-on-lot-accordion');
+    const accordionContent = document.getElementById('days-on-lot-content');
+    const accordionIcon = accordionHeader?.querySelector('.accordion-icon');
+
+    if (!accordionHeader || !accordionContent || !accordionIcon) return;
+
+    accordionHeader.addEventListener('click', function() {
+        const isExpanded = accordionContent.classList.contains('expanded');
+
+        if (isExpanded) {
+            accordionContent.classList.remove('expanded');
+            accordionIcon.classList.remove('expanded');
+        } else {
+            accordionContent.classList.add('expanded');
+            accordionIcon.classList.add('expanded');
+        }
+    });
+}
+
+/**
  * Initialize the days on lot filter
  */
 function initializeDaysOnLotFilter() {
@@ -505,6 +528,9 @@ function initializeDaysOnLotFilter() {
     const resetLink = document.getElementById('reset-days-on-lot');
 
     if (!minInput || !maxInput || !resetLink) return;
+
+    // Initialize accordion
+    initializeDaysOnLotAccordion();
 
     // Update filter when min input changes
     minInput.addEventListener('change', function() {
@@ -547,6 +573,29 @@ function initializeDaysOnLotFilter() {
 }
 
 /**
+ * Initialize accordion for Total leads filter
+ */
+function initializeTotalLeadsAccordion() {
+    const accordionHeader = document.getElementById('total-leads-accordion');
+    const accordionContent = document.getElementById('total-leads-content');
+    const accordionIcon = accordionHeader?.querySelector('.accordion-icon');
+
+    if (!accordionHeader || !accordionContent || !accordionIcon) return;
+
+    accordionHeader.addEventListener('click', function() {
+        const isExpanded = accordionContent.classList.contains('expanded');
+
+        if (isExpanded) {
+            accordionContent.classList.remove('expanded');
+            accordionIcon.classList.remove('expanded');
+        } else {
+            accordionContent.classList.add('expanded');
+            accordionIcon.classList.add('expanded');
+        }
+    });
+}
+
+/**
  * Initialize the total leads filter
  */
 function initializeTotalLeadsFilter() {
@@ -555,6 +604,9 @@ function initializeTotalLeadsFilter() {
     const resetLink = document.getElementById('reset-total-leads');
 
     if (!minInput || !maxInput || !resetLink) return;
+
+    // Initialize accordion
+    initializeTotalLeadsAccordion();
 
     // Update filter when min input changes
     minInput.addEventListener('change', function() {
@@ -597,6 +649,29 @@ function initializeTotalLeadsFilter() {
 }
 
 /**
+ * Initialize accordion for Mileage filter
+ */
+function initializeMileageAccordion() {
+    const accordionHeader = document.getElementById('mileage-accordion');
+    const accordionContent = document.getElementById('mileage-content');
+    const accordionIcon = accordionHeader?.querySelector('.accordion-icon');
+
+    if (!accordionHeader || !accordionContent || !accordionIcon) return;
+
+    accordionHeader.addEventListener('click', function() {
+        const isExpanded = accordionContent.classList.contains('expanded');
+
+        if (isExpanded) {
+            accordionContent.classList.remove('expanded');
+            accordionIcon.classList.remove('expanded');
+        } else {
+            accordionContent.classList.add('expanded');
+            accordionIcon.classList.add('expanded');
+        }
+    });
+}
+
+/**
  * Initialize the mileage filter
  */
 function initializeMileageFilter() {
@@ -605,6 +680,9 @@ function initializeMileageFilter() {
     const resetLink = document.getElementById('reset-mileage');
 
     if (!minInput || !maxInput || !resetLink) return;
+
+    // Initialize accordion
+    initializeMileageAccordion();
 
     // Update filter when min input changes
     minInput.addEventListener('change', function() {
@@ -922,26 +1000,7 @@ function renderConversionChart(filteredVehicles) {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    padding: 12,
-                    cornerRadius: 6,
-                    titleFont: {
-                        size: 13,
-                        weight: '600'
-                    },
-                    bodyFont: {
-                        size: 12
-                    },
-                    callbacks: {
-                        label: function(context) {
-                            const rawValue = context.dataset.rawData[context.dataIndex];
-                            const percent = context.parsed.y.toFixed(1);
-                            return [
-                                `${percent}%`,
-                                `${rawValue.toLocaleString()} total`
-                            ];
-                        }
-                    }
+                    enabled: false
                 }
             },
             scales: {
@@ -1130,26 +1189,7 @@ function renderMarketAverageChart() {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    padding: 12,
-                    cornerRadius: 6,
-                    titleFont: {
-                        size: 13,
-                        weight: '600'
-                    },
-                    bodyFont: {
-                        size: 12
-                    },
-                    callbacks: {
-                        label: function(context) {
-                            const rawValue = context.dataset.rawData[context.dataIndex];
-                            const percent = context.parsed.y.toFixed(1);
-                            return [
-                                `${percent}%`,
-                                `${rawValue.toLocaleString()} total`
-                            ];
-                        }
-                    }
+                    enabled: false
                 }
             },
             scales: {
