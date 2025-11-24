@@ -192,13 +192,11 @@ function renderTotalLeadsChart(data) {
         ratingsOrder.forEach(rating => {
             if (window.currentFilters.dealRatings.includes(rating)) {
                 const ratingData = EXPLORE_MOCK_DATA.dealRatingData[rating];
-                const lpv = lpvByDealRating[rating];
 
-                // Calculate total leads for this rating for each month
-                const ratingLeads = inventory.map(inv => {
+                // Split the existing totalLeads proportionally - don't recalculate from inventory
+                const ratingLeads = data.totalLeads.map(totalLeads => {
                     const normalizedShare = ratingData.inventoryShare / totalShare;
-                    const ratingInventory = Math.round(inv * normalizedShare);
-                    return Math.round(ratingInventory * lpv);
+                    return Math.round(totalLeads * normalizedShare);
                 });
 
                 datasets.push({
@@ -219,9 +217,6 @@ function renderTotalLeadsChart(data) {
             'Compact': '#FF6B9D'
         };
 
-        // Get average LPV
-        const avgLPV = Object.values(lpvByDealRating).reduce((a, b) => a + b, 0) / Object.values(lpvByDealRating).length;
-
         // Calculate total share of selected types
         let totalShare = 0;
         window.currentFilters.vehicleTypes.forEach(type => {
@@ -234,14 +229,10 @@ function renderTotalLeadsChart(data) {
             if (window.currentFilters.vehicleTypes.includes(type)) {
                 const typeData = EXPLORE_MOCK_DATA.vehicleTypeData[type];
 
-                // Calculate total leads for this type for each month
-                const monthCount = data.months.length;
-                const startIndex = 13 - monthCount;
-                const typeLeads = inventory.map((inv, idx) => {
+                // Split the existing totalLeads proportionally - don't recalculate from inventory
+                const typeLeads = data.totalLeads.map(totalLeads => {
                     const normalizedShare = typeData.inventoryShare / totalShare;
-                    const typeInventory = Math.round(inv * normalizedShare);
-                    const typeLPV = avgLPV * typeData.leadsPerformance[startIndex + idx];
-                    return Math.round(typeInventory * typeLPV);
+                    return Math.round(totalLeads * normalizedShare);
                 });
 
                 datasets.push({
