@@ -220,7 +220,7 @@
             </div>
 
             <!-- Main content area -->
-            <div class="content" style="flex-direction: column; gap: 0;">
+            <div class="content" style="flex-direction: column; gap: 0; margin-bottom: 20px;">
                 <!-- Filter Bar with Date Picker -->
                 <div class="filter-wrapper">
                     <div class="filter-bar" style="margin-bottom: 0;">
@@ -236,8 +236,19 @@
                         <!-- Conversion Chart Panel -->
                         <div class="panel">
                             <div class="panel-content">
-                                <div class="conversion-chart-container">
-                                    <canvas id="conversion-chart"></canvas>
+                                <div style="display: flex; gap: 24px; margin-bottom: 24px;">
+                                    <div style="flex: 1;">
+                                        <h3 id="my-inventory-title" style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 12px;">My selected inventory: 20</h3>
+                                        <div class="conversion-chart-container">
+                                            <canvas id="conversion-chart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div id="market-average-chart-wrapper" style="flex: 1; display: none;">
+                                        <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 12px;">Market average: Based on 1,209</h3>
+                                        <div class="conversion-chart-container">
+                                            <canvas id="market-average-chart"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <table class="vehicle-table">
@@ -271,7 +282,7 @@
                             <div class="filter-section">
                                 <label class="filter-label">Market Average</label>
                                 <label class="checkbox-container">
-                                    <input type="checkbox" class="checkbox-input" id="show-market-average" checked>
+                                    <input type="checkbox" class="checkbox-input" id="show-market-average">
                                     <span class="checkbox-label">Show Market Average</span>
                                 </label>
                             </div>
@@ -337,24 +348,88 @@
                                 <label for="brand" class="filter-label">Brand</label>
                                 <select id="brand" class="dropdown-select">
                                     <option>All</option>
-                                    <option>Toyota</option>
+                                    <option>Audi</option>
+                                    <option>BMW</option>
+                                    <option>Chevrolet</option>
+                                    <option>Ford</option>
                                     <option>Honda</option>
+                                    <option>Hyundai</option>
+                                    <option>Jeep</option>
+                                    <option>Kia</option>
+                                    <option>Mazda</option>
+                                    <option>Mercedes-Benz</option>
                                     <option>Nissan</option>
-                                    <option>Volvo</option>
-                                    <option>Multi-brand</option>
-                                    <option>Luxury</option>
+                                    <option>Ram</option>
+                                    <option>Subaru</option>
+                                    <option>Tesla</option>
+                                    <option>Toyota</option>
+                                    <option>Volkswagen</option>
                                 </select>
                             </div>
 
                             <div class="filter-section">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                                     <label class="filter-label" style="margin-bottom: 0;">Conversion rate</label>
-                                    <a href="#" id="reset-conversion-rate" style="font-size: 12px; color: #0763D3; text-decoration: none;">Reset</a>
+                                    <a href="#" id="reset-conversion-rate" class="link-small">Reset</a>
                                 </div>
                                 <div class="range-inputs">
-                                    <input type="number" id="conversion-min-input" class="range-input" min="0" max="100" value="0" placeholder="Min">
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <input type="number" id="conversion-min-input" class="range-input" min="0" max="100" value="0" placeholder="Min" style="padding-right: 24px;">
+                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">%</span>
+                                    </div>
                                     <span class="range-separator">-</span>
-                                    <input type="number" id="conversion-max-input" class="range-input" min="0" max="100" value="100" placeholder="Max">
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <input type="number" id="conversion-max-input" class="range-input" min="0" max="100" value="100" placeholder="Max" style="padding-right: 24px;">
+                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="filter-section">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <label class="filter-label" style="margin-bottom: 0;">Days on lot</label>
+                                    <a href="#" id="reset-days-on-lot" class="link-small">Reset</a>
+                                </div>
+                                <div class="range-inputs">
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <input type="number" id="days-min-input" class="range-input" min="0" value="0" placeholder="Min" style="padding-right: 40px;">
+                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">Days</span>
+                                    </div>
+                                    <span class="range-separator">-</span>
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <input type="number" id="days-max-input" class="range-input" min="0" value="365" placeholder="Max" style="padding-right: 40px;">
+                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">Days</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="filter-section">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <label class="filter-label" style="margin-bottom: 0;">Total leads</label>
+                                    <a href="#" id="reset-total-leads" class="link-small">Reset</a>
+                                </div>
+                                <div class="range-inputs">
+                                    <input type="number" id="leads-min-input" class="range-input" min="0" value="0" placeholder="Min">
+                                    <span class="range-separator">-</span>
+                                    <input type="number" id="leads-max-input" class="range-input" min="0" value="100" placeholder="Max">
+                                </div>
+                            </div>
+
+                            <div class="filter-section">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <label class="filter-label" style="margin-bottom: 0;">Mileage</label>
+                                    <a href="#" id="reset-mileage" class="link-small">Reset</a>
+                                </div>
+                                <div class="range-inputs">
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <input type="number" id="mileage-min-input" class="range-input" min="0" value="0" placeholder="Min" style="padding-right: 32px;">
+                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">mi</span>
+                                    </div>
+                                    <span class="range-separator">-</span>
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <input type="number" id="mileage-max-input" class="range-input" min="0" value="200000" placeholder="Max" style="padding-right: 32px;">
+                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">mi</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -366,6 +441,7 @@
 
     <!-- JavaScript Files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/filter-url-utils.js"></script>
     <script src="js/conversion.js"></script>
 
     <!-- Sidebar Navigation Script -->
