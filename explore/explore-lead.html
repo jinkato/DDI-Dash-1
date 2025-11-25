@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1300, initial-scale=1.0">
-    <title>Conversion - CarGurus Dealer Analysis</title>
+    <title>Explore Leads - CarGurus Dealer Analysis</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,22 +11,22 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="styles/global/global.css">
-    <link rel="stylesheet" href="styles/global/main.css">
-    <link rel="stylesheet" href="styles/global/dropdown.css">
-    <link rel="stylesheet" href="styles/global/table.css">
-    <link rel="stylesheet" href="styles/global/typography.css">
-    <link rel="stylesheet" href="styles/global/link.css">
-    <link rel="stylesheet" href="styles/global/button.css">
-    <link rel="stylesheet" href="styles/global/header.css">
-    <link rel="stylesheet" href="styles/global/panel.css">
-    <link rel="stylesheet" href="styles/global/side-filter.css">
-    <link rel="stylesheet" href="styles/global/top-filter.css">
-    <link rel="stylesheet" href="styles/global/checkbox.css">
-    <link rel="stylesheet" href="styles/global/sidebar.css">
-    <link rel="stylesheet" href="styles/global/tooltip.css">
-    <link rel="stylesheet" href="styles/global/tabs.css">
-    <link rel="stylesheet" href="styles/trends.css">
+    <link rel="stylesheet" href="../styles/global/global.css">
+    <link rel="stylesheet" href="../styles/global/main.css">
+    <link rel="stylesheet" href="../styles/global/dropdown.css">
+    <link rel="stylesheet" href="../styles/global/table.css">
+    <link rel="stylesheet" href="../styles/global/typography.css">
+    <link rel="stylesheet" href="../styles/global/link.css">
+    <link rel="stylesheet" href="../styles/global/button.css">
+    <link rel="stylesheet" href="../styles/global/header.css">
+    <link rel="stylesheet" href="../styles/global/panel.css">
+    <link rel="stylesheet" href="../styles/global/side-filter.css">
+    <link rel="stylesheet" href="../styles/global/top-filter.css">
+    <link rel="stylesheet" href="../styles/global/checkbox.css">
+    <link rel="stylesheet" href="../styles/global/sidebar.css">
+    <link rel="stylesheet" href="../styles/global/tooltip.css">
+    <link rel="stylesheet" href="../styles/global/tabs.css">
+    <link rel="stylesheet" href="../styles/trends.css">
 
 </head>
 <body>
@@ -36,7 +36,7 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo">
-                <img src="img/logo.svg" alt="CarGurus" style="height: 19px;">
+                <img src="../img/logo.svg" alt="CarGurus" style="height: 19px;">
             </div>
 
             <nav class="sidebar-nav">
@@ -61,7 +61,7 @@
                         </a>
                         <ul class="nav-submenu">
                             <li class="nav-subitem">
-                                <a href="performance.html" class="nav-sublink">
+                                <a href="../performance.html" class="nav-sublink">
                                     <span class="nav-subtext">PriceVantage</span>
                                 </a>
                             </li>
@@ -91,22 +91,22 @@
                         </a>
                         <ul class="nav-submenu">
                             <li class="nav-subitem">
-                                <a href="performance.html" class="nav-sublink">
+                                <a href="../performance.html" class="nav-sublink">
                                     <span class="nav-subtext">Performance</span>
                                 </a>
                             </li>
                             <li class="nav-subitem">
-                                <a href="market.html" class="nav-sublink">
+                                <a href="../market/market.html" class="nav-sublink">
                                     <span class="nav-subtext">Market Trends</span>
                                 </a>
                             </li>
                             <li class="nav-subitem">
-                                <a href="shopper.html" class="nav-sublink">
+                                <a href="../shopper.html" class="nav-sublink">
                                     <span class="nav-subtext">Shopper</span>
                                 </a>
                             </li>
                             <li class="nav-subitem">
-                                <a href="market.html" class="nav-sublink">
+                                <a href="../market/market.html" class="nav-sublink">
                                     <span class="nav-subtext">Market Analysis</span>
                                 </a>
                             </li>
@@ -211,47 +211,52 @@
         <!-- Main Content -->
         <main class="main-content">
             <div class="dropdowns">
-                <img src="img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
+                <img src="../img/Dropdowns.svg" alt="CarGurus" style="height: 36px;">
             </div>
             <div class="header">
                 <div class="header-actions">
-                    <h1 class="header-title">Conversion</h1>
+                    <h1 class="header-title">Leads</h1>
                 </div>
             </div>
 
             <!-- Main content area -->
             <div class="content" style="flex-direction: column; gap: 0; margin-bottom: 20px;">
-                <!-- Filter Bar with Date Picker -->
+                <!-- Filter Bar with Date Range -->
                 <div class="filter-wrapper">
                     <div class="filter-bar" style="margin-bottom: 0;">
                         <div class="dropdown-container">
-                            <span class="dropdown-label text-sm">Date:</span>
-                            <input type="date" class="dropdown-select" id="date-picker" value="2025-11-24">
+                            <span class="dropdown-label text-sm">Date range:</span>
+                            <select class="dropdown-select" id="date-range">
+                                <option value="7" selected>Last 7 days</option>
+                                <option value="14">Last 14 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="50">Last 50 days</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 24px;">
                     <div style="display: flex; flex-direction: column; gap: 24px; flex: 1;">
-                        <!-- Conversion Chart Panel -->
+                        <!-- Leads Chart Panel -->
                         <div class="panel">
                             <div class="panel-content">
-                                <div style="display: flex; gap: 24px; margin-bottom: 24px;">
-                                    <div style="flex: 1;">
+                                <div id="charts-container" style="display: flex; gap: 24px; margin-bottom: 24px;">
+                                    <div id="leads-chart-wrapper" style="flex: 1; min-width: 0;">
                                         <div style="margin-bottom: 12px;">
-                                            <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0;">My selected inventory</h3>
-                                            <div id="my-inventory-subtitle" style="font-size: 12px; color: #5E6976;">Total: 20 vehicles</div>
+                                            <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0;">Your inventory</h3>
+                                            <div style="font-size: 12px; color: #5E6976;">Based on <span id="inventory-count">40</span> vehicles</div>
                                         </div>
-                                        <div class="conversion-chart-container">
-                                            <canvas id="conversion-chart"></canvas>
+                                        <div style="height: 300px;">
+                                            <canvas id="leads-chart"></canvas>
                                         </div>
                                     </div>
-                                    <div id="market-average-chart-wrapper" style="flex: 1; display: none;">
+                                    <div id="market-average-chart-wrapper" style="flex: 1; min-width: 0; display: none;">
                                         <div style="margin-bottom: 12px;">
                                             <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0;">Market average</h3>
                                             <div style="font-size: 12px; color: #5E6976;">Based on 1,209 similar vehicles</div>
                                         </div>
-                                        <div class="conversion-chart-container">
+                                        <div style="height: 300px;">
                                             <canvas id="market-average-chart"></canvas>
                                         </div>
                                     </div>
@@ -261,13 +266,13 @@
                                     <thead>
                                         <tr>
                                             <th>Vehicle</th>
-                                            <th style="width: 120px;">Search result</th>
-                                            <th style="width: 120px;">Vehicle page</th>
-                                            <th style="width: 120px;">Leads</th>
+                                            <th style="width: 140px;">Days on lot</th>
+                                            <th style="width: 140px;">VDP last 7 days</th>
+                                            <th style="width: 140px;">Leads last 7 days</th>
                                             <th style="width: 60px;"></th>
                                         </tr>
                                     </thead>
-                                    <tbody id="conversion-table-body">
+                                    <tbody id="leads-table-body">
                                         <!-- Rows will be populated by JavaScript -->
                                     </tbody>
                                 </table>
@@ -281,10 +286,62 @@
                         <div class="filter-panel">
                             <div class="filter-section">
                                 <label class="filter-label">Market Average</label>
+                                <div style="font-size: 12px; color: #5E6976; margin-bottom: 8px;">
+                                    50ml, All franchise type
+                                    <a href="#" onclick="return false;" class="link-primary" style="margin-left: 8px;">Edit</a>
+                                </div>
                                 <label class="checkbox-container">
                                     <input type="checkbox" class="checkbox-input" id="show-market-average">
                                     <span class="checkbox-label">Show Market Average</span>
                                 </label>
+                            </div>
+
+                            <div class="filter-section">
+                                <label class="filter-label">Lead type</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input lead-type-checkbox" value="Standard email" checked>
+                                        <span class="checkbox-label">Standard email leads</span>
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input lead-type-checkbox" value="Digital deal" checked>
+                                        <span class="checkbox-label">Digital deal leads</span>
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input lead-type-checkbox" value="Phone" checked>
+                                        <span class="checkbox-label">Phone leads</span>
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input lead-type-checkbox" value="Chat" checked>
+                                        <span class="checkbox-label">Chat leads</span>
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input lead-type-checkbox" value="Text" checked>
+                                        <span class="checkbox-label">Text leads</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="filter-section">
+                                <label class="filter-label">Leads last 7 days</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input leads-range-checkbox" value="5+" checked>
+                                        <span class="checkbox-label">With 5+ leads last 7 days</span>
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input leads-range-checkbox" value="2-4" checked>
+                                        <span class="checkbox-label">With 2-4 leads last 7 days</span>
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input leads-range-checkbox" value="1" checked>
+                                        <span class="checkbox-label">With 1 lead last 7 days</span>
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" class="checkbox-input leads-range-checkbox" value="0" checked>
+                                        <span class="checkbox-label">With 0 leads last 7 days</span>
+                                    </label>
+                                </div>
                             </div>
 
                             <div class="filter-section">
@@ -318,139 +375,29 @@
                                 <div class="checkbox-group">
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="Great Deal" checked>
-                                        <img src="img/deals/great.svg" alt="Great Deal" class="deal-rating-icon">
+                                        <img src="../img/deals/great.svg" alt="Great Deal" class="deal-rating-icon">
                                         <span class="checkbox-label">Great Deal</span>
                                     </label>
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="Good Deal" checked>
-                                        <img src="img/deals/good.svg" alt="Good Deal" class="deal-rating-icon">
+                                        <img src="../img/deals/good.svg" alt="Good Deal" class="deal-rating-icon">
                                         <span class="checkbox-label">Good Deal</span>
                                     </label>
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="Fair Deal" checked>
-                                        <img src="img/deals/fair.svg" alt="Fair Deal" class="deal-rating-icon">
+                                        <img src="../img/deals/fair.svg" alt="Fair Deal" class="deal-rating-icon">
                                         <span class="checkbox-label">Fair Deal</span>
                                     </label>
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="High Priced" checked>
-                                        <img src="img/deals/high.svg" alt="High Priced" class="deal-rating-icon">
+                                        <img src="../img/deals/high.svg" alt="High Priced" class="deal-rating-icon">
                                         <span class="checkbox-label">High Priced</span>
                                     </label>
                                     <label class="checkbox-container">
                                         <input type="checkbox" class="checkbox-input deal-rating-checkbox" value="Over Priced" checked>
-                                        <img src="img/deals/overpriced.svg" alt="Over Priced" class="deal-rating-icon">
+                                        <img src="../img/deals/overpriced.svg" alt="Over Priced" class="deal-rating-icon">
                                         <span class="checkbox-label">Over Priced</span>
                                     </label>
-                                </div>
-                            </div>
-
-                            <div class="filter-section">
-                                <label for="brand" class="filter-label">Brand</label>
-                                <select id="brand" class="dropdown-select">
-                                    <option>All</option>
-                                    <option>Audi</option>
-                                    <option>BMW</option>
-                                    <option>Chevrolet</option>
-                                    <option>Ford</option>
-                                    <option>Honda</option>
-                                    <option>Hyundai</option>
-                                    <option>Jeep</option>
-                                    <option>Kia</option>
-                                    <option>Mazda</option>
-                                    <option>Mercedes-Benz</option>
-                                    <option>Nissan</option>
-                                    <option>Ram</option>
-                                    <option>Subaru</option>
-                                    <option>Tesla</option>
-                                    <option>Toyota</option>
-                                    <option>Volkswagen</option>
-                                </select>
-                            </div>
-
-                            <div class="filter-section">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <label class="filter-label" style="margin-bottom: 0;">Conversion rate</label>
-                                    <a href="#" id="reset-conversion-rate" class="link-small">Reset</a>
-                                </div>
-                                <div class="range-inputs">
-                                    <div style="position: relative; display: flex; align-items: center;">
-                                        <input type="number" id="conversion-min-input" class="range-input" min="0" max="100" value="0" placeholder="Min" style="padding-right: 24px;">
-                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">%</span>
-                                    </div>
-                                    <span class="range-separator">-</span>
-                                    <div style="position: relative; display: flex; align-items: center;">
-                                        <input type="number" id="conversion-max-input" class="range-input" min="0" max="100" value="100" placeholder="Max" style="padding-right: 24px;">
-                                        <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">%</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-section">
-                                <div class="accordion-header" id="days-on-lot-accordion">
-                                    <label class="filter-label" style="margin-bottom: 0;">Days on lot</label>
-                                    <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
-                                <div class="accordion-content" id="days-on-lot-content">
-                                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
-                                        <a href="#" id="reset-days-on-lot" class="link-small">Reset</a>
-                                    </div>
-                                    <div class="range-inputs">
-                                        <div style="position: relative; display: flex; align-items: center;">
-                                            <input type="number" id="days-min-input" class="range-input" min="0" value="0" placeholder="Min" style="padding-right: 40px;">
-                                            <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">Days</span>
-                                        </div>
-                                        <span class="range-separator">-</span>
-                                        <div style="position: relative; display: flex; align-items: center;">
-                                            <input type="number" id="days-max-input" class="range-input" min="0" value="365" placeholder="Max" style="padding-right: 40px;">
-                                            <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">Days</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-section">
-                                <div class="accordion-header" id="total-leads-accordion">
-                                    <label class="filter-label" style="margin-bottom: 0;">Total leads</label>
-                                    <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
-                                <div class="accordion-content" id="total-leads-content">
-                                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
-                                        <a href="#" id="reset-total-leads" class="link-small">Reset</a>
-                                    </div>
-                                    <div class="range-inputs">
-                                        <input type="number" id="leads-min-input" class="range-input" min="0" value="0" placeholder="Min">
-                                        <span class="range-separator">-</span>
-                                        <input type="number" id="leads-max-input" class="range-input" min="0" value="100" placeholder="Max">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-section">
-                                <div class="accordion-header" id="mileage-accordion">
-                                    <label class="filter-label" style="margin-bottom: 0;">Mileage</label>
-                                    <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
-                                <div class="accordion-content" id="mileage-content">
-                                    <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
-                                        <a href="#" id="reset-mileage" class="link-small">Reset</a>
-                                    </div>
-                                    <div class="range-inputs">
-                                        <div style="position: relative; display: flex; align-items: center;">
-                                            <input type="number" id="mileage-min-input" class="range-input" min="0" value="0" placeholder="Min" style="padding-right: 32px;">
-                                            <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">mi</span>
-                                        </div>
-                                        <span class="range-separator">-</span>
-                                        <div style="position: relative; display: flex; align-items: center;">
-                                            <input type="number" id="mileage-max-input" class="range-input" min="0" value="200000" placeholder="Max" style="padding-right: 32px;">
-                                            <span style="position: absolute; right: 12px; color: #6B7280; font-size: 14px; pointer-events: none;">mi</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -462,10 +409,9 @@
 
     <!-- JavaScript Files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/filter-url-utils.js"></script>
-    <script src="data/conversion-inventory.js"></script>
-    <script src="data/conversion-market-average.js"></script>
-    <script src="js/conversion.js"></script>
+    <script src="../js/filter-url-utils.js"></script>
+    <script src="../data/conversion-inventory.js"></script>
+    <script src="../js/explore-lead.js"></script>
 
     <!-- Sidebar Navigation Script -->
     <script>
@@ -477,24 +423,6 @@
                     e.preventDefault();
                     const parentItem = this.closest('.nav-item-parent');
                     parentItem.classList.toggle('expanded');
-                });
-            });
-
-            // Handle tab clicks
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all tabs
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-
-                    // Add active class to clicked tab
-                    this.classList.add('active');
-
-                    // Get the tab name
-                    const tabName = this.getAttribute('data-tab');
-                    console.log('Switched to tab:', tabName);
-
-                    // Here you can add logic to show/hide different content based on the tab
                 });
             });
         });

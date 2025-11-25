@@ -41,7 +41,7 @@ function createSelectedTableRow(dealer) {
     const tr = document.createElement('tr');
     // Use store logo if ID is 11 or less, otherwise use fallback
     const logoContent = dealer.id <= 11 
-        ? `<img src="img/store_logo/store_${dealer.id}.png" srcset="img/store_logo/store_${dealer.id}@2x.png 2x" alt="${dealer.name}">`
+        ? `<img src="../img/store_logo/store_${dealer.id}.png" srcset="../img/store_logo/store_${dealer.id}@2x.png 2x" alt="${dealer.name}">`
         : `<div style="background-color: ${dealer.logoColor}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
             <span style="color: white; font-weight: bold; font-size: 18px;">
                 ${dealer.name.charAt(0)}

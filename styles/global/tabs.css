@@ -27,9 +27,6 @@
     gap: 8px;
 }
 
-.tab-button:last-child {
-    flex: 1;
-}
 
 .tab-button:hover {
     color: #374151;

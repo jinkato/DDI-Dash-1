@@ -680,7 +680,7 @@
                 <td>${Math.round(vehicle.leadsLast7Days || 0)} leads</td>
                 <td style="position: relative;">
                     <button class="menu-button" data-index="${index}" style="background: none; border: none; cursor: pointer; padding: 4px;">
-                        <img src="img/icon/menu.svg" alt="Menu" style="width: 20px; height: 20px;">
+                        <img src="../img/icon/menu.svg" alt="Menu" style="width: 20px; height: 20px;">
                     </button>
                     <div class="dropdown-menu" id="dropdown-${index}" style="display: none; position: absolute; right: 0; top: 100%; background: white; border: 1px solid #D1D5DB; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 200px; z-index: 1000;">
                         <a href="#" onclick="return false;" style="display: block; padding: 12px 16px; text-decoration: none; color: #374151; font-size: 14px; border-bottom: 1px solid #E5E7EB;">Segment analysis</a>

@@ -496,9 +496,9 @@ function buildComparisonTable() {
         let logoContent;
         if (dealer.isBenchmark) {
             // Use benchmark image for CG Benchmark
-            logoContent = `<img src="img/store_logo/benchmark.png" srcset="img/store_logo/benchmark@2x.png 2x" alt="${dealer.name}">`;
+            logoContent = `<img src="../img/store_logo/benchmark.png" srcset="../img/store_logo/benchmark@2x.png 2x" alt="${dealer.name}">`;
         } else if (dealer.id <= 11) {
-            logoContent = `<img src="img/store_logo/store_${dealer.id}.png" srcset="img/store_logo/store_${dealer.id}@2x.png 2x" alt="${dealer.name}">`;
+            logoContent = `<img src="../img/store_logo/store_${dealer.id}.png" srcset="../img/store_logo/store_${dealer.id}@2x.png 2x" alt="${dealer.name}">`;
         } else {
             logoContent = `<div class="logo-placeholder" style="background-color: ${dealer.logoColor};">
                 <span>${dealer.name.charAt(0)}</span>
@@ -641,7 +641,7 @@ function buildComparisonTable() {
                                     <span class="metric-with-tooltip">
                                         ${value.toFixed(1)}
                                         <span class="tooltip-icon">
-                                            <img src="img/info_icon.svg" alt="Info" />
+                                            <img src="../img/info_icon.svg" alt="Info" />
                                             <span class="tooltip-text">78% of the dealers with higher VDP per vehicle is using Highlight.</span>
                                         </span>
                                     </span>

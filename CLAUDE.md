@@ -9,6 +9,7 @@
 ## Workflow
 - When building UI components, always reference `styles/global/` first
 - Reuse existing classes and patterns from the global stylesheet
+- **Links**: When asked to add a link, always use the link styles from `styles/global/link.css` (e.g., `link-primary`, `link-secondary`)
 
 # Testing Guidelines
 
