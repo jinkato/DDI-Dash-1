@@ -270,10 +270,10 @@
                                             </th>
                                             <th style="width: 140px; vertical-align: bottom;">
                                                 <div class="tooltip-container" style="display: block; font-weight: bold; color: #0D1722; font-size: 12px;">
-                                                    <span class="tooltip-trigger">Opportunity score</span>
+                                                    <span class="tooltip-trigger">Search per available vehicle</span>
                                                     <div class="tooltip-content">Shows how many searches each vehicle of this brand receives on average. Example: A score of 45.2 means approximately 45 searches per vehicle.</div>
                                                 </div>
-                                                <span style="display: block; font-size: 12px; color: #5E6976; font-weight: 400; margin-top: 4px; line-height: 1.2;">Search/Available vehicles</span>
+                                                <span style="display: block; font-size: 12px; color: #5E6976; font-weight: 400; margin-top: 4px; line-height: 1.2;">Opportunity</span>
                                             </th>
                                             <th style="width: 140px; vertical-align: bottom;">
                                                 <div class="tooltip-container" style="display: block; font-weight: bold; color: #0D1722; font-size: 12px;">
@@ -334,6 +334,14 @@
 
                         <!-- Filter Panel -->
                         <div class="filter-panel">
+                            <div class="filter-section">
+                                <label class="filter-label">My inventory</label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input" id="show-my-inventory">
+                                    <span class="checkbox-label">Show only my inventory</span>
+                                </label>
+                            </div>
+
                             <div class="filter-section">
                                 <label class="filter-label">Vehicle type</label>
                                 <div class="checkbox-group">
@@ -400,6 +408,7 @@
     <!-- JavaScript Files -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/filter-url-utils.js"></script>
+    <script src="../data/conversion-inventory.js"></script>
     <script src="../data/market-search-inventory.js"></script>
     <script src="../js/search-lead.js"></script>
 

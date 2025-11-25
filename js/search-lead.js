@@ -11,11 +11,18 @@
         vehicles: []
     };
 
+    // Separate storage for market and dealer inventories
+    let MARKET_INVENTORY = [];
+    let DEALER_INVENTORY = [];
+
     let searchChart = null;
 
     // Sorting state
     let currentSortColumn = 'conversion'; // Default sort by conversion
     let currentSortDirection = 'desc';
+
+    // Flag to prevent multiple re-renders when toggling Group By checkboxes
+    let isTogglingGroupBy = false;
 
     // Performance bucket definitions
     const PERFORMANCE_BUCKETS = {
@@ -40,17 +47,30 @@
     }
 
     /**
-     * Load inventory data from global MARKET_SEARCH_INVENTORY variable
-     * (loaded via data/market-search-inventory.js script tag)
+     * Load inventory data from global MARKET_SEARCH_INVENTORY and CONVERSION_INVENTORY variables
+     * (loaded via data/market-search-inventory.js and data/conversion-inventory.js script tags)
      */
     function loadInventoryData() {
+        // Load market inventory
         if (typeof MARKET_SEARCH_INVENTORY !== 'undefined' && MARKET_SEARCH_INVENTORY.vehicles) {
-            SEARCH_DATA.vehicles = MARKET_SEARCH_INVENTORY.vehicles;
-            console.log('Loaded market search inventory data:', SEARCH_DATA.vehicles.length, 'vehicles');
+            MARKET_INVENTORY = MARKET_SEARCH_INVENTORY.vehicles;
+            console.log('Loaded market search inventory data:', MARKET_INVENTORY.length, 'vehicles');
         } else {
             console.error('MARKET_SEARCH_INVENTORY not found! Make sure data/market-search-inventory.js is loaded.');
-            SEARCH_DATA.vehicles = [];
+            MARKET_INVENTORY = [];
         }
+
+        // Load dealer inventory
+        if (typeof CONVERSION_INVENTORY !== 'undefined' && CONVERSION_INVENTORY.vehicles) {
+            DEALER_INVENTORY = CONVERSION_INVENTORY.vehicles;
+            console.log('Loaded dealer inventory data:', DEALER_INVENTORY.length, 'vehicles');
+        } else {
+            console.error('CONVERSION_INVENTORY not found! Make sure data/conversion-inventory.js is loaded.');
+            DEALER_INVENTORY = [];
+        }
+
+        // Default to market inventory
+        SEARCH_DATA.vehicles = MARKET_INVENTORY;
     }
 
     /**
@@ -68,6 +88,7 @@
 
         // Initialize all filters
         initializeGroupByFilter();
+        initializeMyInventoryFilter();
         initializeVehicleTypeFilter();
         initializeDealRatingFilter();
         initializeTableSorting();
@@ -123,7 +144,10 @@
 
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', function() {
-                renderSearchTable();
+                // Skip re-render if we're programmatically toggling from My Inventory filter
+                if (!isTogglingGroupBy) {
+                    renderSearchTable();
+                }
             });
         });
     }
@@ -155,6 +179,49 @@
             checkbox.addEventListener('change', function() {
                 filterTable();
             });
+        });
+    }
+
+    /**
+     * Initialize the "My inventory" filter
+     */
+    function initializeMyInventoryFilter() {
+        const checkbox = document.getElementById('show-my-inventory');
+
+        if (!checkbox) return;
+
+        checkbox.addEventListener('change', function() {
+            // Set flag to prevent multiple re-renders
+            isTogglingGroupBy = true;
+
+            // Get all Group by checkboxes
+            const groupByCheckboxes = document.querySelectorAll('.group-by-checkbox');
+
+            if (this.checked) {
+                // Switch to dealer inventory
+                SEARCH_DATA.vehicles = DEALER_INVENTORY;
+
+                // Check all Group by checkboxes EXCEPT Vehicle type
+                groupByCheckboxes.forEach(cb => {
+                    if (cb.value !== 'Vehicle type') {
+                        cb.checked = true;
+                    }
+                });
+            } else {
+                // Switch back to market inventory
+                SEARCH_DATA.vehicles = MARKET_INVENTORY;
+
+                // Uncheck all Group by checkboxes
+                groupByCheckboxes.forEach(cb => {
+                    cb.checked = false;
+                });
+            }
+
+            // Reset flag
+            isTogglingGroupBy = false;
+
+            // Re-render table with new data and grouping
+            renderSearchTable();
         });
     }
 
@@ -468,9 +535,9 @@
                         <a href="#" onclick="return false;" style="font-weight: 500; color: #0D1722;">${group.groupKey}</a>
                     </div>
                 </td>
-                <td>${group.count}</td>
+                <td>${group.count} ${group.count === 1 ? 'vehicle' : 'vehicles'}</td>
                 <td>${totalSearch.toLocaleString()}</td>
-                <td>${totalLeads}</td>
+                <td>${totalLeads} ${totalLeads === 1 ? 'lead' : 'leads'}</td>
                 <td><span class="${opportunityPillClass}">${opportunityScore}</span></td>
                 <td><span class="${conversionPillClass}">${conversion}%</span></td>
                 <td style="position: relative;">
