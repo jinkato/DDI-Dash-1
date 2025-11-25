@@ -238,8 +238,8 @@
                             <span class="dropdown-label text-sm">Radius:</span>
                             <select class="dropdown-select" id="radius">
                                 <option value="10">10ml</option>
-                                <option value="25">25ml</option>
-                                <option value="50" selected>50ml</option>
+                                <option value="25" selected>25ml</option>
+                                <option value="50">50ml</option>
                                 <option value="100">100ml</option>
                                 <option value="200">200ml</option>
                             </select>
@@ -249,9 +249,34 @@
 
                 <div style="display: flex; gap: 24px;">
                     <div style="display: flex; flex-direction: column; gap: 24px; flex: 1;">
+                        <!-- Scatter Chart Panel -->
+                        <div class="panel" id="scatter-chart-panel" style="display: none;">
+                            <div class="panel-header">
+                                <h3 class="panel-title">Market Opportunity Analysis</h3>
+                            </div>
+                            <div class="panel-content">
+                                <div style="height: 400px; position: relative;">
+                                    <canvas id="opportunity-scatter-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Table Panel -->
                         <div class="panel">
                             <div class="panel-content">
+                                <!-- Search Input -->
+                                <div style="position: relative; margin-bottom: 20px; width: 320px;">
+                                    <input
+                                        type="text"
+                                        id="vehicle-search"
+                                        placeholder="Search by make, model, or trim..."
+                                        style="width: 100%; padding: 10px 16px; font-size: 14px; border: 1px solid #D1D5DB; border-radius: 8px; font-family: 'DM Sans', sans-serif; color: #0D1722;"
+                                    >
+                                    <div id="autocomplete-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #D1D5DB; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); max-height: 300px; overflow-y: auto; z-index: 1000; margin-top: 4px;">
+                                        <!-- Autocomplete items will be populated here -->
+                                    </div>
+                                </div>
+
                                 <table class="vehicle-table">
                                     <thead>
                                         <tr>
@@ -329,6 +354,14 @@
                                         <span class="checkbox-label">Vehicle type</span>
                                     </label>
                                 </div>
+                            </div>
+
+                            <div class="filter-section">
+                                <label class="filter-label">Chart</label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="checkbox-input" id="show-scatter-chart">
+                                    <span class="checkbox-label">Show chart</span>
+                                </label>
                             </div>
                         </div>
 

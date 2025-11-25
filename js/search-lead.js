@@ -92,6 +92,7 @@
         // Initialize all filters
         initializeSearchInput();
         initializeGroupByFilter();
+        initializeChartFilter();
         initializeMyInventoryFilter();
         initializeVehicleTypeFilter();
         initializeDealRatingFilter();
@@ -156,6 +157,24 @@
                     renderSearchTable();
                 }
             });
+        });
+    }
+
+    /**
+     * Initialize the chart visibility filter
+     */
+    function initializeChartFilter() {
+        const checkbox = document.getElementById('show-scatter-chart');
+        const chartPanel = document.getElementById('scatter-chart-panel');
+
+        if (!checkbox || !chartPanel) return;
+
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                chartPanel.style.display = 'block';
+            } else {
+                chartPanel.style.display = 'none';
+            }
         });
     }
 
