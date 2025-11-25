@@ -21,6 +21,10 @@
     --color-suv-co: #8B5CF6;
     --color-truck: #EC4899;
     --color-luxury: #6366F1;
+
+    /* Trend Colors */
+    --color-trend-positive: #078A0B;
+    --color-trend-negative: #DC1D34;
 }
 
 /* Apply default border to common elements */
@@ -99,6 +103,19 @@ textarea,
 
 .text-over-priced {
     color: var(--color-over-priced);
+}
+
+/* Trend text color utilities */
+.text-positive {
+    color: var(--color-trend-positive);
+}
+
+.text-negative {
+    color: var(--color-trend-negative);
+}
+
+.text-neutral {
+    color: #5E6976;
 }
 
 

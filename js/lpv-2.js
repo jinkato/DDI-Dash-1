@@ -623,18 +623,9 @@ function renderTable(data) {
         const diffClass = parseFloat(difference) > 0 ? 'text-positive' : parseFloat(difference) < 0 ? 'text-negative' : 'text-neutral';
         const diffDisplay = parseFloat(difference) > 0 ? `+${difference}` : difference;
 
-        // Determine trend icon
-        let trendIcon = '';
-        if (parseFloat(difference) > 0) {
-            trendIcon = '<img src="img/trend icon/up.svg" alt="Up" style="width: 16px; height: 16px; margin-left: 4px;">';
-        } else if (parseFloat(difference) < 0) {
-            trendIcon = '<img src="img/trend icon/down.svg" alt="Down" style="width: 16px; height: 16px; margin-left: 4px;">';
-        }
-
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${data.months[i]}</td>
-            <td>${data.totalLeads[i]}</td>
             <td>
                 <div style="display: flex; flex-direction: column; gap: 2px;">
                     <span>${data.marketAvg[i]}</span>
@@ -662,11 +653,9 @@ function renderTable(data) {
                 </div>
             </td>
             <td>
-                <div style="display: flex; align-items: center;">
-                    <span class="${diffClass}">${diffDisplay}</span>
-                    ${trendIcon}
-                </div>
+                <span class="${diffClass}">${diffDisplay}</span>
             </td>
+            <td>${data.totalLeads[i]}</td>
         `;
         tbody.appendChild(row);
     }

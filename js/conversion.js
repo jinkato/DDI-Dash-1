@@ -13,361 +13,15 @@
 (function() {
     'use strict';
 
-    // Inventory data embedded directly to avoid CORS issues
-    const INVENTORY_VEHICLES = [
-        {
-            "id": "VIN001",
-            "name": "2023 Toyota Camry SE",
-            "year": 2023,
-            "make": "Toyota",
-            "model": "Camry",
-            "trim": "SE",
-            "image": "img/car thumbnail/used-1.png",
-            "price": 28495,
-            "mileage": 15420,
-            "vehicleType": "Sedans",
-            "dealRating": "Great Deal",
-            "daysOnLot": 12,
-            "searchViews": 245,
-            "detailViews": 89,
-            "leads": 8
-        },
-        {
-            "id": "VIN002",
-            "name": "2022 Honda Accord EX",
-            "year": 2022,
-            "make": "Honda",
-            "model": "Accord",
-            "trim": "EX",
-            "image": "img/car thumbnail/used-2.png",
-            "price": 29850,
-            "mileage": 22100,
-            "vehicleType": "Sedans",
-            "dealRating": "Good Deal",
-            "daysOnLot": 18,
-            "searchViews": 198,
-            "detailViews": 72,
-            "leads": 6
-        },
-        {
-            "id": "VIN003",
-            "name": "2023 Tesla Model 3",
-            "year": 2023,
-            "make": "Tesla",
-            "model": "Model 3",
-            "trim": "Standard Range",
-            "image": "img/car thumbnail/used-3.png",
-            "price": 42990,
-            "mileage": 8500,
-            "vehicleType": "Luxury",
-            "dealRating": "Fair Deal",
-            "daysOnLot": 5,
-            "searchViews": 412,
-            "detailViews": 156,
-            "leads": 12
-        },
-        {
-            "id": "VIN004",
-            "name": "2021 Ford F-150 XLT",
-            "year": 2021,
-            "make": "Ford",
-            "model": "F-150",
-            "trim": "XLT",
-            "image": "img/car thumbnail/used-4.png",
-            "price": 38750,
-            "mileage": 35200,
-            "vehicleType": "Truck",
-            "dealRating": "Great Deal",
-            "daysOnLot": 25,
-            "searchViews": 321,
-            "detailViews": 134,
-            "leads": 9
-        },
-        {
-            "id": "VIN005",
-            "name": "2023 Mazda CX-5 Grand Touring",
-            "year": 2023,
-            "make": "Mazda",
-            "model": "CX-5",
-            "trim": "Grand Touring",
-            "image": "img/car thumbnail/used-5.png",
-            "price": 33200,
-            "mileage": 12800,
-            "vehicleType": "SUV/CO",
-            "dealRating": "Good Deal",
-            "daysOnLot": 8,
-            "searchViews": 267,
-            "detailViews": 98,
-            "leads": 7
-        },
-        {
-            "id": "VIN006",
-            "name": "2022 Chevrolet Silverado 1500",
-            "year": 2022,
-            "make": "Chevrolet",
-            "model": "Silverado 1500",
-            "trim": "LT",
-            "image": "img/car thumbnail/used-6.png",
-            "price": 41500,
-            "mileage": 28900,
-            "vehicleType": "Truck",
-            "dealRating": "Fair Deal",
-            "daysOnLot": 42,
-            "searchViews": 189,
-            "detailViews": 67,
-            "leads": 3
-        },
-        {
-            "id": "VIN007",
-            "name": "2023 Subaru Outback Premium",
-            "year": 2023,
-            "make": "Subaru",
-            "model": "Outback",
-            "trim": "Premium",
-            "image": "img/car thumbnail/used-7.png",
-            "price": 32495,
-            "mileage": 9200,
-            "vehicleType": "SUV/CO",
-            "dealRating": "Great Deal",
-            "daysOnLot": 15,
-            "searchViews": 234,
-            "detailViews": 87,
-            "leads": 10
-        },
-        {
-            "id": "VIN008",
-            "name": "2020 BMW 3 Series 330i",
-            "year": 2020,
-            "make": "BMW",
-            "model": "3 Series",
-            "trim": "330i",
-            "image": "img/car thumbnail/used-8.png",
-            "price": 35900,
-            "mileage": 42000,
-            "vehicleType": "Luxury",
-            "dealRating": "High Priced",
-            "daysOnLot": 67,
-            "searchViews": 156,
-            "detailViews": 45,
-            "leads": 2
-        },
-        {
-            "id": "VIN009",
-            "name": "2022 Hyundai Tucson SEL",
-            "year": 2022,
-            "make": "Hyundai",
-            "model": "Tucson",
-            "trim": "SEL",
-            "image": "img/car thumbnail/used-9.png",
-            "price": 27850,
-            "mileage": 18500,
-            "vehicleType": "SUV/CO",
-            "dealRating": "Good Deal",
-            "daysOnLot": 21,
-            "searchViews": 203,
-            "detailViews": 76,
-            "leads": 5
-        },
-        {
-            "id": "VIN010",
-            "name": "2023 Nissan Altima SV",
-            "year": 2023,
-            "make": "Nissan",
-            "model": "Altima",
-            "trim": "SV",
-            "image": "img/car thumbnail/used-10.png",
-            "price": 26995,
-            "mileage": 11200,
-            "vehicleType": "Sedans",
-            "dealRating": "Great Deal",
-            "daysOnLot": 9,
-            "searchViews": 178,
-            "detailViews": 68,
-            "leads": 6
-        },
-        {
-            "id": "VIN011",
-            "name": "2021 Jeep Grand Cherokee Limited",
-            "year": 2021,
-            "make": "Jeep",
-            "model": "Grand Cherokee",
-            "trim": "Limited",
-            "image": "img/car thumbnail/used-11.png",
-            "price": 39200,
-            "mileage": 31400,
-            "vehicleType": "SUV/CO",
-            "dealRating": "Fair Deal",
-            "daysOnLot": 38,
-            "searchViews": 289,
-            "detailViews": 102,
-            "leads": 4
-        },
-        {
-            "id": "VIN012",
-            "name": "2023 Honda Civic LX",
-            "year": 2023,
-            "make": "Honda",
-            "model": "Civic",
-            "trim": "LX",
-            "image": "img/car thumbnail/used-12.png",
-            "price": 24750,
-            "mileage": 7800,
-            "vehicleType": "Compact",
-            "dealRating": "Great Deal",
-            "daysOnLot": 6,
-            "searchViews": 312,
-            "detailViews": 118,
-            "leads": 11
-        },
-        {
-            "id": "VIN013",
-            "name": "2022 Toyota RAV4 XLE",
-            "year": 2022,
-            "make": "Toyota",
-            "model": "RAV4",
-            "trim": "XLE",
-            "image": "img/car thumbnail/used-13.png",
-            "price": 31900,
-            "mileage": 19600,
-            "vehicleType": "SUV/CO",
-            "dealRating": "Good Deal",
-            "daysOnLot": 14,
-            "searchViews": 345,
-            "detailViews": 129,
-            "leads": 9
-        },
-        {
-            "id": "VIN014",
-            "name": "2020 Mercedes-Benz C-Class C300",
-            "year": 2020,
-            "make": "Mercedes-Benz",
-            "model": "C-Class",
-            "trim": "C300",
-            "image": "img/car thumbnail/used-14.png",
-            "price": 38500,
-            "mileage": 38700,
-            "vehicleType": "Luxury",
-            "dealRating": "Over Priced",
-            "daysOnLot": 89,
-            "searchViews": 134,
-            "detailViews": 38,
-            "leads": 1
-        },
-        {
-            "id": "VIN015",
-            "name": "2023 Volkswagen Jetta S",
-            "year": 2023,
-            "make": "Volkswagen",
-            "model": "Jetta",
-            "trim": "S",
-            "image": "img/car thumbnail/used-15.png",
-            "price": 22995,
-            "mileage": 9100,
-            "vehicleType": "Compact",
-            "dealRating": "Good Deal",
-            "daysOnLot": 11,
-            "searchViews": 167,
-            "detailViews": 61,
-            "leads": 5
-        },
-        {
-            "id": "VIN016",
-            "name": "2021 Ram 1500 Big Horn",
-            "year": 2021,
-            "make": "Ram",
-            "model": "1500",
-            "trim": "Big Horn",
-            "image": "img/car thumbnail/used-16.png",
-            "price": 42800,
-            "mileage": 26500,
-            "vehicleType": "Truck",
-            "dealRating": "Fair Deal",
-            "daysOnLot": 33,
-            "searchViews": 278,
-            "detailViews": 95,
-            "leads": 6
-        },
-        {
-            "id": "VIN017",
-            "name": "2023 Kia Sportage LX",
-            "year": 2023,
-            "make": "Kia",
-            "model": "Sportage",
-            "trim": "LX",
-            "image": "img/car thumbnail/used-17.png",
-            "price": 28200,
-            "mileage": 6400,
-            "vehicleType": "SUV/CO",
-            "dealRating": "Great Deal",
-            "daysOnLot": 7,
-            "searchViews": 221,
-            "detailViews": 84,
-            "leads": 8
-        },
-        {
-            "id": "VIN018",
-            "name": "2022 Ford Mustang EcoBoost",
-            "year": 2022,
-            "make": "Ford",
-            "model": "Mustang",
-            "trim": "EcoBoost",
-            "image": "img/car thumbnail/used-18.png",
-            "price": 33750,
-            "mileage": 14200,
-            "vehicleType": "Sedans",
-            "dealRating": "Good Deal",
-            "daysOnLot": 28,
-            "searchViews": 298,
-            "detailViews": 112,
-            "leads": 7
-        },
-        {
-            "id": "VIN019",
-            "name": "2023 Chevrolet Equinox LT",
-            "year": 2023,
-            "make": "Chevrolet",
-            "model": "Equinox",
-            "trim": "LT",
-            "image": "img/car thumbnail/used-19.png",
-            "price": 29500,
-            "mileage": 10800,
-            "vehicleType": "SUV/CO",
-            "dealRating": "Fair Deal",
-            "daysOnLot": 19,
-            "searchViews": 187,
-            "detailViews": 69,
-            "leads": 4
-        },
-        {
-            "id": "VIN020",
-            "name": "2021 Audi A4 Premium",
-            "year": 2021,
-            "make": "Audi",
-            "model": "A4",
-            "trim": "Premium",
-            "image": "img/car thumbnail/used-20.png",
-            "price": 36900,
-            "mileage": 29800,
-            "vehicleType": "Luxury",
-            "dealRating": "High Priced",
-            "daysOnLot": 54,
-            "searchViews": 145,
-            "detailViews": 52,
-            "leads": 2
-        }
-    ];
-
+    // Inventory data will be loaded from data/conversion-inventory.js
+    // Market average data will be loaded from data/conversion-market-average.js
     let CONVERSION_DATA = {
         funnel: {
             searchViews: 0,
             detailViews: 0,
             leads: 0
         },
-        marketAverage: {
-            searchViews: 18200,
-            detailViews: 5100,
-            leads: 310
-        },
+        marketAverage: null, // Will be calculated from external data
         vehicles: []
     };
 
@@ -375,17 +29,166 @@
     let marketAverageChart = null;
 
     /**
-     * Load inventory data from embedded data
+     * Load inventory data from global CONVERSION_INVENTORY variable
+     * (loaded via data/conversion-inventory.js script tag)
      */
     function loadInventoryData() {
-        CONVERSION_DATA.vehicles = INVENTORY_VEHICLES;
+        if (typeof CONVERSION_INVENTORY !== 'undefined' && CONVERSION_INVENTORY.vehicles) {
+            CONVERSION_DATA.vehicles = CONVERSION_INVENTORY.vehicles;
 
-        // Calculate funnel totals from vehicle data
-        CONVERSION_DATA.funnel.searchViews = INVENTORY_VEHICLES.reduce((sum, v) => sum + v.searchViews, 0);
-        CONVERSION_DATA.funnel.detailViews = INVENTORY_VEHICLES.reduce((sum, v) => sum + v.detailViews, 0);
-        CONVERSION_DATA.funnel.leads = INVENTORY_VEHICLES.reduce((sum, v) => sum + v.leads, 0);
+            // Calculate funnel totals from vehicle data
+            CONVERSION_DATA.funnel.searchViews = CONVERSION_INVENTORY.vehicles.reduce((sum, v) => sum + v.searchViews, 0);
+            CONVERSION_DATA.funnel.detailViews = CONVERSION_INVENTORY.vehicles.reduce((sum, v) => sum + v.detailViews, 0);
+            CONVERSION_DATA.funnel.leads = CONVERSION_INVENTORY.vehicles.reduce((sum, v) => sum + v.leads, 0);
 
-        console.log('Loaded inventory data:', CONVERSION_DATA.vehicles.length, 'vehicles');
+            console.log('Loaded inventory data:', CONVERSION_DATA.vehicles.length, 'vehicles');
+        } else {
+            console.error('CONVERSION_INVENTORY not found! Make sure data/conversion-inventory.js is loaded.');
+            CONVERSION_DATA.vehicles = [];
+        }
+    }
+
+    /**
+     * Load and calculate market average data from global CONVERSION_MARKET_AVERAGE variable
+     * (loaded via data/conversion-market-average.js script tag)
+     */
+    function loadMarketAverageData() {
+        if (typeof CONVERSION_MARKET_AVERAGE !== 'undefined') {
+            // Calculate initial market average with all filters
+            CONVERSION_DATA.marketAverage = calculateMarketAverage();
+            console.log('Loaded market average data');
+        } else {
+            console.error('CONVERSION_MARKET_AVERAGE not found! Using fallback values.');
+            // Fallback to hardcoded values if data file fails to load
+            CONVERSION_DATA.marketAverage = {
+                searchViews: 18200,
+                detailViews: 5100,
+                leads: 310,
+                vehicleCount: 1209
+            };
+        }
+    }
+
+    /**
+     * Calculate market average based on current filter selections
+     * Uses segment-based data with multipliers
+     * @returns {Object} Market average data {searchViews, detailViews, leads, vehicleCount}
+     */
+    function calculateMarketAverage() {
+        if (typeof CONVERSION_MARKET_AVERAGE === 'undefined') {
+            return {
+                searchViews: 18200,
+                detailViews: 5100,
+                leads: 310,
+                vehicleCount: 1209
+            };
+        }
+
+        // Get selected vehicle types
+        const vehicleTypeCheckboxes = document.querySelectorAll('.vehicle-type-checkbox:checked');
+        const selectedVehicleTypes = Array.from(vehicleTypeCheckboxes).map(cb => cb.value);
+
+        // Get selected deal ratings
+        const dealRatingCheckboxes = document.querySelectorAll('.deal-rating-checkbox:checked');
+        const selectedDealRatings = Array.from(dealRatingCheckboxes).map(cb => cb.value);
+
+        // Get selected brand
+        const brandSelect = document.getElementById('brand');
+        const selectedBrand = brandSelect ? brandSelect.value : 'All';
+
+        // Step 1: Calculate vehicle type component
+        let result = { searchViews: 0, detailViews: 0, leads: 0, vehicleCount: 0 };
+
+        if (selectedVehicleTypes.length === 0 || selectedVehicleTypes.length === 5) {
+            // All types selected or none -> use baseline
+            result = { ...CONVERSION_MARKET_AVERAGE.baseline };
+        } else {
+            // Sum the selected vehicle type segments
+            selectedVehicleTypes.forEach(type => {
+                const typeData = CONVERSION_MARKET_AVERAGE.byVehicleType[type];
+                if (typeData) {
+                    result.searchViews += typeData.searchViews;
+                    result.detailViews += typeData.detailViews;
+                    result.leads += typeData.leads;
+                    result.vehicleCount += typeData.vehicleCount;
+                }
+            });
+        }
+
+        // Step 2: Calculate deal rating multiplier (weighted average)
+        let dealRatingMultiplier = 1.0;
+        if (selectedDealRatings.length > 0 && selectedDealRatings.length < 5) {
+            let totalWeight = 0;
+            let weightedMultiplier = 0;
+
+            selectedDealRatings.forEach(rating => {
+                const ratingData = CONVERSION_MARKET_AVERAGE.byDealRating[rating];
+                if (ratingData) {
+                    const weight = ratingData.vehicleCount;
+                    totalWeight += weight;
+                    weightedMultiplier += ratingData.multiplier * weight;
+                }
+            });
+
+            if (totalWeight > 0) {
+                dealRatingMultiplier = weightedMultiplier / totalWeight;
+            }
+        }
+
+        // Step 3: Get brand multiplier
+        const brandData = CONVERSION_MARKET_AVERAGE.byBrand[selectedBrand];
+        const brandMultiplier = brandData ? brandData.multiplier : 1.0;
+
+        // Step 4: Apply multipliers to conversion metrics (detailViews and leads)
+        const combinedMultiplier = dealRatingMultiplier * brandMultiplier;
+
+        return {
+            searchViews: Math.round(result.searchViews),
+            detailViews: Math.round(result.detailViews * combinedMultiplier),
+            leads: Math.round(result.leads * combinedMultiplier),
+            vehicleCount: result.vehicleCount
+        };
+    }
+
+    /**
+     * Update the market average chart with filtered data
+     * Called when filters change and market average is visible
+     */
+    function updateMarketAverageChart() {
+        const wrapper = document.getElementById('market-average-chart-wrapper');
+        const checkbox = document.getElementById('show-market-average');
+
+        // Only update if market average is currently shown
+        if (!wrapper || !checkbox || !checkbox.checked) {
+            return;
+        }
+
+        // Get market average for current filters
+        const marketData = calculateMarketAverage();
+
+        // Update CONVERSION_DATA with new market average
+        CONVERSION_DATA.marketAverage = marketData;
+
+        // Update the subtitle with vehicle count
+        updateMarketAverageSubtitle(marketData.vehicleCount);
+
+        // Re-render the chart
+        renderMarketAverageChart();
+    }
+
+    /**
+     * Update the market average subtitle with vehicle count
+     * @param {number} vehicleCount - Number of similar vehicles
+     */
+    function updateMarketAverageSubtitle(vehicleCount) {
+        const wrapper = document.getElementById('market-average-chart-wrapper');
+        if (!wrapper) return;
+
+        // Find the subtitle element (div with font-size: 12px inside the wrapper)
+        const subtitle = wrapper.querySelector('div[style*="font-size: 12px"]');
+        if (subtitle) {
+            subtitle.textContent = `Based on ${vehicleCount.toLocaleString()} similar vehicles`;
+        }
     }
 
     /**
@@ -396,6 +199,7 @@
 
         // Load data first
         loadInventoryData();
+        loadMarketAverageData();
 
         // Now render everything with the loaded data
         renderConversionChart();
@@ -428,9 +232,14 @@ function initializeMarketAverageToggle() {
     checkbox.addEventListener('change', function() {
         if (this.checked) {
             wrapper.style.display = 'block';
-            if (!marketAverageChart) {
-                renderMarketAverageChart();
-            }
+
+            // Calculate market average for current filters before rendering
+            const marketData = calculateMarketAverage();
+            CONVERSION_DATA.marketAverage = marketData;
+            updateMarketAverageSubtitle(marketData.vehicleCount);
+
+            // Always re-render with current filter data
+            renderMarketAverageChart();
         } else {
             wrapper.style.display = 'none';
         }
@@ -877,6 +686,9 @@ function filterTable() {
 
     // Update the inventory title with filtered count
     updateInventoryTitle(filteredVehicles.length);
+
+    // Update market average chart if visible
+    updateMarketAverageChart();
 }
 
 /**
