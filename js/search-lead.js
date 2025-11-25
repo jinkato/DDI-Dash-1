@@ -16,7 +16,7 @@
     let DEALER_INVENTORY = [];
 
     // Sorting state
-    let currentSortColumn = 'conversion'; // Default sort by conversion
+    let currentSortColumn = 'leadPerVehicle'; // Default sort by lead per vehicle
     let currentSortDirection = 'desc';
 
     // Flag to prevent multiple re-renders when toggling Group By checkboxes
@@ -65,15 +65,7 @@
      * Initialize global click handlers (added once to prevent memory leaks)
      */
     function initializeGlobalClickHandlers() {
-        // Close dropdown menus when clicking outside
-        document.addEventListener('click', function(e) {
-            // Don't close if clicking on a menu button (handled in renderSearchTable)
-            if (!e.target.closest('.menu-button')) {
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    menu.style.display = 'none';
-                });
-            }
-        });
+        // Reserved for future global event handlers
     }
 
     /**
@@ -93,6 +85,8 @@
         initializeSearchInput();
         initializeGroupByFilter();
         initializeChartFilter();
+        initializeTrendingInfoFilter();
+        initializeSameShoppersFilter();
         initializeMyInventoryFilter();
         initializeVehicleTypeFilter();
         initializeDealRatingFilter();
@@ -100,6 +94,9 @@
 
         // Initialize global click handlers (once)
         initializeGlobalClickHandlers();
+
+        // Initialize side panel
+        initializeSidePanel();
     }
 
     /**
@@ -110,15 +107,13 @@
 
         if (!headers.length) return;
 
-        // Add click handlers to sortable columns (skip the last column - menu)
+        // Add click handlers to sortable columns
         headers.forEach((header, index) => {
-            if (index === headers.length - 1) return; // Skip menu column
-
             header.style.cursor = 'pointer';
             header.style.userSelect = 'none';
 
             // Add data attribute for column name
-            const columnNames = ['vehicle', 'count', 'totalSearch', 'totalLeads', 'opportunityScore', 'conversion'];
+            const columnNames = ['vehicle', 'count', 'totalSearch', 'totalLeads', 'leadPerVehicle'];
             header.setAttribute('data-sort-column', columnNames[index]);
 
 
@@ -175,6 +170,34 @@
             } else {
                 chartPanel.style.display = 'none';
             }
+        });
+    }
+
+    /**
+     * Initialize the trending information visibility filter
+     */
+    function initializeTrendingInfoFilter() {
+        const checkbox = document.getElementById('show-trending-info');
+
+        if (!checkbox) return;
+
+        checkbox.addEventListener('change', function() {
+            // Re-render the table to show/hide trending information
+            renderSearchTable();
+        });
+    }
+
+    /**
+     * Initialize the same shoppers filter
+     */
+    function initializeSameShoppersFilter() {
+        const checkbox = document.getElementById('hide-same-shoppers');
+
+        if (!checkbox) return;
+
+        checkbox.addEventListener('change', function() {
+            // Re-render the table to show/hide competing vehicles
+            renderSearchTable();
         });
     }
 
@@ -520,9 +543,9 @@
     }
 
     /**
-     * Render the scatter chart showing opportunity vs conversion
+     * Render the scatter chart showing available vehicles vs leads generated
      */
-    function renderScatterChart(groupedData, marketAvgConversion, marketAvgOpportunity) {
+    function renderScatterChart(groupedData, marketAvgLeads, marketAvgCount) {
         const canvas = document.getElementById('opportunity-scatter-chart');
         if (!canvas) {
             console.error('Canvas element with id "opportunity-scatter-chart" not found');
@@ -538,29 +561,30 @@
 
         // Prepare data points for scatter chart
         const dataPoints = groupedData.map(group => {
-            const conversionPercent = (group.conversionRate * 100) || 0;
-            const opportunityValue = group.opportunityScore || 0;
+            const leadsGenerated = group.totalLeads || 0;
+            const availableVehicles = group.count || 0;
 
-            // Calculate point radius based on vehicle count (2.5-7.5px range)
+            // Calculate point radius based on total search volume (2.5-7.5px range)
             const minRadius = 2.5;
             const maxRadius = 7.5;
-            const maxCount = Math.max(...groupedData.map(g => g.count));
-            const radius = minRadius + ((group.count / maxCount) * (maxRadius - minRadius));
+            const maxSearch = Math.max(...groupedData.map(g => g.totalVdpViews || 0));
+            const radius = minRadius + (((group.totalVdpViews || 0) / maxSearch) * (maxRadius - minRadius));
 
-            // Add jitter to break up diagonal banding patterns (±8% random offset)
-            const jitterAmount = 0.08;
-            const xJitter = (Math.random() - 0.5) * 2 * jitterAmount * conversionPercent;
-            const yJitter = (Math.random() - 0.5) * 2 * jitterAmount * opportunityValue;
+            // Add jitter to break up overlapping points (±3% random offset)
+            const jitterAmount = 0.03;
+            const xJitter = (Math.random() - 0.5) * 2 * jitterAmount * leadsGenerated;
+            const yJitter = (Math.random() - 0.5) * 2 * jitterAmount * availableVehicles;
 
             return {
-                x: conversionPercent + xJitter,
-                y: opportunityValue + yJitter,
-                originalX: conversionPercent,
-                originalY: opportunityValue,
+                x: leadsGenerated + xJitter,
+                y: availableVehicles + yJitter,
+                originalX: leadsGenerated,
+                originalY: availableVehicles,
                 groupKey: group.groupKey,
                 count: group.count,
                 totalSearch: group.totalVdpViews,
                 totalLeads: group.totalLeads,
+                leadPerVehicle: group.leadPerVehicle,
                 radius: radius
             };
         });
@@ -593,11 +617,10 @@
                             label: function(context) {
                                 const data = context.raw;
                                 return [
-                                    `Conversion: ${data.originalX.toFixed(1)}%`,
-                                    `Search per vehicle: ${data.originalY.toFixed(2)}`,
-                                    `Total vehicles: ${data.count}`,
-                                    `Total searches: ${data.totalSearch.toLocaleString()}`,
-                                    `Total leads: ${data.totalLeads}`
+                                    `Available vehicles: ${data.originalY}`,
+                                    `Leads generated: ${data.originalX}`,
+                                    `Lead per vehicle: ${(data.leadPerVehicle || 0).toFixed(2)}`,
+                                    `Total search: ${data.totalSearch.toLocaleString()}`
                                 ];
                             }
                         }
@@ -607,7 +630,7 @@
                     x: {
                         title: {
                             display: true,
-                            text: 'Conversion Rate (%)',
+                            text: 'Leads Generated',
                             color: '#0D1722',
                             font: {
                                 size: 13,
@@ -620,14 +643,14 @@
                         ticks: {
                             color: '#6B7280',
                             callback: function(value) {
-                                return value + '%';
+                                return Math.round(value);
                             }
                         }
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'Search per Available Vehicle',
+                            text: 'Available Vehicles',
                             color: '#0D1722',
                             font: {
                                 size: 13,
@@ -638,7 +661,10 @@
                             color: '#E5E7EB'
                         },
                         ticks: {
-                            color: '#6B7280'
+                            color: '#6B7280',
+                            callback: function(value) {
+                                return Math.round(value);
+                            }
                         }
                     }
                 },
@@ -670,32 +696,103 @@
                     const xAxis = chart.scales.x;
                     const yAxis = chart.scales.y;
 
-                    // Draw vertical line for average conversion
-                    const avgConversionX = xAxis.getPixelForValue(marketAvgConversion * 100);
+                    // Draw vertical line for average leads generated
+                    const avgLeadsX = xAxis.getPixelForValue(marketAvgLeads);
                     ctx.save();
                     ctx.beginPath();
                     ctx.strokeStyle = '#9CA3AF';
                     ctx.lineWidth = 1;
                     ctx.setLineDash([5, 5]);
-                    ctx.moveTo(avgConversionX, yAxis.top);
-                    ctx.lineTo(avgConversionX, yAxis.bottom);
+                    ctx.moveTo(avgLeadsX, yAxis.top);
+                    ctx.lineTo(avgLeadsX, yAxis.bottom);
                     ctx.stroke();
                     ctx.restore();
 
-                    // Draw horizontal line for average opportunity
-                    const avgOpportunityY = yAxis.getPixelForValue(marketAvgOpportunity);
+                    // Draw horizontal line for average vehicle count
+                    const avgCountY = yAxis.getPixelForValue(marketAvgCount);
                     ctx.save();
                     ctx.beginPath();
                     ctx.strokeStyle = '#9CA3AF';
                     ctx.lineWidth = 1;
                     ctx.setLineDash([5, 5]);
-                    ctx.moveTo(xAxis.left, avgOpportunityY);
-                    ctx.lineTo(xAxis.right, avgOpportunityY);
+                    ctx.moveTo(xAxis.left, avgCountY);
+                    ctx.lineTo(xAxis.right, avgCountY);
                     ctx.stroke();
                     ctx.restore();
                 }
             }]
         });
+    }
+
+    /**
+     * Calculate trend text with arrow
+     * @param {number} current - Current period value
+     * @param {number} previous - Previous period value
+     * @param {boolean} isPercentage - Whether to show as percentage
+     * @returns {string} HTML string with trend
+     */
+    function calculateTrend(current, previous, isPercentage = true) {
+        // Check if trending information should be displayed
+        const showTrendingInfo = document.getElementById('show-trending-info');
+        if (!showTrendingInfo || !showTrendingInfo.checked) {
+            return '';
+        }
+
+        const diff = current - previous;
+        const percentChange = (diff / previous) * 100;
+
+        let arrow = '↑';
+        if (diff < 0) arrow = '↓';
+
+        const displayValue = isPercentage
+            ? `${Math.abs(percentChange).toFixed(1)}%`
+            : `${Math.abs(diff)}`;
+
+        return `<div style="font-size: 12px; color: #5E6976; margin-top: 4px;">${arrow} ${displayValue}</div>`;
+    }
+
+    /**
+     * Calculate distribution label based on variance of leads across vehicles
+     * @param {Array} vehicles - Array of vehicles in the group
+     * @returns {string} Distribution label
+     */
+    function calculateDistributionLabel(vehicles) {
+        // Check if trending information should be displayed
+        const showTrendingInfo = document.getElementById('show-trending-info');
+        if (!showTrendingInfo || !showTrendingInfo.checked) {
+            return '';
+        }
+
+        if (!vehicles || vehicles.length <= 1) {
+            return 'Single vehicle';
+        }
+
+        // Calculate leads per vehicle for each vehicle
+        const leadsPerVehicle = vehicles.map(v => v.leadsLast7Days || 0);
+
+        // Calculate mean
+        const mean = leadsPerVehicle.reduce((sum, val) => sum + val, 0) / leadsPerVehicle.length;
+
+        if (mean === 0) {
+            return 'No leads';
+        }
+
+        // Calculate standard deviation
+        const squaredDiffs = leadsPerVehicle.map(val => Math.pow(val - mean, 2));
+        const variance = squaredDiffs.reduce((sum, val) => sum + val, 0) / leadsPerVehicle.length;
+        const stdDev = Math.sqrt(variance);
+
+        // Calculate coefficient of variation (CV)
+        const cv = stdDev / mean;
+
+        // Determine distribution label based on CV thresholds
+        if (cv < 0.3) {
+            return 'Evenly distributed';
+        } else if (cv < 0.7) {
+            return 'Slight variation';
+        } else {
+            return 'Winners and losers';
+        }
     }
 
     /**
@@ -735,15 +832,48 @@
 
         let groupedData = MARKET_SEARCH_UTILS.groupVehicles(dimensions, filteredVehicles);
 
-        // Add conversion rate and opportunity score to each group for sorting
+        // Add lead per vehicle and synthetic previous period data to each group
         groupedData = groupedData.map(group => {
-            const totalSearch = group.totalVdpViews || 0;
             const totalLeads = group.totalLeads || 0;
             const count = group.count || 1; // Avoid division by zero
-            const conversionRate = totalSearch > 0 ? (totalLeads / totalSearch) : 0;
-            const opportunityScore = count > 0 ? (totalSearch / count) : 0;
-            return { ...group, conversionRate, opportunityScore };
+            const leadPerVehicle = count > 0 ? (totalLeads / count) : 0;
+
+            // Generate synthetic previous period data with realistic variance (-15% to +15%)
+            const varianceMin = 0.85;
+            const varianceMax = 1.15;
+            const countVariance = varianceMin + Math.random() * (varianceMax - varianceMin);
+            const searchVariance = varianceMin + Math.random() * (varianceMax - varianceMin);
+            const leadsVariance = varianceMin + Math.random() * (varianceMax - varianceMin);
+
+            const countPrevious = Math.max(1, Math.round(count * countVariance));
+            const totalVdpViewsPrevious = Math.max(1, Math.round((group.totalVdpViews || 0) * searchVariance));
+            const totalLeadsPrevious = Math.max(0, Math.round(totalLeads * leadsVariance));
+
+            return {
+                ...group,
+                leadPerVehicle,
+                countPrevious,
+                totalVdpViewsPrevious,
+                totalLeadsPrevious
+            };
         });
+
+        // Filter out competing vehicles if the checkbox is checked
+        const hideSameShoppersCheckbox = document.getElementById('hide-same-shoppers');
+        if (hideSameShoppersCheckbox && hideSameShoppersCheckbox.checked) {
+            // Simulate hiding ~40% of vehicles that would target the same shoppers
+            // Use a deterministic random based on group key so the same groups are always hidden
+            groupedData = groupedData.filter(group => {
+                // Create a simple hash from the group key for consistent "random" selection
+                let hash = 0;
+                for (let i = 0; i < group.groupKey.length; i++) {
+                    hash = ((hash << 5) - hash) + group.groupKey.charCodeAt(i);
+                    hash = hash & hash; // Convert to 32-bit integer
+                }
+                // Keep approximately 60% of groups (hide 40%)
+                return Math.abs(hash) % 100 >= 40;
+            });
+        }
 
         // Sort based on current sort column and direction
         groupedData.sort((a, b) => {
@@ -766,17 +896,13 @@
                     aVal = a.totalLeads;
                     bVal = b.totalLeads;
                     break;
-                case 'conversion':
-                    aVal = a.conversionRate;
-                    bVal = b.conversionRate;
-                    break;
-                case 'opportunityScore':
-                    aVal = a.opportunityScore;
-                    bVal = b.opportunityScore;
+                case 'leadPerVehicle':
+                    aVal = a.leadPerVehicle;
+                    bVal = b.leadPerVehicle;
                     break;
                 default:
-                    aVal = a.conversionRate;
-                    bVal = b.conversionRate;
+                    aVal = a.leadPerVehicle;
+                    bVal = b.leadPerVehicle;
             }
 
             if (currentSortDirection === 'asc') {
@@ -786,32 +912,62 @@
             }
         });
 
-        // Calculate market averages for conversion and opportunity score
-        const totalConversionRate = groupedData.reduce((sum, g) => sum + g.conversionRate, 0);
-        const totalOpportunityScore = groupedData.reduce((sum, g) => sum + g.opportunityScore, 0);
-        const marketAvgConversion = groupedData.length > 0 ? totalConversionRate / groupedData.length : 0;
-        const marketAvgOpportunity = groupedData.length > 0 ? totalOpportunityScore / groupedData.length : 0;
+        // Calculate market averages
+        const totalLeadPerVehicle = groupedData.reduce((sum, g) => sum + g.leadPerVehicle, 0);
+        const marketAvgLeadPerVehicle = groupedData.length > 0 ? totalLeadPerVehicle / groupedData.length : 0;
+
+        const totalLeads = groupedData.reduce((sum, g) => g.totalLeads + sum, 0);
+        const marketAvgLeads = groupedData.length > 0 ? totalLeads / groupedData.length : 0;
+
+        const totalCount = groupedData.reduce((sum, g) => g.count + sum, 0);
+        const marketAvgCount = groupedData.length > 0 ? totalCount / groupedData.length : 0;
 
         // Render scatter chart
-        renderScatterChart(groupedData, marketAvgConversion, marketAvgOpportunity);
+        renderScatterChart(groupedData, marketAvgLeads, marketAvgCount);
 
         // Render grouped rows
         groupedData.forEach((group, index) => {
             const totalSearch = group.totalVdpViews || 0;
             const totalLeads = group.totalLeads || 0;
-            const conversionValue = totalSearch > 0 ? ((totalLeads / totalSearch) * 100) : 0;
-            const conversion = (conversionValue || 0).toFixed(1);
-            const opportunityScore = (group.opportunityScore || 0).toFixed(2);
+            const leadPerVehicle = (group.leadPerVehicle || 0).toFixed(2);
+
+            const countPrevious = group.countPrevious || 0;
+            const totalSearchPrevious = group.totalVdpViewsPrevious || 0;
+            const totalLeadsPrevious = group.totalLeadsPrevious || 0;
+
+            // Calculate trends
+            const countTrend = calculateTrend(group.count, countPrevious, true);
+            const searchTrend = calculateTrend(totalSearch, totalSearchPrevious, true);
+            const leadsTrend = calculateTrend(totalLeads, totalLeadsPrevious, true);
+
+            // Calculate distribution label for lead per vehicle
+            const distributionLabel = calculateDistributionLabel(group.vehicles);
 
             // Determine pill classes based on market average
-            const conversionPillClass = conversionValue >= (marketAvgConversion * 100) ? 'pill pill-green' : 'pill pill-red';
-            const opportunityPillClass = (group.opportunityScore || 0) >= marketAvgOpportunity ? 'pill pill-green' : 'pill pill-red';
+            const leadPerVehiclePillClass = (group.leadPerVehicle || 0) >= marketAvgLeadPerVehicle ? 'pill pill-green' : 'pill pill-red';
 
             // Get the make name from groupValues (always the first dimension)
             const makeName = group.groupValues.make || '';
             // Handle special case for Mercedes-Benz - only use makeName if it's not empty
             const logoFileName = makeName === 'Mercedes-Benz' ? 'Mercedes' : (makeName || '');
             const logoPath = logoFileName ? `../img/Make logo/${logoFileName}.png` : '';
+
+            // Build two lines: primary (make, model, year, trim) and secondary (price, mileage, deal rating, vehicle type)
+            const primaryParts = [];
+            const secondaryParts = [];
+
+            if (group.groupValues.make) primaryParts.push(group.groupValues.make);
+            if (group.groupValues.model) primaryParts.push(group.groupValues.model);
+            if (group.groupValues.year) primaryParts.push(group.groupValues.year);
+            if (group.groupValues.trim) primaryParts.push(group.groupValues.trim);
+
+            if (group.groupValues.price) secondaryParts.push(group.groupValues.price);
+            if (group.groupValues.mileage) secondaryParts.push(group.groupValues.mileage);
+            if (group.groupValues.dealRating) secondaryParts.push(group.groupValues.dealRating);
+            if (group.groupValues.vehicleType) secondaryParts.push(group.groupValues.vehicleType);
+
+            const primaryText = primaryParts.join(' ');
+            const secondaryText = secondaryParts.join(' • ');
 
             const row = document.createElement('tr');
             row.style.fontSize = '12px';
@@ -821,43 +977,38 @@
                 <td>
                     <div style="display: flex; align-items: center; gap: 12px;">
                         ${makeName ? `<img src="${logoPath}" alt="${makeName}" style="width: 53px; height: 40px; object-fit: contain; border: var(--border-light); border-radius: 4px;">` : ''}
-                        <a href="#" onclick="return false;" style="font-weight: 500; color: #0D1722;">${group.groupKey}</a>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <a href="#" onclick="return false;" style="font-weight: 600; color: #0D1722; text-decoration: none;">${primaryText}</a>
+                            ${secondaryText ? `<span style="font-size: 12px; color: #5E6976;">${secondaryText}</span>` : ''}
+                        </div>
                     </div>
                 </td>
-                <td>${group.count} ${group.count === 1 ? 'vehicle' : 'vehicles'}</td>
-                <td>${totalSearch.toLocaleString()}</td>
-                <td>${totalLeads} ${totalLeads === 1 ? 'lead' : 'leads'}</td>
-                <td><span class="${opportunityPillClass}">${opportunityScore}</span></td>
-                <td><span class="${conversionPillClass}">${conversion}%</span></td>
-                <td style="position: relative;">
-                    <button class="menu-button" data-index="${index}" style="background: none; border: none; cursor: pointer; padding: 4px;">
-                        <img src="../img/icon/menu.svg" alt="Menu" style="width: 20px; height: 20px;">
-                    </button>
-                    <div class="dropdown-menu" id="dropdown-${index}" style="display: none; position: absolute; right: 0; top: 100%; background: white; border: 1px solid #D1D5DB; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 200px; z-index: 1000;">
-                        <a href="#" onclick="return false;" style="display: block; padding: 12px 16px; text-decoration: none; color: #374151; font-size: 14px; border-bottom: 1px solid #E5E7EB;">Segment analysis</a>
-                        <a href="#" onclick="return false;" style="display: block; padding: 12px 16px; text-decoration: none; color: #374151; font-size: 14px;">Buyer overlap analysis</a>
-                    </div>
+                <td>
+                    <div>${group.count} ${group.count === 1 ? 'vehicle' : 'vehicles'}</div>
+                    ${countTrend}
+                </td>
+                <td>
+                    <div>${totalSearch.toLocaleString()}</div>
+                    ${searchTrend}
+                </td>
+                <td>
+                    <div>${totalLeads} ${totalLeads === 1 ? 'lead' : 'leads'}</div>
+                    ${leadsTrend}
+                </td>
+                <td>
+                    <div><span class="${leadPerVehiclePillClass}">${leadPerVehicle}</span></div>
+                    <div style="font-size: 12px; color: #5E6976; margin-top: 4px;">${distributionLabel}</div>
                 </td>
             `;
             tableBody.appendChild(row);
-        });
 
-        // Add event listeners for menu buttons
-        document.querySelectorAll('.menu-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const index = this.getAttribute('data-index');
-                const dropdown = document.getElementById(`dropdown-${index}`);
-
-                // Close all other dropdowns
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    if (menu.id !== `dropdown-${index}`) {
-                        menu.style.display = 'none';
-                    }
-                });
-
-                // Toggle current dropdown
-                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            // Add click event listener to open side panel
+            row.addEventListener('click', function(e) {
+                // Don't open panel if clicking on a link or button
+                if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                    return;
+                }
+                openSidePanel(group);
             });
         });
 
@@ -866,22 +1017,129 @@
     }
 
     /**
+     * Open the side panel with group data
+     * @param {Object} group - The group data to display
+     */
+    function openSidePanel(group) {
+        const panel = document.getElementById('side-panel');
+        const overlay = document.getElementById('side-panel-overlay');
+        const title = document.getElementById('side-panel-title');
+        const content = document.getElementById('side-panel-content');
+
+        if (!panel || !overlay) return;
+
+        // Set the title
+        title.textContent = group.groupKey || 'Details';
+
+        // Build the vehicle table
+        let tableHTML = `
+            <table class="vehicle-table" style="width: 100%; font-size: 12px;">
+                <thead>
+                    <tr style="border-bottom: 1px solid #E5E7EB;">
+                        <th style="text-align: left; padding: 12px 8px; font-weight: 600; color: #0D1722;">Vehicle</th>
+                        <th style="text-align: left; padding: 12px 8px; font-weight: 600; color: #0D1722;">Price</th>
+                        <th style="text-align: left; padding: 12px 8px; font-weight: 600; color: #0D1722;">Mileage</th>
+                        <th style="text-align: left; padding: 12px 8px; font-weight: 600; color: #0D1722;">Days on Lot</th>
+                        <th style="text-align: left; padding: 12px 8px; font-weight: 600; color: #0D1722;">VDP Views</th>
+                        <th style="text-align: left; padding: 12px 8px; font-weight: 600; color: #0D1722;">Leads</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        // Add each vehicle as a row
+        group.vehicles.forEach((vehicle, index) => {
+            tableHTML += `
+                <tr style="border-bottom: 1px solid #E5E7EB;">
+                    <td style="padding: 12px 8px;">
+                        <div style="font-weight: 500; color: #0D1722;">${vehicle.year} ${vehicle.make} ${vehicle.model}</div>
+                        <div style="font-size: 11px; color: #6B7280; margin-top: 2px;">${vehicle.trim}</div>
+                    </td>
+                    <td style="padding: 12px 8px; color: #0D1722;">$${vehicle.price.toLocaleString()}</td>
+                    <td style="padding: 12px 8px; color: #0D1722;">${vehicle.mileage.toLocaleString()} mi</td>
+                    <td style="padding: 12px 8px; color: #0D1722;">${vehicle.daysOnLot} days</td>
+                    <td style="padding: 12px 8px; color: #0D1722;">${vehicle.vdpViewsLast7Days || 0}</td>
+                    <td style="padding: 12px 8px; color: #0D1722;">${vehicle.leadsLast7Days || 0}</td>
+                </tr>
+            `;
+        });
+
+        tableHTML += `
+                </tbody>
+            </table>
+        `;
+
+        content.innerHTML = tableHTML;
+
+        // Show the panel with animation
+        overlay.style.display = 'block';
+        panel.style.display = 'flex';
+
+        // Trigger animation after a small delay to ensure display is set
+        setTimeout(() => {
+            overlay.classList.add('active');
+            panel.classList.add('active');
+        }, 10);
+    }
+
+    /**
+     * Close the side panel
+     */
+    function closeSidePanel() {
+        const panel = document.getElementById('side-panel');
+        const overlay = document.getElementById('side-panel-overlay');
+
+        if (!panel || !overlay) return;
+
+        // Remove active classes for animation
+        overlay.classList.remove('active');
+        panel.classList.remove('active');
+
+        // Hide after animation completes
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            panel.style.display = 'none';
+        }, 300); // Match the CSS transition duration
+    }
+
+    /**
+     * Initialize side panel event listeners
+     */
+    function initializeSidePanel() {
+        const closeButton = document.getElementById('side-panel-close');
+        const overlay = document.getElementById('side-panel-overlay');
+
+        if (closeButton) {
+            closeButton.addEventListener('click', closeSidePanel);
+        }
+
+        if (overlay) {
+            overlay.addEventListener('click', closeSidePanel);
+        }
+
+        // Close panel on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSidePanel();
+            }
+        });
+    }
+
+    /**
      * Update sort indicators in table headers
      */
     function updateSortIndicators() {
         const headers = document.querySelectorAll('.vehicle-table thead th');
-        const columnNames = ['vehicle', 'count', 'totalSearch', 'totalLeads', 'opportunityScore', 'conversion'];
+        const columnNames = ['vehicle', 'count', 'totalSearch', 'totalLeads', 'leadPerVehicle'];
 
         headers.forEach((header, index) => {
-            if (index === headers.length - 1) return; // Skip menu column
-
             const column = columnNames[index];
 
-            // Special handling for columns with sub-text (count, totalSearch, totalLeads, conversion, opportunityScore)
-            if (column === 'count' || column === 'totalSearch' || column === 'totalLeads' || column === 'conversion' || column === 'opportunityScore') {
+            // Special handling for columns with sub-text (count, totalSearch, totalLeads, leadPerVehicle)
+            if (column === 'count' || column === 'totalSearch' || column === 'totalLeads' || column === 'leadPerVehicle') {
                 // For columns with tooltip, target the tooltip-trigger span
                 let targetSpan;
-                if (column === 'conversion' || column === 'opportunityScore') {
+                if (column === 'leadPerVehicle') {
                     targetSpan = header.querySelector('.tooltip-trigger');
                 } else {
                     targetSpan = header.querySelector('span:first-child');
