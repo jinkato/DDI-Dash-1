@@ -1,15 +1,19 @@
 /* Tooltip Styles */
 
-.tooltip-trigger {
+/* Tooltip Container - wrapper for tooltip */
+.tooltip-container {
     position: relative;
     display: inline-block;
-    border-bottom: 2px dotted #6B7280;
-    cursor: help;
-    align-self: flex-start;
-    width: fit-content;
 }
 
-.tooltip-trigger .tooltip-content {
+/* Tooltip Trigger - dotted underline text that triggers tooltip */
+.tooltip-trigger {
+    border-bottom: 2px dotted #6B7280;
+    cursor: help;
+}
+
+/* Tooltip Content - the popup itself */
+.tooltip-content {
     visibility: hidden;
     opacity: 0;
     position: absolute;
@@ -31,7 +35,8 @@
     pointer-events: none;
 }
 
-.tooltip-trigger .tooltip-content::after {
+/* Tooltip Arrow */
+.tooltip-content::after {
     content: '';
     position: absolute;
     top: 100%;
@@ -41,7 +46,8 @@
     border-top-color: #1F2937;
 }
 
-.tooltip-trigger:hover .tooltip-content {
+/* Show tooltip on hover */
+.tooltip-container:hover .tooltip-content {
     visibility: visible;
     opacity: 1;
 }

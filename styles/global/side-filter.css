@@ -25,6 +25,10 @@
     margin-bottom: 24px;
 }
 
+.filter-section:last-child {
+    margin-bottom: 0;
+}
+
 .filter-section label {
     /* display: block; */
     font-size: 12px;
